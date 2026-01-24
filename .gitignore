@@ -1,0 +1,23 @@
+# Dependências
+node_modules/
+dist/
+data/
+scripts/
+
+# Banco de Dados
+*.sqlite
+*.sqlite-journal
+
+# Variáveis de ambiente
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs
+.vscode/
+.idea/
+.antigravity/
+
