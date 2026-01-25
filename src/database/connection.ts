@@ -7,5 +7,6 @@ dotenv.config();
 const dbPath = process.env.DATABASE_PATH || path.resolve(__dirname, '../../data/database.db');
 const db = new Database(dbPath);
 db.pragma('journal_mode = WAL');
+db.pragma('foreign_keys = ON');
 
 export default db;

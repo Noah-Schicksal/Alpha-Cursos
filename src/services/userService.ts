@@ -35,7 +35,7 @@ export class CreateUserService {
             name,
             email,
             password: passwordHash,
-            role
+            role: role // passada explicitamente
         });
 
         //salva no banco
