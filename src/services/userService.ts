@@ -61,4 +61,57 @@ export class UserService {
         // Deleta o usuário
         this.userRepository.delete(userIdToDelete);
     }
+
+    async update(id: string, data: UpdateUserDTO): Promise<User> {
+        const user = this.userRepository.findById(id);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+
+        if (data.name) {
+            user.setName(data.name);
+        }
+
+        if (data.email) {
+            // Verifica se o email já está em uso por outro usuário
+            const userWithEmail = this.userRepository.findByEmail(data.email);
+            if (userWithEmail && userWithEmail.id !== id) {
+                throw new Error("Este email já está sendo utilizado por outro usuário.");
+            }
+            user.setEmail(data.email);
+        }
+
+        if (data.password) {
+            User.validatePasswordRules(data.password);
+            const passwordHash = await bcrypt.hash(data.password, 10);
+
+            //recriamos a entidade pois a senha é imutável/privada sem setter público de hash
+            const updatedUser = new User({
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                password: passwordHash,
+                role: user.role,
+                createdAt: user.createdAt
+            });
+
+            return this.userRepository.update(updatedUser);
+        }
+
+        //salva as alterações de nome/email se houve mudança
+        return this.userRepository.update(user);
+    }
+    async findById(id: string): Promise<User> {
+        const user = this.userRepository.findById(id);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+        return user;
+    }
+}
+
+interface UpdateUserDTO {
+    name?: string;
+    email?: string;
+    password?: string;
 }

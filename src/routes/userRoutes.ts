@@ -13,7 +13,9 @@ router.post('/auth/register/student', userController.registerStudent.bind(userCo
 router.post('/auth/register/instructor', userController.registerInstructor.bind(userController));
 router.post('/auth/login', authController.login.bind(authController));
 
-// Rotas protegidas
-router.delete('/users/:id', authMiddleware, userController.deleteSelf.bind(userController));
+//rotas protegidas
+router.delete('/users/me', authMiddleware, userController.deleteSelf.bind(userController));
+router.put('/users/me', authMiddleware, userController.updateSelfInfos.bind(userController));
+router.get('/users/me', authMiddleware, userController.getMe.bind(userController));
 
 export default router;
