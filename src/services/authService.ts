@@ -25,14 +25,14 @@ export class AuthService {
     }
 
     async login({ email, password }: LoginRequestDTO): Promise<LoginResponseDTO> {
-        // 1. Buscar usuário pelo email
+        //busca o usuário pelo email
         const user = this.userRepository.findByEmail(email);
 
         if (!user) {
             throw new Error("Email ou senha incorretos."); // Mensagem genérica por segurança
         }
 
-        // 2. Verificar a senha (Hash comparison)
+        //verifica a senha (Hash comparison)
         // user.password vem do banco (hash), password vem do request (plano)
         const passwordMatch = await bcrypt.compare(password, user.password);
 
@@ -40,7 +40,7 @@ export class AuthService {
             throw new Error("Email ou senha incorretos.");
         }
 
-        // 3. Gerar o Token JWT
+        //gera o token jwt
         const secret = process.env.JWT_SECRET;
         if (!secret) {
             throw new Error("Erro interno: JWT_SECRET não definido.");
@@ -50,6 +50,7 @@ export class AuthService {
 
         const token = jwt.sign(
             {
+                name: user.name,
                 id: user.id,
                 role: user.role
             },
@@ -57,7 +58,7 @@ export class AuthService {
             { expiresIn: expiresIn as any }
         );
 
-        // 4. Retornar dados (sem a senha, obviamente)
+        //retorna os dados do usuário e o token jwt
         return {
             user: {
                 id: user.id!,
