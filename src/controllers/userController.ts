@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { CreateUserService } from '../services/userService';
 
-export class UserController {
+export class studentRegister {
     async registerStudent(req: Request, res: Response) {
         const { name, email, password } = req.body;
 
@@ -18,17 +18,17 @@ export class UserController {
         }
     }
 
-    async registerAdmin(req: Request, res: Response) {
+    async registerInstructor(req: Request, res: Response) {
         const { name, email, password } = req.body;
 
-        // Em um sistema real, aqui teria que ter uma verificação se quem está criando é um ADMIN master,
-        // mas como pedido, é uma rota pública de registro de admin.
+        //em um sistema real, aqui teria que ter uma verificação se quem está criando é um ADMIN master,
+        //mas como pedido, é uma rota pública de registro de admin.
 
         const service = new CreateUserService();
 
         try {
-            // Força a role ADMIN
-            const user = await service.execute({ name, email, password, role: 'ADMIN' });
+            // Força a role INSTRUCTOR
+            const user = await service.execute({ name, email, password, role: 'INSTRUCTOR' });
 
             return res.status(201).json(user.toJSON());
 
