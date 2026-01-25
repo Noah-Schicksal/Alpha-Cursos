@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { AuthService } from '../services/authService';
+import { ApiResponse } from '../utils/apiResponse';
 
 export class AuthController {
   async login(req: Request, res: Response) {
@@ -21,15 +22,19 @@ export class AuthController {
       });
 
       // Retorna apenas os dados do usuário (token não vai no body)
-      return res.status(200).json({ user: result.user });
+      return ApiResponse.success(
+        res,
+        result.user,
+        'Login realizado com sucesso',
+      );
     } catch (error: any) {
       // Se for erro de credenciais, retornamos 401 Unauthorized
       if (error.message === 'Email ou senha incorretos.') {
-        return res.status(401).json({ error: error.message });
+        return ApiResponse.unauthorized(res, error.message);
       }
 
       // Outros erros
-      return res.status(400).json({ error: error.message });
+      return ApiResponse.error(res, error.message);
     }
   }
 
@@ -41,6 +46,6 @@ export class AuthController {
       sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
     });
 
-    return res.status(200).json({ message: 'Logout realizado com sucesso' });
+    return ApiResponse.success(res, null, 'Logout realizado com sucesso');
   }
 }
