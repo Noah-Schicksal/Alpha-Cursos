@@ -2,21 +2,25 @@ import 'dotenv/config'; //carrega as variáveis de ambiente
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { initializeDatabase } from './database/init';
-import router from './routes/userRoutes';
+import routes from './routes';
+import { errorHandler } from './middlewares/errorHandler';
 
 const app = express();
-
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3333;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(router);
 
 // Inicializa o banco antes de subir o servidor
 initializeDatabase();
 
+// Rotas
+app.use(routes);
+
+app.use(errorHandler);
+
 app.listen(PORT, () => {
-  console.log(` Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
 
 process.on('uncaughtException', (err) => {
@@ -26,6 +30,3 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
-
-// Debug: Prevent event loop from emptying
-setInterval(() => {}, 10000);
