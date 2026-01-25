@@ -2,15 +2,19 @@ import { Request, Response } from 'express';
 import { UserService } from '../services/userService';
 import { ApiResponse } from '../utils/apiResponse';
 
-export class studentRegister {
+export class UserController {
+  private userService: UserService;
+
+  constructor() {
+    this.userService = new UserService();
+  }
+
   async registerStudent(req: Request, res: Response) {
     const { name, email, password } = req.body;
 
-    const service = new UserService();
-
     try {
       // Força a role STUDENT
-      const user = await service.create({
+      const user = await this.userService.create({
         name,
         email,
         password,
@@ -33,11 +37,9 @@ export class studentRegister {
     //em um sistema real, aqui teria que ter uma verificação se quem está criando é um ADMIN master,
     //mas como pedido, é uma rota pública de registro de admin.
 
-    const service = new UserService();
-
     try {
       // Força a role INSTRUCTOR
-      const user = await service.create({
+      const user = await this.userService.create({
         name,
         email,
         password,
@@ -73,10 +75,11 @@ export class studentRegister {
   async deleteSelf(req: Request, res: Response) {
     const requesterId = req.user.id;
 
-    const service = new UserService();
-
     try {
-      await service.delete({ userIdToDelete: requesterId, requesterId });
+      await this.userService.delete({
+        userIdToDelete: requesterId,
+        requesterId,
+      });
       return ApiResponse.noContent(res);
     } catch (error: any) {
       return this.handleError(res, error);
@@ -87,10 +90,8 @@ export class studentRegister {
     const requesterId = req.user.id;
     const { name, email, password } = req.body;
 
-    const service = new UserService();
-
     try {
-      const updatedUser = await service.update(requesterId, {
+      const updatedUser = await this.userService.update(requesterId, {
         name,
         email,
         password,
@@ -106,10 +107,9 @@ export class studentRegister {
   }
   async getMe(req: Request, res: Response) {
     const requesterId = req.user.id;
-    const service = new UserService();
 
     try {
-      const user = await service.findById(requesterId);
+      const user = await this.userService.findById(requesterId);
       return ApiResponse.success(res, user.toJSON());
     } catch (error: any) {
       return this.handleError(res, error);

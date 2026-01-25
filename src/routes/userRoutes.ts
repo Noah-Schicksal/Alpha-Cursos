@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { studentRegister } from '../controllers/userController';
+import { UserController } from '../controllers/userController';
 import { AuthController } from '../controllers/authController';
 import { authMiddleware } from '../middlewares/authMiddleware';
 
 const router = Router();
-const userController = new studentRegister();
+const userController = new UserController();
 const authController = new AuthController();
 
 //rotas publicas

@@ -3,13 +3,17 @@ import { AuthService } from '../services/authService';
 import { ApiResponse } from '../utils/apiResponse';
 
 export class AuthController {
+  private authService: AuthService;
+
+  constructor() {
+    this.authService = new AuthService();
+  }
+
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
 
-    const service = new AuthService();
-
     try {
-      const result = await service.login({ email, password });
+      const result = await this.authService.login({ email, password });
 
       // Define o cookie httpOnly com o token
       const isProduction = process.env.NODE_ENV === 'production';
