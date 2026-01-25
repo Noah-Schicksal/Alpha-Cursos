@@ -1,117 +1,101 @@
 import bcrypt from 'bcrypt';
 import { User } from '../entities/User';
 import { UserRepository } from '../repositories/userRepository';
+import { CreateUserDTO, UpdateUserDTO } from '../dtos/userDTOs';
 
-interface CreateUserDTO {
-    name: string;
-    email: string;
-    password: string;//senha crua sem hash
-    role: string;
-}
-
-interface DeleteUserDTO {
-    userIdToDelete: string;
-    requesterId: string;
+/**
+ * Erros de aplicação (relacionados ao banco/regras de aplicação)
+ */
+export class ApplicationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ApplicationError';
+  }
 }
 
 export class UserService {
-    private userRepository: UserRepository;
+  private userRepository: UserRepository;
 
-    constructor() {
-        this.userRepository = new UserRepository();
+  constructor(userRepository: UserRepository = new UserRepository()) {
+    this.userRepository = userRepository;
+  }
+
+  async create({ name, email, password, role }: CreateUserDTO): Promise<User> {
+    // Valida duplicidade (Regra de Aplicação)
+    const exists = this.userRepository.findByEmail(email);
+    if (exists) {
+      throw new ApplicationError('Este e-mail já está cadastrado');
     }
 
-    async create({ name, email, password, role }: CreateUserDTO): Promise<User> {
-        //verifica duplicidade (Regra de Aplicação)
-        const exists = this.userRepository.findByEmail(email);
-        if (exists) {
-            throw new Error("Esse email ja esta cadastrado");
-        }
+    // Valida senha crua ANTES de hashear (Regra de Negócio)
+    User.validatePasswordRules(password);
 
-        //valida a senha crua (Regra de Negócio)
-        User.validatePasswordRules(password);
+    // Hash da senha (Infraestrutura)
+    const passwordHash = await bcrypt.hash(password, 10);
 
-        //hash da senha (Regra de Segurança/Infra)
-        const passwordHash = await bcrypt.hash(password, 10);
+    // Cria entidade (validações de formato acontecem aqui)
+    const newUser = new User({
+      name,
+      email,
+      password: passwordHash,
+      role,
+    });
 
-        //instancia a Entidade
-        //SE OS DADOS ESTIVEREM INVÁLIDOS, A CLASSE USER LANÇA ERRO AQUI.
-        const newUser = new User({
-            name,
-            email,
-            password: passwordHash,
-            role: role // passada explicitamente
-        });
+    // Salva no banco
+    return this.userRepository.save(newUser);
+  }
 
-        //salva no banco
-        const savedUser = this.userRepository.save(newUser);
+  async delete(userId: string): Promise<void> {
+    // Deleta o usuário (já validado pelo authMiddleware)
+    this.userRepository.delete(userId);
+  }
 
-        return savedUser;
+  async update(id: string, data: UpdateUserDTO): Promise<User> {
+    const user = this.userRepository.findById(id);
+    if (!user) {
+      throw new ApplicationError('Usuário não encontrado');
     }
 
-    async delete({ userIdToDelete, requesterId }: DeleteUserDTO): Promise<void> {
-        // Regra de negócio: Usuário só pode deletar a si mesmo.
-        if (userIdToDelete !== requesterId) {
-            throw new Error("Proibido: Você só pode deletar a sua própria conta.");
-        }
-
-        // Verifica se o usuário existe (embora se ele está autenticado, deveria existir, mas é bom garantir)
-        // Como o repositório só tem findByEmail, vamos assumir que o ID veio do token e é válido.
-
-        // Deleta o usuário
-        this.userRepository.delete(userIdToDelete);
+    // Atualiza campos (validações de formato acontecem nos setters)
+    if (data.name) {
+      user.setName(data.name);
     }
 
-    async update(id: string, data: UpdateUserDTO): Promise<User> {
-        const user = this.userRepository.findById(id);
-        if (!user) {
-            throw new Error("Usuário não encontrado.");
-        }
-
-        if (data.name) {
-            user.setName(data.name);
-        }
-
-        if (data.email) {
-            // Verifica se o email já está em uso por outro usuário
-            const userWithEmail = this.userRepository.findByEmail(data.email);
-            if (userWithEmail && userWithEmail.id !== id) {
-                throw new Error("Este email já está sendo utilizado por outro usuário.");
-            }
-            user.setEmail(data.email);
-        }
-
-        if (data.password) {
-            User.validatePasswordRules(data.password);
-            const passwordHash = await bcrypt.hash(data.password, 10);
-
-            //recriamos a entidade pois a senha é imutável/privada sem setter público de hash
-            const updatedUser = new User({
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                password: passwordHash,
-                role: user.role,
-                createdAt: user.createdAt
-            });
-
-            return this.userRepository.update(updatedUser);
-        }
-
-        //salva as alterações de nome/email se houve mudança
-        return this.userRepository.update(user);
+    if (data.email) {
+      // Verifica duplicidade
+      const userWithEmail = this.userRepository.findByEmail(data.email);
+      if (userWithEmail && userWithEmail.id !== id) {
+        throw new ApplicationError('Este e-mail já está cadastrado');
+      }
+      user.setEmail(data.email);
     }
-    async findById(id: string): Promise<User> {
-        const user = this.userRepository.findById(id);
-        if (!user) {
-            throw new Error("Usuário não encontrado.");
-        }
-        return user;
-    }
-}
 
-interface UpdateUserDTO {
-    name?: string;
-    email?: string;
-    password?: string;
+    if (data.password) {
+      // Valida senha crua
+      User.validatePasswordRules(data.password);
+      const passwordHash = await bcrypt.hash(data.password, 10);
+
+      // Recria entidade com nova senha
+      const updatedUser = new User({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        password: passwordHash,
+        role: user.role,
+        createdAt: user.createdAt,
+      });
+
+      return this.userRepository.update(updatedUser);
+    }
+
+    return this.userRepository.update(user);
+  }
+
+  async findById(id: string): Promise<User> {
+    const user = this.userRepository.findById(id);
+    if (!user) {
+      throw new ApplicationError('Usuário não encontrado');
+    }
+    return user;
+  }
 }

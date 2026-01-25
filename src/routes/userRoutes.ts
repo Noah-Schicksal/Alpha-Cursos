@@ -1,21 +1,22 @@
 import { Router } from 'express';
-import { studentRegister } from '../controllers/userController';
-import { AuthController } from '../controllers/authController';
+import { userController } from '../controllers';
 import { authMiddleware } from '../middlewares/authMiddleware';
+import { validateUpdate } from '../middlewares/validationMiddleware';
 
 const router = Router();
-const userController = new studentRegister();
-const authController = new AuthController();
 
-//rotas publicas 
-
-router.post('/auth/register/student', userController.registerStudent.bind(userController));
-router.post('/auth/register/instructor', userController.registerInstructor.bind(userController));
-router.post('/auth/login', authController.login.bind(authController));
-
-//rotas protegidas
-router.delete('/users/me', authMiddleware, userController.deleteSelf.bind(userController));
-router.put('/users/me', authMiddleware, userController.updateSelfInfos.bind(userController));
-router.get('/users/me', authMiddleware, userController.getMe.bind(userController));
+// Rotas protegidas do usuário - Base: /users
+router.get('/me', authMiddleware, userController.getMe.bind(userController));
+router.put(
+  '/me',
+  authMiddleware,
+  validateUpdate,
+  userController.updateSelfInfos.bind(userController),
+);
+router.delete(
+  '/me',
+  authMiddleware,
+  userController.deleteSelf.bind(userController),
+);
 
 export default router;

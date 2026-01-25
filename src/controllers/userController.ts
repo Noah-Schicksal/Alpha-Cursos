@@ -1,93 +1,88 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { UserService } from '../services/userService';
+import { ApiResponse } from '../utils/apiResponse';
 
-export class studentRegister {
-    async registerStudent(req: Request, res: Response) {
-        const { name, email, password } = req.body;
+export class UserController {
+  private userService: UserService;
 
-        const service = new UserService();
+  constructor() {
+    this.userService = new UserService();
+  }
 
-        try {
-            // Força a role STUDENT
-            const user = await service.create({ name, email, password, role: 'STUDENT' });
+  private async register(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+    role: 'STUDENT' | 'INSTRUCTOR',
+  ) {
+    const { name, email, password } = req.body;
 
-            return res.status(201).json(user.toJSON());
+    try {
+      const user = await this.userService.create({
+        name,
+        email,
+        password,
+        role,
+      });
 
-        } catch (error: any) {
-            return this.handleError(res, error);
-        }
+      const message =
+        role === 'STUDENT'
+          ? 'Estudante registrado com sucesso'
+          : 'Instrutor registrado com sucesso';
+
+      return ApiResponse.created(res, user.toJSON(), message);
+    } catch (error) {
+      next(error);
     }
+  }
 
-    async registerInstructor(req: Request, res: Response) {
-        const { name, email, password } = req.body;
+  async registerStudent(req: Request, res: Response, next: NextFunction) {
+    return this.register(req, res, next, 'STUDENT');
+  }
 
-        //em um sistema real, aqui teria que ter uma verificação se quem está criando é um ADMIN master,
-        //mas como pedido, é uma rota pública de registro de admin.
+  async registerInstructor(req: Request, res: Response, next: NextFunction) {
+    //em um sistema real, aqui teria que ter uma verificação se quem está criando é um ADMIN master,
+    //mas como pedido, é uma rota pública de registro de admin.
+    return this.register(req, res, next, 'INSTRUCTOR');
+  }
 
-        const service = new UserService();
-
-        try {
-            // Força a role INSTRUCTOR
-            const user = await service.create({ name, email, password, role: 'INSTRUCTOR' });
-
-            return res.status(201).json(user.toJSON());
-
-        } catch (error: any) {
-            return this.handleError(res, error);
-        }
+  async deleteSelf(req: Request, res: Response, next: NextFunction) {
+    try {
+      await this.userService.delete(req.user.id);
+      return ApiResponse.noContent(res);
+    } catch (error) {
+      next(error);
     }
+  }
 
-    private handleError(res: Response, error: any) {
-        if (error.message.includes('Regra de Negócio') || error.message.includes('Proibido')) {
-            return res.status(403).json({ error: error.message });
-        }
-        if (error.message.includes('Conflito') || error.message.includes('duplicidade')) {
-            return res.status(409).json({ error: error.message });
-        }
-        return res.status(400).json({ error: error.message });
+  async updateSelfInfos(req: Request, res: Response, next: NextFunction) {
+    const requesterId = req.user.id;
+    const { name, email, password } = req.body;
+
+    try {
+      const updatedUser = await this.userService.update(requesterId, {
+        name,
+        email,
+        password,
+      });
+      return ApiResponse.success(
+        res,
+        updatedUser.toJSON(),
+        'Perfil atualizado com sucesso',
+      );
+    } catch (error) {
+      next(error);
     }
+  }
 
-    async deleteSelf(req: Request, res: Response) {
-        const { id } = req.params;
-        const requesterId = req.user.id;
+  async getMe(req: Request, res: Response, next: NextFunction) {
+    const requesterId = req.user.id;
 
-        const service = new UserService();
-
-        try {
-            await service.delete({ userIdToDelete: id as string, requesterId });
-            return res.status(204).send();
-        } catch (error: any) {
-            return this.handleError(res, error);
-        }
+    try {
+      const user = await this.userService.findById(requesterId);
+      return ApiResponse.success(res, user.toJSON());
+    } catch (error) {
+      next(error);
     }
-
-    async updateSelfInfos(req: Request, res: Response) {
-        const { id } = req.params;
-        const requesterId = req.user.id;
-        const { name, email, password } = req.body;
-
-        if (id !== requesterId) {
-            return res.status(403).json({ error: "Usuário só pode atualizar dados de sua própria conta." });
-        }
-
-        const service = new UserService();
-
-        try {
-            const updatedUser = await service.update(id as string, { name, email, password });
-            return res.status(200).json(updatedUser.toJSON());
-        } catch (error: any) {
-            return this.handleError(res, error);
-        }
-    }
-    async getMe(req: Request, res: Response) {
-        const requesterId = req.user.id;
-        const service = new UserService();
-
-        try {
-            const user = await service.findById(requesterId);
-            return res.json(user.toJSON());
-        } catch (error: any) {
-            return this.handleError(res, error);
-        }
-    }
+  }
 }
