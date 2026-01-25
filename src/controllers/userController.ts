@@ -60,4 +60,34 @@ export class studentRegister {
             return this.handleError(res, error);
         }
     }
+
+    async updateSelfInfos(req: Request, res: Response) {
+        const { id } = req.params;
+        const requesterId = req.user.id;
+        const { name, email, password } = req.body;
+
+        if (id !== requesterId) {
+            return res.status(403).json({ error: "Usuário só pode atualizar dados de sua própria conta." });
+        }
+
+        const service = new UserService();
+
+        try {
+            const updatedUser = await service.update(id as string, { name, email, password });
+            return res.status(200).json(updatedUser.toJSON());
+        } catch (error: any) {
+            return this.handleError(res, error);
+        }
+    }
+    async getMe(req: Request, res: Response) {
+        const requesterId = req.user.id;
+        const service = new UserService();
+
+        try {
+            const user = await service.findById(requesterId);
+            return res.json(user.toJSON());
+        } catch (error: any) {
+            return this.handleError(res, error);
+        }
+    }
 }

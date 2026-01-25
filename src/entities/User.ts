@@ -34,7 +34,7 @@ export class User {
 
     public setName(name: string) {
         if (!name || name.trim().length < 3) {
-            throw new Error("Regra de Negócio: O nome deve ter no mínimo 3 caracteres.");
+            throw new Error("O nome deve ter no mínimo 3 caracteres.");
         }
         this._name = name.trim();
     }
@@ -42,14 +42,14 @@ export class User {
     public setEmail(email: string) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            throw new Error("Regra de Negócio: Formato de e-mail inválido.");
+            throw new Error("Formato de e-mail inválido.");
         }
         this._email = email.toLowerCase();
     }
 
     public setRole(role: string) {
         if (role !== 'STUDENT' && role !== 'ADMIN' && role !== 'INSTRUCTOR') {
-            throw new Error("O perfil deve ser 'STUDENT', 'INSTRUCTOR' ou 'ADMIN'.");
+            throw new Error("O perfil deve ser 'STUDENT', 'INSTRUCTOR'.");
         }
         this._role = role as UserRole;
     }
@@ -59,7 +59,7 @@ export class User {
     static validatePasswordRules(password: string) {
         const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!password || password.length < 8 || !passRegex.test(password)) {
-            throw new Error("A senha deve ter no mínimo 8 caracteres, com pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.");
+            throw new Error("A senha deve ter no mínimo 8 caracteres, conter: Letras maiúsculas, números e caracteres especiais.");
         }
 
     }
@@ -80,4 +80,3 @@ export class User {
         };
     }
 }
-

@@ -14,8 +14,17 @@ app.use(router);
 // Inicializa o banco antes de subir o servidor
 initializeDatabase();
 
-export { app };
-
 app.listen(PORT, () => {
     console.log(` Server running on port ${PORT}`);
 });
+
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+// Debug: Prevent event loop from emptying
+setInterval(() => { }, 10000);

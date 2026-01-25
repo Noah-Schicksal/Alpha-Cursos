@@ -52,4 +52,38 @@ export class UserRepository {
         const stmt = db.prepare('DELETE FROM users WHERE id = ?');
         stmt.run(id);
     }
+
+    findById(id: string): User | null {
+        const stmt = db.prepare('SELECT * FROM users WHERE id = ?');
+        const row = stmt.get(id) as any;
+
+        if (!row) return null;
+
+        return new User({
+            id: row.id,
+            name: row.name,
+            email: row.email,
+            password: row.password,
+            role: row.role,
+            createdAt: new Date(row.created_at)
+        });
+    }
+
+    update(user: User): User {
+        const stmt = db.prepare(`
+            UPDATE users 
+            SET name = ?, email = ?, password = ?, role = ?
+            WHERE id = ?
+        `);
+
+        stmt.run(
+            user.name,
+            user.email,
+            user.password,
+            user.role,
+            user.id
+        );
+
+        return user;
+    }
 }
