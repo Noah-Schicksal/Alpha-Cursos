@@ -1,6 +1,6 @@
 # Log de Teste Completo da API
 
-Data: 26/01/2026, 08:27:39
+Data: 26/01/2026, 09:29:52
 
 
 ## Inicialização
@@ -13,8 +13,8 @@ Data: 26/01/2026, 08:27:39
 > **Requisição**: `POST /auth/register/student`
 > Corpo: ```json
 {
-  "name": "Estudante 1769426862612",
-  "email": "student_1769426862612@test.com",
+  "name": "Estudante 1769430596020",
+  "email": "student_1769430596020@test.com",
   "password": "Password123!"
 }
 ```
@@ -23,11 +23,11 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "id": "069ac4ed-6e86-4212-ad10-30661c6ebf54",
-    "name": "Estudante 1769426862612",
-    "email": "student_1769426862612@test.com",
+    "id": "7f3bea3c-024d-48f1-9568-ae4e4497488b",
+    "name": "Estudante 1769430596020",
+    "email": "student_1769430596020@test.com",
     "role": "STUDENT",
-    "createdAt": "2026-01-26T11:27:42.682Z"
+    "createdAt": "2026-01-26T12:29:56.094Z"
   },
   "message": "Estudante registrado com sucesso"
 }
@@ -37,8 +37,8 @@ Data: 26/01/2026, 08:27:39
 > **Requisição**: `POST /auth/register/instructor`
 > Corpo: ```json
 {
-  "name": "Instrutor 1769426862612",
-  "email": "instructor_1769426862612@test.com",
+  "name": "Instrutor 1769430596020",
+  "email": "instructor_1769430596020@test.com",
   "password": "Password123!"
 }
 ```
@@ -47,11 +47,11 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "id": "14ef0d54-880e-4016-a5a9-026e2afc84b8",
-    "name": "Instrutor 1769426862612",
-    "email": "instructor_1769426862612@test.com",
+    "id": "c37f0b7f-6e3e-48d0-b948-7532325d1449",
+    "name": "Instrutor 1769430596020",
+    "email": "instructor_1769430596020@test.com",
     "role": "INSTRUCTOR",
-    "createdAt": "2026-01-26T11:27:42.739Z"
+    "createdAt": "2026-01-26T12:29:56.154Z"
   },
   "message": "Instrutor registrado com sucesso"
 }
@@ -61,7 +61,7 @@ Data: 26/01/2026, 08:27:39
 > **Requisição**: `POST /auth/login`
 > Corpo: ```json
 {
-  "email": "student_1769426862612@test.com",
+  "email": "student_1769430596020@test.com",
   "password": "Password123!"
 }
 ```
@@ -71,12 +71,12 @@ Data: 26/01/2026, 08:27:39
 {
   "data": {
     "user": {
-      "id": "069ac4ed-6e86-4212-ad10-30661c6ebf54",
-      "name": "Estudante 1769426862612",
-      "email": "student_1769426862612@test.com",
+      "id": "7f3bea3c-024d-48f1-9568-ae4e4497488b",
+      "name": "Estudante 1769430596020",
+      "email": "student_1769430596020@test.com",
       "role": "STUDENT"
     },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRXN0dWRhbnRlIDE3Njk0MjY4NjI2MTIiLCJpZCI6IjA2OWFjNGVkLTZlODYtNDIxMi1hZDEwLTMwNjYxYzZlYmY1NCIsInJvbGUiOiJTVFVERU5UIiwiaWF0IjoxNzY5NDI2ODYyLCJleHAiOjE3Njk0MzA0NjJ9.68T6xAnk3E0IuUUMh-1Jy38_aNAKh4E-VMMSJGZPQW4"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRXN0dWRhbnRlIDE3Njk0MzA1OTYwMjAiLCJpZCI6IjdmM2JlYTNjLTAyNGQtNDhmMS05NTY4LWFlNGU0NDk3NDg4YiIsInJvbGUiOiJTVFVERU5UIiwiaWF0IjoxNzY5NDMwNTk2LCJleHAiOjE3Njk0MzQxOTZ9.ICtwGFwhQpa3Pm8ib0nI7Ux0G8CfqZtgATb_YtbFzWA"
   },
   "message": "Login realizado com sucesso"
 }
@@ -86,7 +86,7 @@ Data: 26/01/2026, 08:27:39
 > **Requisição**: `POST /auth/login`
 > Corpo: ```json
 {
-  "email": "instructor_1769426862612@test.com",
+  "email": "instructor_1769430596020@test.com",
   "password": "Password123!"
 }
 ```
@@ -96,12 +96,12 @@ Data: 26/01/2026, 08:27:39
 {
   "data": {
     "user": {
-      "id": "14ef0d54-880e-4016-a5a9-026e2afc84b8",
-      "name": "Instrutor 1769426862612",
-      "email": "instructor_1769426862612@test.com",
+      "id": "c37f0b7f-6e3e-48d0-b948-7532325d1449",
+      "name": "Instrutor 1769430596020",
+      "email": "instructor_1769430596020@test.com",
       "role": "INSTRUCTOR"
     },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSW5zdHJ1dG9yIDE3Njk0MjY4NjI2MTIiLCJpZCI6IjE0ZWYwZDU0LTg4MGUtNDAxNi1hNWE5LTAyNmUyYWZjODRiOCIsInJvbGUiOiJJTlNUUlVDVE9SIiwiaWF0IjoxNzY5NDI2ODYyLCJleHAiOjE3Njk0MzA0NjJ9.emzrI3H31qemMCMqTyZ54fjExxyfREagHvr9i9wOIpw"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSW5zdHJ1dG9yIDE3Njk0MzA1OTYwMjAiLCJpZCI6ImMzN2YwYjdmLTZlM2UtNDhkMC1iOTQ4LTc1MzIzMjVkMTQ0OSIsInJvbGUiOiJJTlNUUlVDVE9SIiwiaWF0IjoxNzY5NDMwNTk2LCJleHAiOjE3Njk0MzQxOTZ9.Bb1YQAUoHC9-4ZUfBd7PwMnMHPU2AmF2-vQ_RezFg1Y"
   },
   "message": "Login realizado com sucesso"
 }
@@ -143,15 +143,15 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "id": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
-    "title": "Curso 1769426862612",
+    "id": "93425141-aa16-4096-93bb-ae3832b9d017",
+    "title": "Curso 1769430596020",
     "description": "Descrição do curso de teste",
     "price": 99.99,
-    "coverImageUrl": "/storage/courses/curso_1769426862612/452f6d90-6274-4ca3-b842-6573ccfe5690.jpg",
-    "instructorId": "14ef0d54-880e-4016-a5a9-026e2afc84b8",
+    "coverImageUrl": "/storage/courses/curso_1769430596020/bf7a89c2-b9ed-4e35-a7eb-1636c2e0d63b.jpg",
+    "instructorId": "c37f0b7f-6e3e-48d0-b948-7532325d1449",
     "categoryId": "ede3e696-536a-4272-aac0-4cbfd98442b6",
     "isActive": true,
-    "createdAt": "2026-01-26T11:27:42.873Z"
+    "createdAt": "2026-01-26T12:29:56.291Z"
   },
   "message": "Curso criado com sucesso"
 }
@@ -159,10 +159,9 @@ Data: 26/01/2026, 08:27:39
 
 ✅ **[SUCESSO]** Criar Curso com Imagem
 ✅ **[SUCESSO]**   coverImageUrl presente na resposta
-ℹ️ **[INFO]**   URL: /storage/courses/curso_1769426862612/452f6d90-6274-4ca3-b842-6573ccfe5690.jpg
+ℹ️ **[INFO]**   URL: /storage/courses/curso_1769430596020/bf7a89c2-b9ed-4e35-a7eb-1636c2e0d63b.jpg
 ✅ **[SUCESSO]**   Acesso público GET /courses/:id/cover
-✅ **[SUCESSO]**   Conteúdo da imagem verificado
-> **Requisição**: `POST /courses/cd909b14-dcbc-4d18-8766-0993a3842e7f/modules`
+> **Requisição**: `POST /courses/93425141-aa16-4096-93bb-ae3832b9d017/modules`
 > Corpo: ```json
 {
   "title": "Módulo 1: Intro",
@@ -174,18 +173,18 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "id": "4614b240-8682-4b9f-8131-f43ae804a5c9",
+    "id": "9cf788ad-f8b7-4c89-8b77-f3fb6b90e400",
     "title": "Módulo 1: Intro",
-    "courseId": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
+    "courseId": "93425141-aa16-4096-93bb-ae3832b9d017",
     "orderIndex": 1,
-    "createdAt": "2026-01-26T11:27:42.898Z"
+    "createdAt": "2026-01-26T12:29:56.392Z"
   },
   "message": "Módulo criado com sucesso"
 }
 ```
 
 ✅ **[SUCESSO]** Criar Módulo
-> **Requisição**: `POST /modules/4614b240-8682-4b9f-8131-f43ae804a5c9/classes`
+> **Requisição**: `POST /modules/9cf788ad-f8b7-4c89-8b77-f3fb6b90e400/classes`
 > Corpo: ```json
 {
   "title": "Aula 1: Olá Mundo",
@@ -199,12 +198,12 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "id": "c069e695-929c-4022-bab9-dc87e90ca936",
+    "id": "90c5084b-fc26-4cb7-8b4d-3368c016ca52",
     "title": "Aula 1: Olá Mundo",
     "description": "Primeira aula",
     "videoUrl": "https://youtube.com/watch?v=123",
-    "moduleId": "4614b240-8682-4b9f-8131-f43ae804a5c9",
-    "createdAt": "2026-01-26T11:27:42.902Z"
+    "moduleId": "9cf788ad-f8b7-4c89-8b77-f3fb6b90e400",
+    "createdAt": "2026-01-26T12:29:56.396Z"
   },
   "message": "Aula criada com sucesso"
 }
@@ -218,11 +217,11 @@ Data: 26/01/2026, 08:27:39
 {
   "data": [
     {
-      "id": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
-      "title": "Curso 1769426862612",
+      "id": "93425141-aa16-4096-93bb-ae3832b9d017",
+      "title": "Curso 1769430596020",
       "description": "Descrição do curso de teste",
       "price": 99.99,
-      "coverImageUrl": "/storage/courses/curso_1769426862612/452f6d90-6274-4ca3-b842-6573ccfe5690.jpg",
+      "coverImageUrl": "/storage/courses/curso_1769430596020/bf7a89c2-b9ed-4e35-a7eb-1636c2e0d63b.jpg",
       "isActive": true,
       "enrolledCount": 0,
       "category": {
@@ -238,8 +237,8 @@ Data: 26/01/2026, 08:27:39
 > **Requisição**: `POST /auth/register/instructor`
 > Corpo: ```json
 {
-  "name": "Other Instr 1769426862612",
-  "email": "other_1769426862612@test.com",
+  "name": "Other Instr 1769430596020",
+  "email": "other_1769430596020@test.com",
   "password": "Password123!"
 }
 ```
@@ -248,11 +247,11 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "id": "9db0ebd1-96cd-491d-aac2-8bdb75e87b5b",
-    "name": "Other Instr 1769426862612",
-    "email": "other_1769426862612@test.com",
+    "id": "bb6cf085-9bb1-4eda-8744-8e6d53d91c78",
+    "name": "Other Instr 1769430596020",
+    "email": "other_1769430596020@test.com",
     "role": "INSTRUCTOR",
-    "createdAt": "2026-01-26T11:27:42.964Z"
+    "createdAt": "2026-01-26T12:29:56.463Z"
   },
   "message": "Instrutor registrado com sucesso"
 }
@@ -261,7 +260,7 @@ Data: 26/01/2026, 08:27:39
 > **Requisição**: `POST /auth/login`
 > Corpo: ```json
 {
-  "email": "other_1769426862612@test.com",
+  "email": "other_1769430596020@test.com",
   "password": "Password123!"
 }
 ```
@@ -271,12 +270,12 @@ Data: 26/01/2026, 08:27:39
 {
   "data": {
     "user": {
-      "id": "9db0ebd1-96cd-491d-aac2-8bdb75e87b5b",
-      "name": "Other Instr 1769426862612",
-      "email": "other_1769426862612@test.com",
+      "id": "bb6cf085-9bb1-4eda-8744-8e6d53d91c78",
+      "name": "Other Instr 1769430596020",
+      "email": "other_1769430596020@test.com",
       "role": "INSTRUCTOR"
     },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiT3RoZXIgSW5zdHIgMTc2OTQyNjg2MjYxMiIsImlkIjoiOWRiMGViZDEtOTZjZC00OTFkLWFhYzItOGJkYjc1ZTg3YjViIiwicm9sZSI6IklOU1RSVUNUT1IiLCJpYXQiOjE3Njk0MjY4NjMsImV4cCI6MTc2OTQzMDQ2M30.JMoA3iIqmmQZrslptuGGWImg0kgnidkqdsJh_NR_EKs"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiT3RoZXIgSW5zdHIgMTc2OTQzMDU5NjAyMCIsImlkIjoiYmI2Y2YwODUtOWJiMS00ZWRhLTg3NDQtOGU2ZDUzZDkxYzc4Iiwicm9sZSI6IklOU1RSVUNUT1IiLCJpYXQiOjE3Njk0MzA1OTYsImV4cCI6MTc2OTQzNDE5Nn0.Rig2ovGYaIyGV7Ni2yXiMDCXToUn8B_SlStoF6P_36o"
   },
   "message": "Login realizado com sucesso"
 }
@@ -298,8 +297,8 @@ Data: 26/01/2026, 08:27:39
 > **Requisição**: `POST /auth/register/instructor`
 > Corpo: ```json
 {
-  "name": "Malicious 1769426862612",
-  "email": "hacker_1769426862612@test.com",
+  "name": "Malicious 1769430596020",
+  "email": "hacker_1769430596020@test.com",
   "password": "Password123!"
 }
 ```
@@ -308,11 +307,11 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "id": "543c3e44-daf6-45fd-b9cb-fa2d61dcd393",
-    "name": "Malicious 1769426862612",
-    "email": "hacker_1769426862612@test.com",
+    "id": "c8eb735f-fdfa-4220-9757-11858ba4fc40",
+    "name": "Malicious 1769430596020",
+    "email": "hacker_1769430596020@test.com",
     "role": "INSTRUCTOR",
-    "createdAt": "2026-01-26T11:27:43.079Z"
+    "createdAt": "2026-01-26T12:29:56.585Z"
   },
   "message": "Instrutor registrado com sucesso"
 }
@@ -321,7 +320,7 @@ Data: 26/01/2026, 08:27:39
 > **Requisição**: `POST /auth/login`
 > Corpo: ```json
 {
-  "email": "hacker_1769426862612@test.com",
+  "email": "hacker_1769430596020@test.com",
   "password": "Password123!"
 }
 ```
@@ -331,18 +330,18 @@ Data: 26/01/2026, 08:27:39
 {
   "data": {
     "user": {
-      "id": "543c3e44-daf6-45fd-b9cb-fa2d61dcd393",
-      "name": "Malicious 1769426862612",
-      "email": "hacker_1769426862612@test.com",
+      "id": "c8eb735f-fdfa-4220-9757-11858ba4fc40",
+      "name": "Malicious 1769430596020",
+      "email": "hacker_1769430596020@test.com",
       "role": "INSTRUCTOR"
     },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWFsaWNpb3VzIDE3Njk0MjY4NjI2MTIiLCJpZCI6IjU0M2MzZTQ0LWRhZjYtNDVmZC1iOWNiLWZhMmQ2MWRjZDM5MyIsInJvbGUiOiJJTlNUUlVDVE9SIiwiaWF0IjoxNzY5NDI2ODYzLCJleHAiOjE3Njk0MzA0NjN9._RFyzSVwV1jH_ndvXtbhj8Xi6sQ8bwPTCsLQWuZlPGc"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWFsaWNpb3VzIDE3Njk0MzA1OTYwMjAiLCJpZCI6ImM4ZWI3MzVmLWZkZmEtNDIyMC05NzU3LTExODU4YmE0ZmM0MCIsInJvbGUiOiJJTlNUUlVDVE9SIiwiaWF0IjoxNzY5NDMwNTk2LCJleHAiOjE3Njk0MzQxOTZ9.cxLmS_13B4KlWdSHWscyrQkpJcdbPT7sPJ6urjkqFwU"
   },
   "message": "Login realizado com sucesso"
 }
 ```
 
-> **Requisição**: `POST /classes/c069e695-929c-4022-bab9-dc87e90ca936/upload`
+> **Requisição**: `POST /classes/90c5084b-fc26-4cb7-8b4d-3368c016ca52/upload`
 > Corpo: ```json
 "[Dados Multipart]"
 ```
@@ -355,7 +354,7 @@ Data: 26/01/2026, 08:27:39
 ```
 
 ✅ **[SUCESSO]** Segurança: Bloqueio de Upload por Outro Instrutor
-> **Requisição**: `POST /classes/c069e695-929c-4022-bab9-dc87e90ca936/upload`
+> **Requisição**: `POST /classes/90c5084b-fc26-4cb7-8b4d-3368c016ca52/upload`
 > Corpo: ```json
 "[Dados Multipart]"
 ```
@@ -364,16 +363,16 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "materialUrl": "/storage/courses/curso_1769426862612/m_dulo_1__intro/1_aula_1__ol__mundo/materials/971a092f-bf86-42c6-b11a-32ecb8c74c11.txt"
+    "materialUrl": "/storage/courses/curso_1769430596020/m_dulo_1__intro/1_aula_1__ol__mundo/materials/c0bb1045-2c08-49d4-bb27-91677db013f2.txt"
   },
   "message": "Material enviado com sucesso"
 }
 ```
 
 ✅ **[SUCESSO]** Upload de Material
-ℹ️ **[INFO]** URL retornado: /storage/courses/curso_1769426862612/m_dulo_1__intro/1_aula_1__ol__mundo/materials/971a092f-bf86-42c6-b11a-32ecb8c74c11.txt
+ℹ️ **[INFO]** URL retornado: /storage/courses/curso_1769430596020/m_dulo_1__intro/1_aula_1__ol__mundo/materials/c0bb1045-2c08-49d4-bb27-91677db013f2.txt
 ✅ **[SUCESSO]** Acesso Público Direto Bloqueado (Correto)
-> **Requisição**: `GET /classes/c069e695-929c-4022-bab9-dc87e90ca936/material`
+> **Requisição**: `GET /classes/90c5084b-fc26-4cb7-8b4d-3368c016ca52/material`
 
 > **Resposta**: Status `200`
 > Corpo: ```json
@@ -381,7 +380,7 @@ Data: 26/01/2026, 08:27:39
 ```
 
 ✅ **[SUCESSO]** Download via Endpoint Protegido (Instrutor)
-> **Requisição**: `GET /classes/c069e695-929c-4022-bab9-dc87e90ca936/material`
+> **Requisição**: `GET /classes/90c5084b-fc26-4cb7-8b4d-3368c016ca52/material`
 
 > **Resposta**: Status `400`
 > Corpo: ```json
@@ -471,17 +470,17 @@ Data: 26/01/2026, 08:27:39
       }
     },
     {
-      "id": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
-      "title": "Curso 1769426862612",
+      "id": "93425141-aa16-4096-93bb-ae3832b9d017",
+      "title": "Curso 1769430596020",
       "description": "Descrição do curso de teste",
       "price": 99.99,
-      "coverImageUrl": "/storage/courses/curso_1769426862612/452f6d90-6274-4ca3-b842-6573ccfe5690.jpg",
+      "coverImageUrl": "/storage/courses/curso_1769430596020/bf7a89c2-b9ed-4e35-a7eb-1636c2e0d63b.jpg",
       "category": {
         "id": "ede3e696-536a-4272-aac0-4cbfd98442b6",
         "name": "Cat 1769408330507"
       },
       "instructor": {
-        "name": "Instrutor 1769426862612"
+        "name": "Instrutor 1769430596020"
       }
     }
   ],
@@ -495,57 +494,57 @@ Data: 26/01/2026, 08:27:39
 ```
 
 ✅ **[SUCESSO]** Listar Todos Cursos (Público)
-> **Requisição**: `GET /courses/cd909b14-dcbc-4d18-8766-0993a3842e7f`
+> **Requisição**: `GET /courses/93425141-aa16-4096-93bb-ae3832b9d017`
 
 > **Resposta**: Status `200`
 > Corpo: ```json
 {
   "data": {
-    "id": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
-    "title": "Curso 1769426862612",
+    "id": "93425141-aa16-4096-93bb-ae3832b9d017",
+    "title": "Curso 1769430596020",
     "description": "Descrição do curso de teste",
     "price": 99.99,
-    "coverImageUrl": "/storage/courses/curso_1769426862612/452f6d90-6274-4ca3-b842-6573ccfe5690.jpg",
+    "coverImageUrl": "/storage/courses/curso_1769430596020/bf7a89c2-b9ed-4e35-a7eb-1636c2e0d63b.jpg",
     "maxStudents": null,
     "enrolledCount": 0,
     "averageRating": 0,
-    "createdAt": "2026-01-26T11:27:42.873Z",
+    "createdAt": "2026-01-26T12:29:56.291Z",
     "category": {
       "id": "ede3e696-536a-4272-aac0-4cbfd98442b6",
       "name": "Cat 1769408330507"
     },
-    "instructorId": "14ef0d54-880e-4016-a5a9-026e2afc84b8",
+    "instructorId": "c37f0b7f-6e3e-48d0-b948-7532325d1449",
     "instructor": {
-      "id": "14ef0d54-880e-4016-a5a9-026e2afc84b8",
-      "name": "Instrutor 1769426862612",
-      "email": "instructor_1769426862612@test.com"
+      "id": "c37f0b7f-6e3e-48d0-b948-7532325d1449",
+      "name": "Instrutor 1769430596020",
+      "email": "instructor_1769430596020@test.com"
     }
   }
 }
 ```
 
 ✅ **[SUCESSO]** Obter Detalhes do Curso
-> **Requisição**: `GET /courses/cd909b14-dcbc-4d18-8766-0993a3842e7f/modules`
+> **Requisição**: `GET /courses/93425141-aa16-4096-93bb-ae3832b9d017/modules`
 
 > **Resposta**: Status `200`
 > Corpo: ```json
 {
   "data": [
     {
-      "id": "4614b240-8682-4b9f-8131-f43ae804a5c9",
+      "id": "9cf788ad-f8b7-4c89-8b77-f3fb6b90e400",
       "title": "Módulo 1: Intro",
-      "courseId": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
+      "courseId": "93425141-aa16-4096-93bb-ae3832b9d017",
       "orderIndex": 1,
-      "createdAt": "2026-01-26T11:27:42.898Z",
+      "createdAt": "2026-01-26T12:29:56.392Z",
       "classes": [
         {
-          "id": "c069e695-929c-4022-bab9-dc87e90ca936",
+          "id": "90c5084b-fc26-4cb7-8b4d-3368c016ca52",
           "title": "Aula 1: Olá Mundo",
           "description": "Primeira aula",
           "videoUrl": "https://youtube.com/watch?v=123",
-          "materialUrl": "/storage/courses/curso_1769426862612/m_dulo_1__intro/1_aula_1__ol__mundo/materials/971a092f-bf86-42c6-b11a-32ecb8c74c11.txt",
-          "moduleId": "4614b240-8682-4b9f-8131-f43ae804a5c9",
-          "createdAt": "2026-01-26T11:27:42.902Z"
+          "materialUrl": "/storage/courses/curso_1769430596020/m_dulo_1__intro/1_aula_1__ol__mundo/materials/c0bb1045-2c08-49d4-bb27-91677db013f2.txt",
+          "moduleId": "9cf788ad-f8b7-4c89-8b77-f3fb6b90e400",
+          "createdAt": "2026-01-26T12:29:56.396Z"
         }
       ]
     }
@@ -554,26 +553,26 @@ Data: 26/01/2026, 08:27:39
 ```
 
 ✅ **[SUCESSO]** Listar Módulos do Curso
-> **Requisição**: `GET /modules/4614b240-8682-4b9f-8131-f43ae804a5c9`
+> **Requisição**: `GET /modules/9cf788ad-f8b7-4c89-8b77-f3fb6b90e400`
 
 > **Resposta**: Status `200`
 > Corpo: ```json
 {
   "data": {
-    "id": "4614b240-8682-4b9f-8131-f43ae804a5c9",
+    "id": "9cf788ad-f8b7-4c89-8b77-f3fb6b90e400",
     "title": "Módulo 1: Intro",
-    "courseId": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
+    "courseId": "93425141-aa16-4096-93bb-ae3832b9d017",
     "orderIndex": 1,
-    "createdAt": "2026-01-26T11:27:42.898Z",
+    "createdAt": "2026-01-26T12:29:56.392Z",
     "classes": [
       {
-        "id": "c069e695-929c-4022-bab9-dc87e90ca936",
+        "id": "90c5084b-fc26-4cb7-8b4d-3368c016ca52",
         "title": "Aula 1: Olá Mundo",
         "description": "Primeira aula",
         "videoUrl": "https://youtube.com/watch?v=123",
-        "materialUrl": "/storage/courses/curso_1769426862612/m_dulo_1__intro/1_aula_1__ol__mundo/materials/971a092f-bf86-42c6-b11a-32ecb8c74c11.txt",
-        "moduleId": "4614b240-8682-4b9f-8131-f43ae804a5c9",
-        "createdAt": "2026-01-26T11:27:42.902Z"
+        "materialUrl": "/storage/courses/curso_1769430596020/m_dulo_1__intro/1_aula_1__ol__mundo/materials/c0bb1045-2c08-49d4-bb27-91677db013f2.txt",
+        "moduleId": "9cf788ad-f8b7-4c89-8b77-f3fb6b90e400",
+        "createdAt": "2026-01-26T12:29:56.396Z"
       }
     ]
   }
@@ -582,19 +581,19 @@ Data: 26/01/2026, 08:27:39
 
 ✅ **[SUCESSO]** Obter Detalhes do Módulo (+ Aulas)
 ✅ **[SUCESSO]**   Classes retornadas no módulo
-> **Requisição**: `GET /classes/c069e695-929c-4022-bab9-dc87e90ca936`
+> **Requisição**: `GET /classes/90c5084b-fc26-4cb7-8b4d-3368c016ca52`
 
 > **Resposta**: Status `200`
 > Corpo: ```json
 {
   "data": {
-    "id": "c069e695-929c-4022-bab9-dc87e90ca936",
+    "id": "90c5084b-fc26-4cb7-8b4d-3368c016ca52",
     "title": "Aula 1: Olá Mundo",
     "description": "Primeira aula",
     "videoUrl": "https://youtube.com/watch?v=123",
-    "materialUrl": "/classes/c069e695-929c-4022-bab9-dc87e90ca936/material",
-    "moduleId": "4614b240-8682-4b9f-8131-f43ae804a5c9",
-    "createdAt": "2026-01-26T11:27:42.902Z"
+    "materialUrl": "/classes/90c5084b-fc26-4cb7-8b4d-3368c016ca52/material",
+    "moduleId": "9cf788ad-f8b7-4c89-8b77-f3fb6b90e400",
+    "createdAt": "2026-01-26T12:29:56.396Z"
   }
 }
 ```
@@ -603,7 +602,7 @@ Data: 26/01/2026, 08:27:39
 > **Requisição**: `POST /cart`
 > Corpo: ```json
 {
-  "courseId": "cd909b14-dcbc-4d18-8766-0993a3842e7f"
+  "courseId": "93425141-aa16-4096-93bb-ae3832b9d017"
 }
 ```
 
@@ -611,10 +610,10 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "id": "fd11f54e-0e5b-4046-981d-6a262f0e9eb2",
-    "userId": "069ac4ed-6e86-4212-ad10-30661c6ebf54",
-    "courseId": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
-    "addedAt": "2026-01-26T11:27:43.184Z"
+    "id": "a5b6d357-e7ec-4cf2-addf-2452c104862a",
+    "userId": "7f3bea3c-024d-48f1-9568-ae4e4497488b",
+    "courseId": "93425141-aa16-4096-93bb-ae3832b9d017",
+    "addedAt": "2026-01-26T12:29:56.682Z"
   },
   "message": "Curso adicionado ao carrinho"
 }
@@ -631,11 +630,11 @@ Data: 26/01/2026, 08:27:39
 {
   "data": {
     "enrolledCourses": 1,
-    "orderDate": "2026-01-26T11:27:43.188Z",
+    "orderDate": "2026-01-26T12:29:56.685Z",
     "items": [
       {
-        "courseId": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
-        "title": "Curso 1769426862612"
+        "courseId": "93425141-aa16-4096-93bb-ae3832b9d017",
+        "title": "Curso 1769430596020"
       }
     ]
   },
@@ -644,7 +643,7 @@ Data: 26/01/2026, 08:27:39
 ```
 
 ✅ **[SUCESSO]** Realizar Checkout
-> **Requisição**: `GET /classes/c069e695-929c-4022-bab9-dc87e90ca936/material`
+> **Requisição**: `GET /classes/90c5084b-fc26-4cb7-8b4d-3368c016ca52/material`
 
 > **Resposta**: Status `200`
 > Corpo: ```json
@@ -659,11 +658,11 @@ Data: 26/01/2026, 08:27:39
 {
   "data": [
     {
-      "id": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
-      "title": "Curso 1769426862612",
+      "id": "93425141-aa16-4096-93bb-ae3832b9d017",
+      "title": "Curso 1769430596020",
       "description": "Descrição do curso de teste",
-      "coverImageUrl": "/storage/courses/curso_1769426862612/452f6d90-6274-4ca3-b842-6573ccfe5690.jpg",
-      "enrolledAt": "2026-01-26T11:27:43.188Z",
+      "coverImageUrl": "/storage/courses/curso_1769430596020/bf7a89c2-b9ed-4e35-a7eb-1636c2e0d63b.jpg",
+      "enrolledAt": "2026-01-26T12:29:56.685Z",
       "progress": 0,
       "totalClasses": 1,
       "completedClasses": 0,
@@ -681,7 +680,7 @@ Data: 26/01/2026, 08:27:39
 ```
 
 ✅ **[SUCESSO]** Obter Meus Cursos
-> **Requisição**: `POST /classes/c069e695-929c-4022-bab9-dc87e90ca936/progress`
+> **Requisição**: `POST /classes/90c5084b-fc26-4cb7-8b4d-3368c016ca52/progress`
 > Corpo: ```json
 {
   "completed": true
@@ -692,16 +691,16 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "classId": "c069e695-929c-4022-bab9-dc87e90ca936",
-    "userId": "069ac4ed-6e86-4212-ad10-30661c6ebf54",
-    "completedAt": "2026-01-26T11:27:43.198Z"
+    "classId": "90c5084b-fc26-4cb7-8b4d-3368c016ca52",
+    "userId": "7f3bea3c-024d-48f1-9568-ae4e4497488b",
+    "completedAt": "2026-01-26T12:29:56.695Z"
   },
   "message": "Aula marcada como concluída"
 }
 ```
 
 ✅ **[SUCESSO]** Marcar Aula Concluída
-> **Requisição**: `POST /courses/cd909b14-dcbc-4d18-8766-0993a3842e7f/reviews`
+> **Requisição**: `POST /courses/93425141-aa16-4096-93bb-ae3832b9d017/reviews`
 > Corpo: ```json
 {
   "rating": 5,
@@ -713,12 +712,12 @@ Data: 26/01/2026, 08:27:39
 > Corpo: ```json
 {
   "data": {
-    "id": "4535f023-e12c-4311-88b3-efb80ba12e92",
-    "userId": "069ac4ed-6e86-4212-ad10-30661c6ebf54",
-    "courseId": "cd909b14-dcbc-4d18-8766-0993a3842e7f",
+    "id": "a9fba650-654d-4a11-a8b8-84f031ab17c9",
+    "userId": "7f3bea3c-024d-48f1-9568-ae4e4497488b",
+    "courseId": "93425141-aa16-4096-93bb-ae3832b9d017",
     "rating": 5,
     "comment": "Excelente curso!",
-    "createdAt": "2026-01-26T11:27:43.200Z"
+    "createdAt": "2026-01-26T12:29:56.698Z"
   },
   "message": "Avaliação enviada com sucesso"
 }
@@ -728,7 +727,7 @@ Data: 26/01/2026, 08:27:39
 
 ## 6. Limpeza (Instrutor)
 
-> **Requisição**: `DELETE /courses/cd909b14-dcbc-4d18-8766-0993a3842e7f`
+> **Requisição**: `DELETE /courses/93425141-aa16-4096-93bb-ae3832b9d017`
 
 > **Resposta**: Status `204`
 
