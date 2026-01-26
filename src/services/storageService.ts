@@ -25,6 +25,44 @@ export class StorageService {
         return name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
     }
 
+    private async validateFile(pathOrBuffer: string | Buffer, originalName: string): Promise<void> {
+        // Dynamic import for ESM compatibility
+        const { fileTypeFromBuffer, fileTypeFromFile } = await import('file-type');
+
+        let type;
+        if (Buffer.isBuffer(pathOrBuffer)) {
+            type = await fileTypeFromBuffer(pathOrBuffer);
+        } else {
+            type = await fileTypeFromFile(pathOrBuffer);
+        }
+
+        console.log(`[StorageService] Validating file: ${originalName}, Detected Type:`, type);
+
+        const allowedMimes = [
+            'image/jpeg', 'image/png', 'image/webp', 'image/gif',
+            'application/pdf',
+            'video/mp4', 'video/webm'
+        ];
+
+        // Handling text files (which often have no magic number)
+        // If type is undefined, it might be text. We check extension.
+        if (!type) {
+            const ext = path.extname(originalName).toLowerCase();
+            // Allow plain text files if they don't look like scripts? 
+            // Ideally we shouldn't allow uploading code. 
+            // For this challenge, let's treat 'undefined' as suspicious unless strictly .txt or .md
+            const allowedTextExts = ['.txt', '.md', '.csv'];
+            if (allowedTextExts.includes(ext)) {
+                return; // Allow generic text
+            }
+            throw new ApplicationError(`Tipo de arquivo desconhecido ou não permitido. Extensão: ${ext}`);
+        }
+
+        if (!allowedMimes.includes(type.mime)) {
+            throw new ApplicationError(`Tipo de arquivo não permitido: ${type.mime}`);
+        }
+    }
+
     async uploadClassMaterial(classId: string, file: Express.Multer.File, instructorId: string): Promise<string> {
         //Buscar hierarquia
         const classEntity = this.classRepository.findById(classId);
@@ -39,6 +77,13 @@ export class StorageService {
         // Check ownership
         if (courseEntity.instructorId !== instructorId) {
             throw new ApplicationError('Você não tem permissão para adicionar materiais a esta aula');
+        }
+
+        // Validate File Type (Magic Numbers)
+        if (file.path) {
+            await this.validateFile(file.path, file.originalname);
+        } else if (file.buffer) {
+            await this.validateFile(file.buffer, file.originalname);
         }
 
         //Construir caminhos
@@ -118,6 +163,13 @@ export class StorageService {
         //check Ownership
         if (courseEntity.instructorId !== instructorId) {
             throw new ApplicationError('Você não tem permissão para alterar a imagem deste curso');
+        }
+
+        // Validate File Type (Magic Numbers)
+        if (file.path) {
+            await this.validateFile(file.path, file.originalname);
+        } else if (file.buffer) {
+            await this.validateFile(file.buffer, file.originalname);
         }
 
         //build Paths
