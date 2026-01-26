@@ -41,13 +41,14 @@ Abaixo listamos as áreas que necessitam de melhorias, classificadas por priorid
 
 ### 🟠 Prioridade MÉDIA (Importante)
 
-4.  **Falta de Headers de Segurança (Helmet)**
+4.  **Falta de Headers de Segurança (Helmet)** (SOLVED)
     *   **Risco**: A aplicação não define headers HTTP de segurança (HSTS, X-Frame-Options, X-XSS-Protection), deixando clientes vulneráveis a ataques como Clickjacking e XSS.
     *   **Recomendação**: Instalar e configurar o middleware `helmet`.
 
-5.  **Configuração de CORS Ausente**
-    *   **Risco**: Se o frontend for hospedado em domínio diferente, requisições falharão ou, se mal configurado futuramente, pode permitir acesso indevido de origens maliciosas.
-    *   **Recomendação**: Configurar o middleware `cors` explicitamente com lista de origens permitidas (allowlist).
+5.  **Configuração de CORS Ausente** (SOLVED)
+    *   **Risco**: Bloqueio de frontends legítimos ou permissividade excessiva.
+    *   **Recomendação**: `cors` instalado e configurado com whitelist via `.env`.
+
 
 6.  **Validação de Arquivos Limitada**
     *   **Risco**: O upload verifica apenas a extensão do arquivo. Um atacante pode renomear um `.exe` malicioso para `.jpg` e enviá-lo. Embora o servidor não execute o arquivo, isso é má prática.

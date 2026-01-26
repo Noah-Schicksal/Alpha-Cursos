@@ -6,12 +6,29 @@ import routes from './routes';
 import { errorHandler } from './middlewares/errorHandler';
 
 import helmet from 'helmet';
+import cors from 'cors';
 import { globalLimiter } from './middlewares/rateLimitMiddleware';
 
 const app = express();
 const PORT = process.env.PORT;
 
+const whitelist = process.env.CORS_ORIGIN_WHITELIST ? process.env.CORS_ORIGIN_WHITELIST.split(',') : [];
+
+const corsOptions: cors.CorsOptions = {
+  origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+    // !origin allows requests from non-browser sources (like Postman or server-to-server)
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
 app.use(helmet());
+app.use(cors(corsOptions));
 app.use(globalLimiter);
 app.use(express.json());
 app.use(cookieParser());
