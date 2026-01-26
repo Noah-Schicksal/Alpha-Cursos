@@ -17,4 +17,20 @@ categoryRoutes.post(
     (req, res) => categoryController.create(req, res)
 );
 
+// Privado (Instrutor): Atualizar categoria
+categoryRoutes.put(
+    '/:id',
+    authMiddleware,
+    roleMiddleware(['INSTRUCTOR']),
+    (req, res) => categoryController.update(req, res)
+);
+
+// Privado (Instrutor): Deletar categoria
+categoryRoutes.delete(
+    '/:id',
+    authMiddleware,
+    roleMiddleware(['INSTRUCTOR']),
+    (req, res) => categoryController.delete(req, res)
+);
+
 export default categoryRoutes;
