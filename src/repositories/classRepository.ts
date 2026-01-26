@@ -73,6 +73,22 @@ export class ClassRepository {
     }
 
     // marca uma aula como concluída pelo aluno
+    // Busca aulas por módulo (ordenadas, se houver lógica de ordem, mas por enquanto criação desc ou asc)
+    findByModule(moduleId: string): Class[] {
+        const stmt = db.prepare(`SELECT * FROM classes WHERE module_id = ?`);
+        const rows = stmt.all(moduleId) as any[];
+
+        return rows.map(row => new Class({
+            id: row.id,
+            moduleId: row.module_id,
+            title: row.title,
+            description: row.description,
+            videoUrl: row.video_url,
+            materialUrl: row.material_url,
+            createdAt: new Date(row.created_at)
+        }));
+    }
+
     markProgress(classId: string, userId: string): ClassProgressDTO {
         // verifica se já existe para evitar erro de UNIQUE constraint
         const checkStmt = db.prepare('SELECT 1 FROM class_progress WHERE user_id = ? AND class_id = ?');
