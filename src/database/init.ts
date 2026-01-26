@@ -49,9 +49,19 @@ export const initializeDatabase = () => {
         id TEXT PRIMARY KEY,
         title TEXT NOT NULL,
         course_id TEXT NOT NULL,
+        order_index INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
         FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE 
     );
+
+    // tenta adicionar a coluna order_index se ela não existir
+    try {
+        db.exec("ALTER TABLE modules ADD COLUMN order_index INTEGER DEFAULT 0");
+    } catch (error: any) {
+        if (!error.message.includes("duplicate column name")) {
+             console.error("Erro ao migrar tabela modules:", error);
+        }
+    }
 
     -- 5. Aulas
     CREATE TABLE IF NOT EXISTS classes (
