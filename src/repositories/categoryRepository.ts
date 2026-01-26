@@ -52,4 +52,25 @@ export class CategoryRepository {
             name: row.name
         });
     }
+
+
+    update(id: string, name: string): Category {
+        const stmt = db.prepare(`
+            UPDATE categories 
+            SET name = ? 
+            WHERE id = ?
+        `);
+
+        stmt.run(name, id);
+
+        return new Category({
+            id: id,
+            name: name
+        });
+    }
+
+    delete(id: string): void {
+        const stmt = db.prepare('DELETE FROM categories WHERE id = ?');
+        stmt.run(id);
+    }
 }
