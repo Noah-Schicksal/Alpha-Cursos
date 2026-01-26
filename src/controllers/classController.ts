@@ -4,9 +4,11 @@ import { ApiResponse } from '../utils/apiResponse';
 
 export class ClassController {
     private classService: ClassService;
+    private storageService: any; // Import StorageService properly if possible or instantiate inside
 
     constructor() {
         this.classService = new ClassService();
+        this.storageService = null; // Will instantiate lazily or import
     }
 
     // POST /modules/:moduleId/classes
@@ -86,6 +88,30 @@ export class ClassController {
             await this.classService.unmarkProgress(id, userId);
 
             return ApiResponse.noContent(res);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    // POST /classes/:id/upload
+    uploadMaterial = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { id } = req.params as { id: string };
+            const file = (req as any).file;
+
+            if (!file) {
+                return ApiResponse.error(res, 'Nenhum arquivo enviado');
+            }
+
+            // Lazy load StorageService to avoid circular dependency if any, or just import top level
+            // Ideally import at top. I will add import via tool call if I missed it.
+            // Assuming I will add import: import { StorageService } from '../services/storageService';
+            const { StorageService } = require('../services/storageService');
+            const storageService = new StorageService();
+
+            const fileUrl = await storageService.uploadClassMaterial(id, file);
+
+            return ApiResponse.success(res, { materialUrl: fileUrl }, 'Material enviado com sucesso');
         } catch (error) {
             next(error);
         }

@@ -109,6 +109,16 @@ export class CourseController {
         try {
             const id = req.params.id as string;
             const instructorId = req.user.id;
+
+            // Fetch course to get title for folder deletion
+            const course = await this.courseService.getById(id);
+            if (course) {
+                // Instantiate StorageService lazily or inject
+                const { StorageService } = require('../services/storageService');
+                const storageService = new StorageService();
+                await storageService.deleteCourseFolder(course.title);
+            }
+
             await this.courseService.delete(id, instructorId);
             return ApiResponse.noContent(res);
         } catch (error) {

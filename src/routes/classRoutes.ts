@@ -2,6 +2,9 @@ import { Router } from 'express';
 import { ClassController } from '../controllers/classController';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { roleMiddleware } from '../middlewares/roleMiddleware';
+import multer from 'multer';
+
+const upload = multer({ dest: 'storage/temp/' }); // Save to temp first
 
 const classRoutes = Router();
 const classController = new ClassController();
@@ -19,5 +22,6 @@ classRoutes.delete('/:id/progress', (req, res, next) => classController.unmarkPr
 
 classRoutes.put('/:id', roleMiddleware(['INSTRUCTOR']), (req, res, next) => classController.update(req, res, next));
 classRoutes.delete('/:id', roleMiddleware(['INSTRUCTOR']), (req, res, next) => classController.delete(req, res, next));
+classRoutes.post('/:id/upload', roleMiddleware(['INSTRUCTOR']), upload.single('file'), (req, res, next) => classController.uploadMaterial(req, res, next));
 
 export default classRoutes;
