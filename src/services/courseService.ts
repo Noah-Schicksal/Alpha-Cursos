@@ -27,6 +27,11 @@ export class CourseService {
         return this.courseRepository.findAll({ page, limit, search });
     }
 
+    // lista cursos por categoria
+    async listByCategory(categoryId: string, page: number, limit: number): Promise<FindAllResponse> {
+        return this.courseRepository.findByCategoryId(categoryId, page, limit);
+    }
+
     // busca detalhes de um curso pelo id
     async getById(id: string): Promise<any> {
         const course = this.courseRepository.findById(id);
@@ -45,7 +50,6 @@ export class CourseService {
                 throw new ApplicationError('Categoria não encontrada');
             }
         } else {
-            // Caso a categoria seja obrigatória de acordo com a regra de negócio recente, descomente abaixo:
             throw new ApplicationError('A categoria é obrigatória');
         }
 
@@ -64,9 +68,9 @@ export class CourseService {
             throw new ApplicationError('Curso não encontrado');
         }
 
-        // verifica propriedade (apenas o instrutor dono pode editar)
+        //verifica propriedade (apenas o instrutor dono pode editar)
         if (courseData.instructorId !== instructorId) {
-            throw new ApplicationError('Você não tem permissão para editar este curso');
+            throw new ApplicationError('Permissão para edição negada');
         }
 
         // recria a entidade para aplicar validações dos setters
@@ -80,7 +84,7 @@ export class CourseService {
             categoryId: data.categoryId ?? (courseData.category ? courseData.category.id : undefined),
             instructorId: courseData.instructorId,
             isActive: data.isActive !== undefined ? data.isActive : courseData.isActive,
-            createdAt: new Date() // mantem data original idealmente, mas aqui simplificamos
+            createdAt: new Date() //mantem data original idealmente, mas aqui simplificamos
         });
 
         return this.courseRepository.update(updatedCourse);

@@ -32,6 +32,27 @@ export class CourseController {
         }
     }
 
+    // lista cursos de uma categoria específica
+    async listByCategory(req: Request, res: Response) {
+        try {
+            const categoryId = req.params.id as string;
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
+
+            const { courses, total } = await this.courseService.listByCategory(categoryId, page, limit);
+            const totalPages = Math.ceil(total / limit);
+
+            return ApiResponse.paginated(res, courses, {
+                currentPage: page,
+                totalPages: totalPages,
+                totalItems: total,
+                itemsPerPage: limit
+            });
+        } catch (error) {
+            return ApiResponse.error(res, 'Erro ao listar cursos da categoria', 500);
+        }
+    }
+
     // exibe detalhes de um único curso
     // exibe detalhes de um único curso
     async show(req: Request, res: Response) {

@@ -95,6 +95,39 @@ export class CourseRepository {
         return { courses, total };
     }
 
+    // busca cursos por categoria com paginação
+    findByCategoryId(categoryId: string, page: number, limit: number): FindAllResponse {
+        const offset = (page - 1) * limit;
+
+        const countQuery = 'SELECT COUNT(*) as total FROM courses WHERE category_id = ? AND is_active = 1';
+        const total = (db.prepare(countQuery).get(categoryId) as any).total;
+
+        const query = `
+            SELECT 
+                c.id, c.title, c.description, c.price, c.cover_image_url,
+                u.name as instructor_name
+            FROM courses c
+            JOIN users u ON c.instructor_id = u.id
+            WHERE c.category_id = ? AND c.is_active = 1
+            LIMIT ? OFFSET ?
+        `;
+
+        const rows = db.prepare(query).all(categoryId, limit, offset) as any[];
+
+        const courses = rows.map(row => ({
+            id: row.id,
+            title: row.title,
+            description: row.description,
+            price: row.price,
+            coverImageUrl: row.cover_image_url,
+            instructor: {
+                name: row.instructor_name
+            }
+        }));
+
+        return { courses, total };
+    }
+
     // busca um curso pelo id com joins detalhados e média de avaliações
     findById(id: string): any | null {
         const query = `
