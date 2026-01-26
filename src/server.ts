@@ -5,9 +5,14 @@ import { initializeDatabase } from './database/init';
 import routes from './routes';
 import { errorHandler } from './middlewares/errorHandler';
 
+import helmet from 'helmet';
+import { globalLimiter } from './middlewares/rateLimitMiddleware';
+
 const app = express();
 const PORT = process.env.PORT;
 
+app.use(helmet());
+app.use(globalLimiter);
 app.use(express.json());
 app.use(cookieParser());
 

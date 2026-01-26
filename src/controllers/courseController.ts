@@ -86,8 +86,7 @@ export class CourseController {
     async create(req: Request, res: Response) {
         try {
             const instructorId = req.user.id;
-            console.log('Creates Course Body:', req.body);
-            console.log('Creates Course File:', (req as any).file);
+
 
             // Fix for multipart/form-data: Parse fields manually if they are strings
             if (req.body.price && typeof req.body.price === 'string') {
