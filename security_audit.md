@@ -30,7 +30,7 @@ Abaixo listamos as áreas que necessitam de melhorias, classificadas por priorid
     *   **Local**: Todas as rotas, especialmente `/auth/login`.
     *   **Recomendação**: Implementar `express-rate-limit` para limitar requisições por IP.
 
-2.  **Validação de Input Manual e Frágil**
+2.  **Validação de Input Manual e Frágil** (SOLVED)
     *   **Risco**: Os controladores (`CourseController`, `UserController`) extraem e validam dados manualmente (`req.body`). Isso é propenso a erros, não trata tipos inesperados (ex: array onde se espera string) e permitiu bugs recentes (ex: erro de parsing de preço no multipart).
     *   **Recomendação**: Adotar uma biblioteca de validação de schema como **Zod** ou **Joi** para garantir que todos os dados de entrada sigam um contrato estrito antes de chegar ao controller.
 

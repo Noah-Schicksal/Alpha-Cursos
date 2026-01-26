@@ -27,10 +27,12 @@ courseRoutes.get('/:id/modules', (req, res) => moduleController.listByCourse(req
 courseRoutes.get('/:id/reviews', (req, res, next) => reviewController.list(req, res, next));
 courseRoutes.post('/:id/reviews', authMiddleware, roleMiddleware(['STUDENT']), (req, res, next) => reviewController.create(req, res, next));
 
+import { validateCourseCreate } from '../middlewares/validationMiddleware';
+
 // rotas privadas (apenas instrutores)
 // aplicando middlewares para todas as rotas abaixo
 // Nota: POST / precisa de upload middleware agora
-courseRoutes.post('/', authMiddleware, roleMiddleware(['INSTRUCTOR']), upload.single('coverImage'), (req, res) => courseController.create(req, res));
+courseRoutes.post('/', authMiddleware, roleMiddleware(['INSTRUCTOR']), upload.single('coverImage'), validateCourseCreate, (req, res) => courseController.create(req, res));
 courseRoutes.post('/:id/modules', authMiddleware, roleMiddleware(['INSTRUCTOR']), (req, res) => moduleController.create(req, res));
 courseRoutes.put('/:id', authMiddleware, roleMiddleware(['INSTRUCTOR']), (req, res) => courseController.update(req, res));
 courseRoutes.delete('/:id', authMiddleware, roleMiddleware(['INSTRUCTOR']), (req, res) => courseController.delete(req, res));

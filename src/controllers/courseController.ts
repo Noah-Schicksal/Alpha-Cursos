@@ -87,14 +87,8 @@ export class CourseController {
         try {
             const instructorId = req.user.id;
 
-
-            // Fix for multipart/form-data: Parse fields manually if they are strings
-            if (req.body.price && typeof req.body.price === 'string') {
-                req.body.price = parseFloat(req.body.price);
-            }
-            if (req.body.maxStudents && typeof req.body.maxStudents === 'string') {
-                req.body.maxStudents = parseInt(req.body.maxStudents, 10);
-            }
+            // Manual parsing is now handled by validateCourseCreate middleware
+            // req.body.price and req.body.maxStudents are already numbers if present
 
             const course = await this.courseService.create(req.body, instructorId);
 
