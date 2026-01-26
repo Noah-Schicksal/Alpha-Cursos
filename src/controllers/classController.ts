@@ -71,7 +71,7 @@ export class ClassController {
 
             const progress = await this.classService.markProgress(id, userId);
 
-            return ApiResponse.success(res, progress, 'Aula marcada como concluída');
+            return ApiResponse.created(res, progress, 'Aula marcada como concluída');
         } catch (error) {
             next(error);
         }

@@ -10,7 +10,7 @@ const classController = new ClassController();
 classRoutes.use(authMiddleware);
 
 // Rotas de progresso (qualquer usuário autenticado)
-classRoutes.patch('/:id/progress', (req, res, next) => classController.markProgress(req, res, next));
+classRoutes.post('/:id/progress', (req, res, next) => classController.markProgress(req, res, next));
 classRoutes.delete('/:id/progress', (req, res, next) => classController.unmarkProgress(req, res, next));
 
 // Rotas de gerenciamento (Apenas Instrutores)
