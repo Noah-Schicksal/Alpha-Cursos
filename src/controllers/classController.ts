@@ -11,6 +11,17 @@ export class ClassController {
         this.storageService = null; // Will instantiate lazily or import
     }
 
+    // GET /classes/:id
+    show = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { id } = req.params as { id: string };
+            const classData = await this.classService.getById(id);
+            return ApiResponse.success(res, classData);
+        } catch (error) {
+            next(error);
+        }
+    }
+
     // POST /modules/:moduleId/classes
     create = async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -114,6 +125,13 @@ export class ClassController {
 
             return ApiResponse.success(res, { materialUrl: fileUrl }, 'Material enviado com sucesso');
         } catch (error) {
+            // Remove o arquivo temporário se houver erro
+            if ((req as any).file && (req as any).file.path) {
+                const fs = require('fs');
+                if (fs.existsSync((req as any).file.path)) {
+                    fs.unlinkSync((req as any).file.path);
+                }
+            }
             next(error);
         }
     }

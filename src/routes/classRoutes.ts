@@ -27,4 +27,7 @@ classRoutes.post('/:id/upload', roleMiddleware(['INSTRUCTOR']), upload.single('f
 // Rotas de download de material (acessível por instrutores e alunos matriculados)
 classRoutes.get('/:id/material', authMiddleware, classController.getMaterial);
 
+// Rotas públicas ou autenticadas para detalhes
+classRoutes.get('/:id', authMiddleware, (req, res, next) => classController.show(req, res, next));
+
 export { classRoutes };

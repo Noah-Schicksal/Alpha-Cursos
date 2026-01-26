@@ -8,6 +8,9 @@ const moduleRoutes = Router();
 const moduleController = new ModuleController();
 const classController = new ClassController();
 
+// rotas públicas (ou protegidas por auth apenas, sem role)
+moduleRoutes.get('/:id', (req, res) => moduleController.show(req, res));
+
 // rotas privadas (Instrutor)
 moduleRoutes.put('/:id', authMiddleware, roleMiddleware(['INSTRUCTOR']), (req, res) => moduleController.update(req, res));
 moduleRoutes.delete('/:id', authMiddleware, roleMiddleware(['INSTRUCTOR']), (req, res) => moduleController.delete(req, res));

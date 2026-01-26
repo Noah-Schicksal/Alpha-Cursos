@@ -28,6 +28,23 @@ export class ClassService {
         this.enrollmentRepository = enrollmentRepository;
     }
 
+    // busca detalhes de uma aula
+    async getById(classId: string): Promise<any> {
+        const classEntity = this.classRepository.findById(classId);
+        if (!classEntity) {
+            throw new ApplicationError('Aula não encontrada');
+        }
+
+        const data = classEntity.toJSON();
+
+        // Transforma o materialUrl (interno) em uma URL de API pública se existir
+        if (data.materialUrl) {
+            data.materialUrl = `/classes/${data.id}/material`;
+        }
+
+        return data;
+    }
+
     // cria uma nova aula dentro de um módulo
     async create(moduleId: string, instructorId: string, data: CreateClassDTO): Promise<Class> {
         // verifica se o módulo existe
