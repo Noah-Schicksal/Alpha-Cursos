@@ -1,1 +1,0 @@
-import '../../shared/styles/global.css'; console.log('Area do Instrutor');
