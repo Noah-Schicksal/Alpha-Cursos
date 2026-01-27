@@ -13,14 +13,21 @@ import { errorHandler } from './middlewares/errorHandler';
 import helmet from 'helmet';
 import cors from 'cors';
 import { globalLimiter } from './middlewares/rateLimitMiddleware';
+import swaggerUi from 'swagger-ui-express';
+import { specs } from './config/swagger';
 
 const app = express();
 const PORT = process.env.PORT;
 
-const whitelist = process.env.CORS_ORIGIN_WHITELIST ? process.env.CORS_ORIGIN_WHITELIST.split(',') : [];
+const whitelist = process.env.CORS_ORIGIN_WHITELIST
+  ? process.env.CORS_ORIGIN_WHITELIST.split(',')
+  : [];
 
 const corsOptions: cors.CorsOptions = {
-  origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+  origin: function (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void,
+  ) {
     // !origin allows requests from non-browser sources (like Postman or server-to-server)
     if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -45,6 +52,7 @@ initializeDatabase();
 // app.use('/storage', express.static('storage'));
 
 // Rotas
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use(routes);
 
 app.use(errorHandler);
