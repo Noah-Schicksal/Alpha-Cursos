@@ -9,7 +9,7 @@ export class CourseController {
         this.courseService = courseService;
     }
 
-    // lista cursos (vitrine) com paginação e metadados
+    // Lista cursos (vitrine) com paginação e metadados
     async index(req: Request, res: Response) {
         try {
             const page = parseInt(req.query.page as string) || 1;
@@ -17,7 +17,6 @@ export class CourseController {
             const search = req.query.search as string;
 
             const { courses, total } = await this.courseService.list(page, limit, search);
-
             const totalPages = Math.ceil(total / limit);
 
             return ApiResponse.paginated(res, courses, {
@@ -26,34 +25,12 @@ export class CourseController {
                 totalItems: total,
                 itemsPerPage: limit
             });
-
         } catch (error) {
             return ApiResponse.error(res, 'Erro ao listar cursos', 500);
         }
     }
 
-    // lista cursos de uma categoria específica
-    async listByCategory(req: Request, res: Response) {
-        try {
-            const categoryId = req.params.id as string;
-            const page = parseInt(req.query.page as string) || 1;
-            const limit = parseInt(req.query.limit as string) || 10;
-
-            const { courses, total } = await this.courseService.listByCategory(categoryId, page, limit);
-            const totalPages = Math.ceil(total / limit);
-
-            return ApiResponse.paginated(res, courses, {
-                currentPage: page,
-                totalPages: totalPages,
-                totalItems: total,
-                itemsPerPage: limit
-            });
-        } catch (error) {
-            return ApiResponse.error(res, 'Erro ao listar cursos da categoria', 500);
-        }
-    }
-
-    // lista cursos criados pelo instrutor logado (dashboard)
+    // Lista cursos criados pelo instrutor logado (dashboard)
     async listAuthored(req: Request, res: Response) {
         try {
             const instructorId = req.user.id;
@@ -67,8 +44,7 @@ export class CourseController {
         }
     }
 
-    // exibe detalhes de um único curso
-    // exibe detalhes de um único curso
+    // Exibe detalhes de um único curso
     async show(req: Request, res: Response) {
         try {
             const id = req.params.id as string;
@@ -82,42 +58,92 @@ export class CourseController {
         }
     }
 
-    // cria um novo curso (requer usuário autenticado como instrutor)
+    // Cria um novo curso
     async create(req: Request, res: Response) {
         try {
             const instructorId = req.user.id;
-
-            // Manual parsing is now handled by validateCourseCreate middleware
-            // req.body.price and req.body.maxStudents are already numbers if present
-
             const course = await this.courseService.create(req.body, instructorId);
 
-            // Check for file and upload if present
-            // We use 'coverImage' field name as planned
             if ((req as any).file) {
                 const { StorageService } = require('../services/storageService');
                 const storageService = new StorageService();
                 try {
                     const coverUrl = await storageService.uploadCourseCover(course.id, (req as any).file, instructorId);
-                    // Update the returned object to reflect the new url locally
                     course.setCoverImageUrl(coverUrl);
                 } catch (uploadError: any) {
-                    // If upload fails, we should ideally rollback course creation or return a warning.
-                    // For now, we will just log/warn and return the course created without image.
-                    // Or we can try to delete the course.
-                    // Making it robust:
                     console.error('Failed to upload cover image:', uploadError);
-                    // Not failing the request, but image wont be there.
                     return ApiResponse.created(res, course, 'Curso criado, mas falha no upload da imagem: ' + uploadError.message);
                 }
             }
 
             return ApiResponse.created(res, course.toJSON(), 'Curso criado com sucesso');
-        } catch (error) {
-            if (error instanceof Error) {
-                return ApiResponse.error(res, error.message);
+        } catch (error: any) {
+            return ApiResponse.error(res, error.message || 'Erro ao criar curso');
+        }
+    }
+
+    // Atualiza um curso existente
+    async update(req: Request, res: Response) {
+        try {
+            const id = req.params.id as string;
+            const instructorId = req.user.id;
+            const course = await this.courseService.update(id, req.body, instructorId);
+            return ApiResponse.success(res, course, 'Curso atualizado com sucesso');
+        } catch (error: any) {
+            if (error instanceof ApplicationError) {
+                if (error.message.includes('não encontrado')) return ApiResponse.notFound(res, error.message);
+                if (error.message.includes('permissão')) return ApiResponse.forbidden(res, error.message);
             }
-            return ApiResponse.error(res, 'Erro ao criar curso', 500);
+            return ApiResponse.error(res, error.message || 'Erro ao atualizar curso');
+        }
+    }
+
+    // REMOVE CURSO (UNIFICADO E ATUALIZADO)
+    async delete(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const user = req.user; // Contém id e role injetados pelo authMiddleware
+
+            if (!user) {
+                return ApiResponse.error(res, 'Usuário não autenticado', 401);
+            }
+
+            // 1. Lógica de Arquivos (Storage): Busca o curso para remover a pasta física
+            const course = await this.courseService.getById(id);
+            if (course) {
+                const { StorageService } = require('../services/storageService');
+                const storageService = new StorageService();
+                // Remove a pasta baseada no título (ou lógica interna do seu storage)
+                await storageService.deleteCourseFolder(course.title);
+            }
+
+            // 2. Lógica de Banco: Chama o serviço passando o usuário completo (ID e ROLE)
+            // O Service agora decide se deleta (se for ADMIN ou se o ID do instrutor bater)
+            await this.courseService.delete(id, user);
+
+            return ApiResponse.noContent(res);
+        } catch (error: any) {
+            if (error instanceof ApplicationError) {
+                if (error.message.includes('permissão')) return ApiResponse.forbidden(res, error.message);
+                return ApiResponse.notFound(res, error.message);
+            }
+            return ApiResponse.error(res, error.message || 'Erro ao remover curso', 500);
+        }
+    }
+
+    // Lista os estudantes de um curso
+    async getStudents(req: Request, res: Response) {
+        try {
+            const id = req.params.id as string;
+            const instructorId = req.user.id;
+            const students = await this.courseService.getStudents(id, instructorId);
+            return ApiResponse.success(res, students);
+        } catch (error: any) {
+            if (error instanceof ApplicationError) {
+                if (error.message.includes('permissão')) return ApiResponse.forbidden(res, error.message);
+                return ApiResponse.notFound(res, error.message);
+            }
+            return ApiResponse.error(res, 'Erro ao listar alunos', 500);
         }
     }
 
@@ -125,8 +151,6 @@ export class CourseController {
     async getCover(req: Request, res: Response) {
         try {
             const id = req.params.id as string;
-            // Public route, so no user check needed for access, just fetch path.
-            // But we need to get the path from the course entity.
             const course = await this.courseService.getById(id);
 
             if (!course || !course.coverImageUrl) {
@@ -135,11 +159,6 @@ export class CourseController {
 
             const path = require('path');
             const fs = require('fs');
-
-            // Resolve local path
-            // The stored URL is like "/storage/courses/..." (web url)
-            // We need to convert back to system path.
-            // Remove leading slash if present
             const relativePath = course.coverImageUrl.startsWith('/') || course.coverImageUrl.startsWith('\\')
                 ? course.coverImageUrl.substring(1)
                 : course.coverImageUrl;
@@ -150,79 +169,9 @@ export class CourseController {
                 return ApiResponse.notFound(res, 'Arquivo de imagem não encontrado no servidor');
             }
 
-            // Serve the file
             res.sendFile(fullPath);
-
         } catch (error) {
-            if (error instanceof ApplicationError) {
-                return ApiResponse.notFound(res, error.message);
-            }
             return ApiResponse.error(res, 'Erro ao obter imagem de capa', 500);
-        }
-    }
-
-    // atualiza um curso existente
-    // atualiza um curso existente
-    async update(req: Request, res: Response) {
-        try {
-            const id = req.params.id as string;
-            const instructorId = req.user.id;
-            const course = await this.courseService.update(id, req.body, instructorId);
-            return ApiResponse.success(res, course, 'Curso atualizado com sucesso');
-        } catch (error) {
-            if (error instanceof ApplicationError) {
-                if (error.message.includes('não encontrado')) return ApiResponse.notFound(res, error.message);
-                if (error.message.includes('permissão')) return ApiResponse.forbidden(res, error.message);
-                return ApiResponse.error(res, error.message);
-            }
-            if (error instanceof Error) {
-                return ApiResponse.error(res, error.message);
-            }
-            return ApiResponse.error(res, 'Erro ao atualizar curso', 500);
-        }
-    }
-
-    // remove (soft delete) um curso
-    // remove (soft delete) um curso
-    async delete(req: Request, res: Response) {
-        try {
-            const id = req.params.id as string;
-            const instructorId = req.user.id;
-
-            // Fetch course to get title for folder deletion
-            const course = await this.courseService.getById(id);
-            if (course) {
-                // Instantiate StorageService lazily or inject
-                const { StorageService } = require('../services/storageService');
-                const storageService = new StorageService();
-                await storageService.deleteCourseFolder(course.title);
-            }
-
-            await this.courseService.delete(id, instructorId);
-            return ApiResponse.noContent(res);
-        } catch (error) {
-            if (error instanceof ApplicationError) {
-                if (error.message.includes('permissão')) return ApiResponse.forbidden(res, error.message);
-                return ApiResponse.notFound(res, error.message);
-            }
-            return ApiResponse.error(res, 'Erro ao remover curso', 500);
-        }
-    }
-
-    // lista os estudantes de um curso específico
-    // lista os estudantes de um curso específico
-    async getStudents(req: Request, res: Response) {
-        try {
-            const id = req.params.id as string;
-            const instructorId = req.user.id;
-            const students = await this.courseService.getStudents(id, instructorId);
-            return ApiResponse.success(res, students);
-        } catch (error) {
-            if (error instanceof ApplicationError) {
-                if (error.message.includes('permissão')) return ApiResponse.forbidden(res, error.message);
-                return ApiResponse.notFound(res, error.message);
-            }
-            return ApiResponse.error(res, 'Erro ao listar alunos', 500);
         }
     }
 }
