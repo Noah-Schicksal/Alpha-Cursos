@@ -96,14 +96,15 @@ export class CourseService {
     }
 
     // realiza soft delete, verificando propriedade
-    async delete(id: string, instructorId: string): Promise<void> {
+    async delete(id: string, user: { id: string, role: string }): Promise<void> {
         const courseData = this.courseRepository.findById(id);
         if (!courseData) {
             throw new ApplicationError('Curso não encontrado');
         }
 
-        if (courseData.instructorId !== instructorId) {
-            throw new ApplicationError('Você não tem permissão para remover este curso');
+        // Se NÃO for Admin E NÃO for o dono, lança erro
+        if (user.role !== 'ADMIN' && courseData.instructorId !== user.id) {
+            throw new ApplicationError('Permissão negada');
         }
 
         this.courseRepository.softDelete(id);
