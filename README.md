@@ -173,7 +173,7 @@ erDiagram
 
 - **Modo Desenvolvimento** (com hot-reload):
   ```bash
-  npm run start:dev
+  npm run dev
   ```
   O servidor será iniciado com `ts-node-dev` e reiniciará automaticamente quando houver alterações no código.
 
