@@ -7,6 +7,146 @@
 
 /**
  * @swagger
+ * /courses/{id}/modules:
+ *   get:
+ *     summary: Listar módulos de um curso
+ *     description: |
+ *       Retorna todos os módulos associados ao curso, ordenados pelo orderIndex.
+ *       Endpoint público para visualização da estrutura do curso.
+ *     tags: [Modules]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID do curso (UUID)
+ *         example: "93425141-aa16-4096-93bb-ae3832b9d017"
+ *     responses:
+ *       200:
+ *         description: Módulos retornados com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         format: uuid
+ *                         example: "9cf788ad-f8b7-4c89-8b77-f3fb6b90e400"
+ *                       title:
+ *                         type: string
+ *                         example: "Módulo 1: Intro"
+ *                       courseId:
+ *                         type: string
+ *                         format: uuid
+ *                         example: "93425141-aa16-4096-93bb-ae3832b9d017"
+ *                       orderIndex:
+ *                         type: integer
+ *                         example: 1
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                         example: "2026-01-26T12:29:56.392Z"
+ *       404:
+ *         description: Curso não encontrado
+ *       500:
+ *         description: Erro interno do servidor
+ */
+
+/**
+ * @swagger
+ * /courses/{id}/modules:
+ *   post:
+ *     summary: Criar módulo em um curso
+ *     description: |
+ *       Cria um novo módulo dentro de um curso específico.
+ *       Apenas o instrutor dono do curso pode adicionar módulos.
+ *     tags: [Modules]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID do curso (UUID)
+ *         example: "93425141-aa16-4096-93bb-ae3832b9d017"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - orderIndex
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "Módulo 1: Intro"
+ *                 description: Título do módulo
+ *               orderIndex:
+ *                 type: integer
+ *                 example: 1
+ *                 description: Índice de ordenação do módulo
+ *           example:
+ *             title: "Módulo 1: Intro"
+ *             orderIndex: 1
+ *     responses:
+ *       201:
+ *         description: Módulo criado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Módulo criado com sucesso"
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       format: uuid
+ *                       example: "9cf788ad-f8b7-4c89-8b77-f3fb6b90e400"
+ *                     title:
+ *                       type: string
+ *                       example: "Módulo 1: Intro"
+ *                     courseId:
+ *                       type: string
+ *                       format: uuid
+ *                       example: "93425141-aa16-4096-93bb-ae3832b9d017"
+ *                     orderIndex:
+ *                       type: integer
+ *                       example: 1
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2026-01-26T12:29:56.392Z"
+ *       400:
+ *         description: Dados inválidos
+ *       401:
+ *         description: Usuário não autenticado
+ *       403:
+ *         description: Usuário sem permissão (não é dono do curso)
+ *       404:
+ *         description: Curso não encontrado
+ *       500:
+ *         description: Erro interno do servidor
+ */
+
+/**
+ * @swagger
  * /modules/{id}:
  *   get:
  *     summary: Buscar módulo por ID
