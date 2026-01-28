@@ -4,17 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>ChemAcademy | Master the Science of Matter</title>
+    <title>Lykos.eng | Master Programming & Technology</title>
 
     <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Fira+Code:wght@400&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
-    <!-- Local Styles (No Frameworks) -->
+    <!-- Local Styles -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -25,21 +21,21 @@
         <div class="container-xl nav-inner">
             <div class="logo-container">
                 <div class="logo-icon">
-                    <span class="material-symbols-outlined">science</span>
+                    <span class="material-symbols-outlined">code</span>
                 </div>
-                <span class="logo-text hidden lg:block">ChemAcademy</span>
+                <span class="logo-text">Lykos.eng</span>
             </div>
 
-            <button class="btn-nav hidden md:flex">
+            <button class="btn-nav">
                 Explore <span class="material-symbols-outlined" style="font-size: 1.25rem;">expand_more</span>
             </button>
 
             <!-- Search -->
-            <div class="search-bar-container hidden md:block">
+            <div class="search-bar-container">
                 <div class="search-icon-wrapper">
                     <span class="material-symbols-outlined" style="font-size: 1.25rem;">search</span>
                 </div>
-                <input class="search-input" placeholder="Search organic mechanisms, thermodynamics..." type="text" />
+                <input id="course-search" class="search-input" placeholder="Search courses: Python, React, DevOps..." type="text" />
             </div>
 
             <!-- Right Actions -->
@@ -60,26 +56,20 @@
                     <span class="material-symbols-outlined">notifications</span>
                 </button>
 
-                <!-- User Avatar (Triggers Auth Card) -->
+                <!-- User Avatar -->
                 <div id="user-avatar-btn">
-                    <img alt="User avatar"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYH54o-pesZe_AaOpu7x_4oQp7OS21INF7YcU6bV52w6jH7YHib3H0iuZxRU9o91FKg0rVUUK8-7knG5zwYG-haYnr9ZYQ-ecwzVJLTlkxQjpj9OzF3dEle3RcTAuFMsnUnYxdNKLlfbUB1XjzcroWiCAPMZ1hygMfvLMV5y-2wrZ-yy0zAlklxLPXhC2lFCR-qlCbWyttDE9U4wwUpq2oA6QLGIsY2VbXPr8vwlv5mxgToWfuApwOBNiLmGif4UEExzp-7cKx5pdQ" />
+                    <img alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYH54o-pesZe_AaOpu7x_4oQp7OS21INF7YcU6bV52w6jH7YHib3H0iuZxRU9o91FKg0rVUUK8-7knG5zwYG-haYnr9ZYQ-ecwzVJLTlkxQjpj9OzF3dEle3RcTAuFMsnUnYxdNKLlfbUB1XjzcroWiCAPMZ1hygMfvLMV5y-2wrZ-yy0zAlklxLPXhC2lFCR-qlCbWyttDE9U4wwUpq2oA6QLGIsY2VbXPr8vwlv5mxgToWfuApwOBNiLmGif4UEExzp-7cKx5pdQ" />
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Subnav -->
-    <div class="subnav">
-        <div class="container-xl subnav-inner">
-            <a href="#">General Chemistry</a>
-            <a class="active-link" href="#">Organic Synthesis</a>
-            <a href="#">Biochemistry</a>
-            <a href="#">Analytical</a>
-            <a href="#">Engineering</a>
-            <a href="#">Lab Safety</a>
-            <a href="#">Physical Chem</a>
-            <a href="#">Pharmacology</a>
+    <!-- Category Filter Tabs -->
+    <div class="category-filter-section">
+        <div class="container-xl">
+            <div class="category-tabs" id="category-tabs">
+                <button class="category-tab active" data-category="">All Courses</button>
+            </div>
         </div>
     </div>
 
@@ -93,7 +83,7 @@
                 <form id="login-form">
                     <div style="margin-bottom: 1rem;">
                         <label class="auth-label">Email / User</label>
-                        <input id="login-email" type="text" class="auth-input" placeholder="user@lab.edu" />
+                        <input id="login-email" type="text" class="auth-input" placeholder="user@company.com" />
                     </div>
                     <div style="margin-bottom: 1rem;">
                         <label class="auth-label">Password</label>
@@ -102,14 +92,14 @@
                     <button type="submit" class="btn-auth-submit">Log In</button>
                 </form>
                 <div class="auth-footer">
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">New Researcher?</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">New Developer?</p>
                     <button id="btn-to-register" class="btn-link">Create Account</button>
                 </div>
             </div>
 
             <!-- Back: Register -->
             <div class="auth-face auth-face-back">
-                <h3 class="auth-title">Join the Lab</h3>
+                <h3 class="auth-title">Join the Platform</h3>
                 <form id="register-form">
                     <div style="margin-bottom: 0.5rem;">
                         <label class="auth-label">I am a...</label>
@@ -120,47 +110,38 @@
                     </div>
                     <div style="margin-bottom: 0.5rem;">
                         <label class="auth-label">Full Name</label>
-                        <input type="text" id="register-name" class="auth-input" placeholder="Marie Curie" required />
+                        <input type="text" id="register-name" class="auth-input" placeholder="John Doe" required />
                     </div>
                     <div style="margin-bottom: 0.5rem;">
                         <label class="auth-label">Email</label>
-                        <input type="email" id="register-email" class="auth-input" placeholder="marie@science.org"
-                            required />
+                        <input type="email" id="register-email" class="auth-input" placeholder="dev@company.com" required />
                     </div>
                     <div class="grid grid-2" style="gap: 0.5rem; margin-bottom: 0.5rem;">
                         <div>
                             <label class="auth-label">Password</label>
-                            <input type="password" id="register-password" class="auth-input" placeholder="••••"
-                                required />
+                            <input type="password" id="register-password" class="auth-input" placeholder="••••" required />
                         </div>
                         <div>
                             <label class="auth-label">Confirm</label>
-                            <input type="password" id="register-confirm" class="auth-input" placeholder="••••"
-                                required />
+                            <input type="password" id="register-confirm" class="auth-input" placeholder="••••" required />
                         </div>
                     </div>
                     <button type="submit" class="btn-auth-submit">Register</button>
                 </form>
                 <div class="auth-footer">
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">Already have access?
-                    </p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">Already have access?</p>
                     <button id="btn-to-login" class="btn-link">Back to Login</button>
                 </div>
             </div>
 
-            <!-- Logged In View (Hidden by default) -->
-            <div id="auth-logged-in" class="auth-face hidden"
-                style="justify-content: center; align-items: center; text-align: center;">
+            <!-- Logged In View -->
+            <div id="auth-logged-in" class="auth-face hidden" style="justify-content: center; align-items: center; text-align: center;">
                 <div class="user-avatar-large">
-                    <span class="material-symbols-outlined"
-                        style="font-size: 3rem; color: var(--primary);">account_circle</span>
+                    <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--primary);">account_circle</span>
                 </div>
                 <h3 id="user-name-display" class="auth-title" style="margin-bottom: 0.25rem;">User Name</h3>
-                <p id="user-email-display"
-                    style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">user@example.com</p>
-                <div id="user-role-badge" class="badge-tag bg-tag-secondary"
-                    style="position: relative; top: auto; left: auto; display: inline-block; margin-bottom: 2rem;">
-                    Student</div>
+                <p id="user-email-display" style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">user@example.com</p>
+                <div id="user-role-badge" class="badge-tag bg-tag-secondary" style="position: relative; top: auto; left: auto; display: inline-block; margin-bottom: 2rem;">Student</div>
 
                 <div class="flex-col" style="width: 100%; gap: 1rem;">
                     <button id="btn-my-learning" class="btn-dashboard">
@@ -185,247 +166,81 @@
         <!-- Hero -->
         <header class="hero-header">
             <div class="hero-glow"></div>
-            <h1 class="hero-title">Chemistry Mastery <span class="text-gradient">Courses</span></h1>
+            <h1 class="hero-title">Programming Mastery <span class="text-gradient">Courses</span></h1>
             <p class="hero-desc">
-                Unravel the molecular world with expert-led courses. From orbital mechanics to complex organic
-                synthesis, master the science of matter.
+                Master the art of coding with expert-led courses. From fundamentals to advanced systems, build your tech career with hands-on projects.
             </p>
         </header>
 
-        <!-- Listing Section -->
+        <!-- Course Listing Section -->
         <section style="margin-bottom: 5rem;">
             <div class="flex justify-between items-center" style="margin-bottom: 2rem;">
                 <div>
                     <h2 class="section-title">
-                        <span class="material-symbols-outlined" style="color: var(--primary);">biotech</span>
-                        Start Your Lab Journey
+                        <span class="material-symbols-outlined" style="color: var(--primary);">terminal</span>
+                        <span id="section-title-text">All Courses</span>
                     </h2>
-                    <p style="font-size: 0.875rem; color: var(--text-muted);">Personalized curriculum based on your
-                        research interests.</p>
+                    <p id="course-count" style="font-size: 0.875rem; color: var(--text-muted);">Loading courses...</p>
                 </div>
-                <!-- Nav Arrows -->
-                <div class="flex gap-2">
-                    <button class="btn-icon" style="border: 1px solid var(--border-med); border-radius: 0.5rem;">
+                <!-- Scroll Navigation Arrows -->
+                <div class="flex gap-2" id="scroll-nav-container" style="display: none;">
+                    <button id="scroll-left-btn" class="scroll-nav-btn" aria-label="Scroll left">
                         <span class="material-symbols-outlined">chevron_left</span>
                     </button>
-                    <button class="btn-icon" style="border: 1px solid var(--border-med); border-radius: 0.5rem;">
+                    <button id="scroll-right-btn" class="scroll-nav-btn" aria-label="Scroll right">
                         <span class="material-symbols-outlined">chevron_right</span>
                     </button>
                 </div>
             </div>
 
-            <div class="grid-cols-basic">
-                <!-- Card 1 -->
-                <div class="card-base group">
-                    <div class="card-img-container">
-                        <img alt="Organic Chemistry" class="card-img"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR6DGwRE1YJ8WF-DD9FAmqasKkQiz7jq169wj28XZtFmFgaxZDad34mUCAOIaE4gQ5FIqFC71LRMZqR2Bi4CmVOJyECsvY1r83JLr_vSWmFaj8UMKYEiW0SHd79WThs0nGeo6BPC8nLonaTVeOML5vp7jLMhsE9J6eAN-RJhJWxOoNVKSr_LYdSQxV0wNOlnnHa56RpMQRvfL2fCh4wYz2v9ex0_t8T7U4bcsBwD9bFbLjZbSCbhJ0BZnYiXmwb_o3CRYd5ZnjqjDp" />
-                        <div class="badge-tag bg-tag-primary">Bestseller</div>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Mastering Organic Chemistry: Mechanisms and Synthesis</h3>
-                        <div class="card-instructor">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">person</span> Dr. Sarah
-                            Jenkins, PhD
-                        </div>
-                        <div class="rating-row">
-                            <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.9</span>
-                            <div class="star-set">
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                            </div>
-                            <span class="rating-count">(12,402)</span>
-                        </div>
-                        <div class="price-row">
-                            <span class="price-main">$84.99</span>
-                            <span class="price-strike">$129.99</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="card-base">
-                    <div class="card-img-container">
-                        <img alt="Physical Chemistry" class="card-img"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXGPsGjhvyb2xdQUvZcqfCrqxxhFdh4b4Y0V1_00an6eiDTzwbhwd2p2F8cddtH-mGAEAOW1zOb-c3j6Uzh-Dtc1960cU_ebO-RQiGd25J0DVvjiYAihvLgU9mKkJk20jtGPEVHTR-lIXops4jtY8CozvMiSbzFzBlpPCFiJ-Yuratx_qRVAZT7N3sYTu0Q2_8wjr4JLjhRwmzzoRHBHDX2xQHvPSQSs64ZerajbV1mYRcqXqCEOcNqtS5-yQYFpCbPbgqJMsQIF2Y" />
-                        <div class="badge-tag bg-tag-new">New</div>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Computational Quantum Chemistry: From Zero to Pro</h3>
-                        <div class="card-instructor">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">person</span> Prof. Marcus
-                            Thorne
-                        </div>
-                        <div class="rating-row">
-                            <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.7</span>
-                            <div class="star-set">
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
-                            </div>
-                            <span class="rating-count">(2,145)</span>
-                        </div>
-                        <div class="price-row">
-                            <span class="price-main">$49.99</span>
-                            <span class="price-strike">$89.99</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="card-base">
-                    <div class="card-img-container">
-                        <img alt="Analytical Chemistry" class="card-img"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF0L1ijMQahBCWN2zirANGanT9CkAlXTekAmgR8vLd4d72nZ8cP_re_VxwLPNzRZGZ0phlBPL8Ke_LAdEq_grZl6lawFs2Fe5wlhN2C-DU-uU8lRr-hHWL6FIWkYaxyNRKCEkO00V0fqUyEkhcTF3nP82yfCrqO2R6-K3VvGwm-BzoNhSmd_rIdPjr0Zs4fbk9-Rmn6pcfelhtLxf0xwa6b4eg1og4DrKlt3fsIgvNNKAMh6t2eVUIye7gkBT6FMHe6iCooSAN5TV_" />
-                        <div class="badge-tag bg-tag-secondary">Top Rated</div>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Advanced Analytical Methods: HPLC &amp; Mass Spec</h3>
-                        <div class="card-instructor">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">person</span> Dr. Elena
-                            Rodriguez
-                        </div>
-                        <div class="rating-row">
-                            <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.8</span>
-                            <div class="star-set">
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                            </div>
-                            <span class="rating-count">(876)</span>
-                        </div>
-                        <div class="price-row">
-                            <span class="price-main">$19.99</span>
-                            <span class="price-strike">$149.99</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="card-base">
-                    <div class="card-img-container">
-                        <img alt="Lab Techniques" class="card-img"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuApiDI_MSm9JzKWMsC-ogeVV8jnBTFjmuKt4KmnOgjUm1flqwVvujZdROILpvoK9fgXCr53alZdswcZmeu6frUrrD1K9IlKQYbkvdyx2iw65s4hCNn4gfi3KqX6pxx0-NGCxBIfaLPqpbNHK12Em0rmAajG8CQEEwZl-s_JbzZMDm8ebQU5VJf7jqAq7myHG4If3SX49tFL_esJklegzayp1b14Qy4KTyWvCJKsKtmqN-eVIBexHsEzL2nsjl7IvbczDJH1XIltv1VA" />
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Essential Laboratory Techniques for Researchers</h3>
-                        <div class="card-instructor">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">school</span> Technical
-                            Univ. of Berlin
-                        </div>
-                        <div class="rating-row">
-                            <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.6</span>
-                            <div class="star-set">
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined"
-                                    style="font-size: 14px; fill: currentColor;">star</span>
-                                <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
-                            </div>
-                            <span class="rating-count">(5,532)</span>
-                        </div>
-                        <div class="price-row">
-                            <span class="price-main">$34.99</span>
-                            <span class="price-strike">$54.99</span>
-                        </div>
-                    </div>
-                </div>
+            <!-- Loading State -->
+            <div id="loading-indicator" class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>Loading courses...</p>
             </div>
-        </section>
 
-        <!-- Course of Month -->
-        <section style="margin-bottom: 5rem;">
-            <h2 class="section-title">Course of the Month</h2>
-            <div class="featured-card">
-                <div class="featured-img-wrap">
-                    <img alt="Featured Course" class="featured-img"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLEVdIVc5uxBTRJra3svY1M_056F7opU5FyfPImWutFm1MvFvuLOER2uTydYcskzm4Tpq5OAX-cUYw6T6ByKYTAs6C_-8kb8uyPUvbK2KuGVY2BDj_h9v23igVO8ymYJ4ba2GNRb0OtqRbMpkzv2PG2sXsYt414gWonDK1_tFV7ABFNGFaJUbWXm3px9Nug6QIYb4FTh_zuml5d0nw-BS5RgL8D6edLlhtR1hSN5YNx04ElP8GNw_pwXJogECFnn4bQd_ad2K0gzKx" />
-                    <div class="absolute inset-0"
-                        style="background: linear-gradient(to right, rgba(13,20,31,0.2), transparent);"></div>
-                </div>
-                <div class="featured-content">
-                    <div class="featured-badge">
-                        <span class="material-symbols-outlined" style="font-size: 12px;">workspace_premium</span>
-                        Premium Selection
-                    </div>
-                    <h3 class="hero-title" style="font-size: 2.25rem; margin-bottom: 1.5rem;">Thermodynamics: The
-                        Physics and Chemistry of Energy</h3>
-                    <p class="hero-desc" style="font-size: 1.125rem; margin-bottom: 2.5rem;">
-                        Deep dive into entropy, enthalpy, and the laws of thermodynamics with world-renowned expert
-                        Prof. David Chen.
-                    </p>
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state hidden">
+                <span class="material-symbols-outlined" style="font-size: 4rem; color: var(--text-muted);">search_off</span>
+                <h3>No courses found</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
 
-                    <div class="flex flex-wrap" style="gap: 2rem; margin-bottom: 2.5rem;">
-                        <div class="stat-item">
-                            <span class="stat-label">Duration</span>
-                            <span class="stat-val">42 Hours</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Level</span>
-                            <span class="stat-val">Intermediate</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Students</span>
-                            <span class="stat-val">12,450+</span>
-                        </div>
-                    </div>
+            <!-- Courses Grid -->
+            <div id="courses-grid" class="grid-cols-basic"></div>
 
-                    <div class="flex" style="gap: 1rem; flex-wrap: wrap;">
-                        <button id="enroll-featured" data-course-id="thermo-001" class="btn-cta-primary">
-                            Enroll Now
-                        </button>
-                        <button id="wishlist-featured" data-course-id="thermo-001" class="btn-cta-outline">
-                            Add to Wishlist
-                        </button>
-                    </div>
-                </div>
+            <!-- Load More Button -->
+            <div id="load-more-container" class="load-more-container hidden">
+                <button id="load-more-btn" class="btn-load-more">
+                    <span class="material-symbols-outlined">expand_more</span>
+                    Load More Courses
+                </button>
+            </div>
+
+            <!-- Infinite Scroll Loading -->
+            <div id="infinite-scroll-loading" class="infinite-scroll-loading hidden">
+                <div class="loading-spinner-small"></div>
+                <p>Loading more courses...</p>
             </div>
         </section>
 
         <!-- Trusted By -->
-        <section
-            style="margin-bottom: 2.5rem; padding: 3rem 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
-            <h2 class="text-center"
-                style="font-size: 0.625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: var(--text-muted); margin-bottom: 3rem;">
-                Trusted by Global Research Institutions
+        <section style="margin-bottom: 2.5rem; padding: 3rem 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+            <h2 class="text-center" style="font-size: 0.625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: var(--text-muted); margin-bottom: 3rem;">
+                Trusted by Leading Tech Companies
             </h2>
             <div class="trusted-grid">
                 <div class="brand-item">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">biotech</span> OXFORD LABS
+                    <span class="material-symbols-outlined" style="font-size: 2rem;">laptop_mac</span> MICROSOFT
                 </div>
                 <div class="brand-item">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">genetics</span> GENE-TECH
+                    <span class="material-symbols-outlined" style="font-size: 2rem;">cloud</span> AWS
                 </div>
                 <div class="brand-item">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">grid_view</span> NANO-SCIENCE
+                    <span class="material-symbols-outlined" style="font-size: 2rem;">terminal</span> GITHUB
                 </div>
                 <div class="brand-item">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">hub</span> MOLECULAR.AI
+                    <span class="material-symbols-outlined" style="font-size: 2rem;">psychology</span> OPENAI
                 </div>
             </div>
         </section>
@@ -434,17 +249,15 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-grid">
-            <!-- Brand Col -->
             <div class="col-span-2-lg">
                 <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
                     <div class="logo-icon" style="width: 2.25rem; height: 2.25rem;">
-                        <span class="material-symbols-outlined" style="font-size: 1.25rem;">science</span>
+                        <span class="material-symbols-outlined" style="font-size: 1.25rem;">code</span>
                     </div>
-                    <span style="font-size: 1.25rem; font-weight: 700; color: white;">ChemAcademy</span>
+                    <span style="font-size: 1.25rem; font-weight: 700; color: white;">Lykos.eng</span>
                 </div>
                 <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 2rem; max-width: 300px;">
-                    The world's premier digital infrastructure for chemical education, molecular research, and
-                    laboratory training.
+                    The premier platform for programming education, software development training, and tech career advancement.
                 </p>
                 <div class="flex table" style="gap: 1.25rem;">
                     <a href="#" class="btn-icon"><span class="material-symbols-outlined">public</span></a>
@@ -456,47 +269,45 @@
             <div>
                 <h4 class="footer-heading">Programs</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Degree Tracks</a></li>
-                    <li><a href="#">Lab Certifications</a></li>
-                    <li><a href="#">Enterprise Research</a></li>
-                    <li><a href="#">Academic Partnerships</a></li>
+                    <li><a href="#">Career Paths</a></li>
+                    <li><a href="#">Certifications</a></li>
+                    <li><a href="#">Enterprise Training</a></li>
+                    <li><a href="#">University Partnerships</a></li>
                 </ul>
             </div>
 
             <div>
                 <h4 class="footer-heading">Resources</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Simulation Tools</a></li>
-                    <li><a href="#">Safety Protocols</a></li>
-                    <li><a href="#">Journal Access</a></li>
-                    <li><a href="#">API Documentation</a></li>
+                    <li><a href="#">Code Sandbox</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Tech Blog</a></li>
+                    <li><a href="#">API Reference</a></li>
                 </ul>
             </div>
 
             <div>
-                <h4 class="footer-heading">Global</h4>
+                <h4 class="footer-heading">Community</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Student Forum</a></li>
-                    <li><a href="#">Research Blog</a></li>
-                    <li><a href="#">Affiliates</a></li>
+                    <li><a href="#">Developer Forum</a></li>
+                    <li><a href="#">Tech Blog</a></li>
+                    <li><a href="#">Partners</a></li>
                     <li><a href="#">Scholarships</a></li>
                 </ul>
             </div>
 
-            <!-- Newsletter -->
             <div class="col-span-2-lg">
                 <h4 class="footer-heading">Newsletter</h4>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.5rem;">Stay updated on
-                    breakthroughs in synthetic and computational chemistry.</p>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.5rem;">Stay updated on the latest programming trends, frameworks, and tech innovations.</p>
                 <div class="flex-col" style="gap: 0.5rem;">
-                    <input class="newsletter-input" placeholder="researcher@lab.edu" type="email" />
+                    <input class="newsletter-input" placeholder="developer@company.com" type="email" />
                     <button class="btn-sub">Subscribe</button>
                 </div>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <p>© 2024 ChemAcademy Education Inc. Molecularly Precise Education.</p>
+            <p>© 2024 Lykos.eng Education Platform. Code Your Future.</p>
             <div class="flex" style="gap: 2.5rem;">
                 <a href="#" style="color: inherit; text-decoration: none;">Terms</a>
                 <a href="#" style="color: inherit; text-decoration: none;">Privacy</a>
@@ -505,9 +316,10 @@
         </div>
     </footer>
 
-    <!-- Dark Mode Toggle -->
-    <button class="btn-theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
-        <span class="material-symbols-outlined" style="font-weight: 700;">dark_mode</span>
+    <!-- Dark/Light Mode Toggle -->
+    <button class="btn-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span class="material-symbols-outlined dark-icon" style="font-weight: 700;">dark_mode</span>
+        <span class="material-symbols-outlined light-icon" style="font-weight: 700;">light_mode</span>
     </button>
 
     <script type="module" src="js/main.js"></script>
