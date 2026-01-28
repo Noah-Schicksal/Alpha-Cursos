@@ -97,15 +97,24 @@ describe('CourseService', () => {
             const courseWithInstructor = new Course({ ...mockCourse.toJSON(), instructorId: 'inst-1' });
             mockCourseRepo.findById.mockReturnValue(courseWithInstructor);
 
-            await courseService.delete('course-123', 'inst-1');
+            await courseService.delete('course-123', { id: 'inst-1', role: 'INSTRUCTOR' });
             expect(mockCourseRepo.softDelete).toHaveBeenCalledWith('course-123');
         });
 
-        it('should throw error if user is not owner', async () => {
+        it('should soft delete course if user is ADMIN', async () => {
             const courseWithInstructor = new Course({ ...mockCourse.toJSON(), instructorId: 'inst-1' });
             mockCourseRepo.findById.mockReturnValue(courseWithInstructor);
 
-            await expect(courseService.delete('course-123', 'other')).rejects.toThrow('Você não tem permissão para remover este curso');
+            // User ID differs but role is ADMIN
+            await courseService.delete('course-123', { id: 'admin-1', role: 'ADMIN' });
+            expect(mockCourseRepo.softDelete).toHaveBeenCalledWith('course-123');
+        });
+
+        it('should throw error if user is not owner and not ADMIN', async () => {
+            const courseWithInstructor = new Course({ ...mockCourse.toJSON(), instructorId: 'inst-1' });
+            mockCourseRepo.findById.mockReturnValue(courseWithInstructor);
+
+            await expect(courseService.delete('course-123', { id: 'other', role: 'STUDENT' })).rejects.toThrow('Permissão negada');
         });
     });
 });

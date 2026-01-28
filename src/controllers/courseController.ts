@@ -198,7 +198,7 @@ export class CourseController {
                 await storageService.deleteCourseFolder(course.title);
             }
 
-            await this.courseService.delete(id, instructorId);
+            await this.courseService.delete(id, req.user);
             return ApiResponse.noContent(res);
         } catch (error) {
             if (error instanceof ApplicationError) {
