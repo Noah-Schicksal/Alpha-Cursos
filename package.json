@@ -52,17 +52,5 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "directories": {
-    "test": "tests"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Noah-Schicksal/Alpha-Cursos.git"
-  },
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Noah-Schicksal/Alpha-Cursos/issues"
-  },
-  "homepage": "https://github.com/Noah-Schicksal/Alpha-Cursos#readme"
+  "license": "ISC"
 }
