@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Lykos.eng | Master Programming & Technology</title>
+    <title>ChemAcademy | Master the Science of Matter</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
     <!-- Local Styles -->
@@ -21,21 +21,20 @@
         <div class="container-xl nav-inner">
             <div class="logo-container">
                 <div class="logo-icon">
-                    <span class="material-symbols-outlined">code</span>
+                    <span class="material-symbols-outlined">science</span>
                 </div>
-                <span class="logo-text">Lykos.eng</span>
+                <span class="logo-text hidden lg:block">ChemAcademy</span>
             </div>
 
-            <button class="btn-nav">
+            <button class="btn-nav hidden md:flex">
                 Explore <span class="material-symbols-outlined" style="font-size: 1.25rem;">expand_more</span>
             </button>
 
-            <!-- Search -->
-            <div class="search-bar-container">
+            <div class="search-bar-container hidden md:block">
                 <div class="search-icon-wrapper">
                     <span class="material-symbols-outlined" style="font-size: 1.25rem;">search</span>
                 </div>
-                <input id="course-search" class="search-input" placeholder="Search courses: Python, React, DevOps..." type="text" />
+                <input class="search-input" placeholder="Search organic mechanisms, thermodynamics..." type="text" />
             </div>
 
             <div class="nav-right-actions">
@@ -55,7 +54,6 @@
                     <span class="material-symbols-outlined">notifications</span>
                 </button>
 
-                <!-- User Avatar -->
                 <div id="user-avatar-btn">
                     <img alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYH54o-pesZe_AaOpu7x_4oQp7OS21INF7YcU6bV52w6jH7YHib3H0iuZxRU9o91FKg0rVUUK8-7knG5zwYG-haYnr9ZYQ-ecwzVJLTlkxQjpj9OzF3dEle3RcTAuFMsnUnYxdNKLlfbUB1XjzcroWiCAPMZ1hygMfvLMV5y-2wrZ-yy0zAlklxLPXhC2lFCR-qlCbWyttDE9U4wwUpq2oA6QLGIsY2VbXPr8vwlv5mxgToWfuApwOBNiLmGif4UEExzp-7cKx5pdQ" />
                 </div>
@@ -63,12 +61,17 @@
         </div>
     </nav>
 
-    <!-- Category Filter Tabs -->
-    <div class="category-filter-section">
-        <div class="container-xl">
-            <div class="category-tabs" id="category-tabs">
-                <button class="category-tab active" data-category="">All Courses</button>
-            </div>
+    <!-- Subnav -->
+    <div class="subnav">
+        <div class="container-xl subnav-inner">
+            <a href="#">General Chemistry</a>
+            <a class="active-link" href="#">Organic Synthesis</a>
+            <a href="#">Biochemistry</a>
+            <a href="#">Analytical</a>
+            <a href="#">Engineering</a>
+            <a href="#">Lab Safety</a>
+            <a href="#">Physical Chem</a>
+            <a href="#">Pharmacology</a>
         </div>
     </div>
 
@@ -82,7 +85,7 @@
                 <form id="login-form">
                     <div style="margin-bottom: 1rem;">
                         <label class="auth-label">Email / User</label>
-                        <input id="login-email" type="text" class="auth-input" placeholder="user@company.com" />
+                        <input id="login-email" type="text" class="auth-input" placeholder="user@lab.edu" />
                     </div>
                     <div style="margin-bottom: 1rem;">
                         <label class="auth-label">Password</label>
@@ -91,14 +94,14 @@
                     <button type="submit" class="btn-auth-submit">Log In</button>
                 </form>
                 <div class="auth-footer">
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">New Developer?</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">New Researcher?</p>
                     <button id="btn-to-register" class="btn-link">Create Account</button>
                 </div>
             </div>
 
             <!-- Back: Register -->
             <div class="auth-face auth-face-back">
-                <h3 class="auth-title">Join the Platform</h3>
+                <h3 class="auth-title">Join the Lab</h3>
                 <form id="register-form">
                     <div style="margin-bottom: 0.5rem;">
                         <label class="auth-label">I am a...</label>
@@ -109,11 +112,11 @@
                     </div>
                     <div style="margin-bottom: 0.5rem;">
                         <label class="auth-label">Full Name</label>
-                        <input type="text" id="register-name" class="auth-input" placeholder="John Doe" required />
+                        <input type="text" id="register-name" class="auth-input" placeholder="Marie Curie" required />
                     </div>
                     <div style="margin-bottom: 0.5rem;">
                         <label class="auth-label">Email</label>
-                        <input type="email" id="register-email" class="auth-input" placeholder="dev@company.com" required />
+                        <input type="email" id="register-email" class="auth-input" placeholder="marie@science.org" required />
                     </div>
                     <div class="grid grid-2" style="gap: 0.5rem; margin-bottom: 0.5rem;">
                         <div>
@@ -140,7 +143,7 @@
                 </div>
                 <h3 id="user-name-display" class="auth-title" style="margin-bottom: 0.25rem;">User Name</h3>
                 <p id="user-email-display" style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">user@example.com</p>
-                <div id="user-role-badge" class="badge-tag bg-tag-secondary" style="position: relative; top: auto; left: auto; display: inline-block; margin-bottom: 2rem;">Student</div>
+                <div id="user-role-badge" class="badge-tag bg-tag-secondary" style="display: inline-block; margin-bottom: 2rem;">Student</div>
 
                 <div class="flex-col" style="width: 100%; gap: 1rem;">
                     <button id="btn-my-learning" class="btn-dashboard"><span class="material-symbols-outlined">school</span> My Learning</button>
@@ -157,83 +160,294 @@
         <!-- Hero -->
         <header class="hero-header">
             <div class="hero-glow"></div>
-            <h1 class="hero-title">Programming Mastery <span class="text-gradient">Courses</span></h1>
-            <p class="hero-desc">
-                Master the art of coding with expert-led courses. From fundamentals to advanced systems, build your tech career with hands-on projects.
-            </p>
+            <h1 class="hero-title">Chemistry Mastery <span class="text-gradient">Courses</span></h1>
+            <p class="hero-desc">Unravel the molecular world with expert-led courses. From orbital mechanics to complex organic synthesis, master the science of matter.</p>
         </header>
 
-        <!-- Course Listing Section -->
+        <!-- Listing Section -->
         <section style="margin-bottom: 5rem;">
             <div class="flex justify-between items-center" style="margin-bottom: 2rem;">
                 <div>
-                    <h2 class="section-title">
-                        <span class="material-symbols-outlined" style="color: var(--primary);">terminal</span>
-                        <span id="section-title-text">All Courses</span>
-                    </h2>
-                    <p id="course-count" style="font-size: 0.875rem; color: var(--text-muted);">Loading courses...</p>
+                    <h2 class="section-title"><span class="material-symbols-outlined" style="color: var(--primary);">biotech</span> Start Your Lab Journey</h2>
+                    <p style="font-size: 0.875rem; color: var(--text-muted);">Personalized curriculum based on your research interests.</p>
                 </div>
-                <!-- Scroll Navigation Arrows -->
-                <div class="flex gap-2" id="scroll-nav-container" style="display: none;">
-                    <button id="scroll-left-btn" class="scroll-nav-btn" aria-label="Scroll left">
-                        <span class="material-symbols-outlined">chevron_left</span>
-                    </button>
-                    <button id="scroll-right-btn" class="scroll-nav-btn" aria-label="Scroll right">
-                        <span class="material-symbols-outlined">chevron_right</span>
-                    </button>
+                <div class="flex gap-2">
+                    <button class="btn-icon" style="border: 1px solid var(--border-med); border-radius: 0.5rem;"><span class="material-symbols-outlined">chevron_left</span></button>
+                    <button class="btn-icon" style="border: 1px solid var(--border-med); border-radius: 0.5rem;"><span class="material-symbols-outlined">chevron_right</span></button>
                 </div>
             </div>
 
-            <!-- Loading State -->
-            <div id="loading-indicator" class="loading-container">
-                <div class="loading-spinner"></div>
-                <p>Loading courses...</p>
+           <div class="grid-cols-basic">
+    <div class="card-base group">
+        <div class="card-img-container">
+            <img alt="Software Architecture" class="card-img" src="images/organic.jpg" />
+            <div class="badge-tag bg-tag-primary">Bestseller</div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Mastering Software Architecture: Patterns and Microservices</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined" style="font-size: 14px;">person</span> Dr. Sarah Jenkins, PhD</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.9</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                </div>
+                <span class="rating-count">(12,402)</span>
             </div>
+            <div class="price-row"><span class="price-main">$84.99</span> <span class="price-strike">$129.99</span></div>
+        </div>
+    </div>
 
-            <!-- Empty State -->
-            <div id="empty-state" class="empty-state hidden">
-                <span class="material-symbols-outlined" style="font-size: 4rem; color: var(--text-muted);">search_off</span>
-                <h3>No courses found</h3>
-                <p>Try adjusting your filters or search terms</p>
+    <div class="card-base">
+        <div class="card-img-container">
+            <img alt="Cloud Computing" class="card-img" src="images/physical.jpg" />
+            <div class="badge-tag bg-tag-new">New</div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Cloud Infrastructure & Serverless: From Zero to Pro</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined" style="font-size: 14px;">person</span> Prof. Marcus Thorne</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.7</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
+                </div>
+                <span class="rating-count">(2,145)</span>
             </div>
+            <div class="price-row"><span class="price-main">$49.99</span> <span class="price-strike">$89.99</span></div>
+        </div>
+    </div>
 
-            <!-- Courses Grid -->
-            <div id="courses-grid" class="grid-cols-basic"></div>
-
-            <!-- Load More Button -->
-            <div id="load-more-container" class="load-more-container hidden">
-                <button id="load-more-btn" class="btn-load-more">
-                    <span class="material-symbols-outlined">expand_more</span>
-                    Load More Courses
-                </button>
+    <div class="card-base">
+        <div class="card-img-container">
+            <img alt="Data Engineering" class="card-img" src="images/analytical.jpg" />
+            <div class="badge-tag bg-tag-secondary">Top Rated</div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Advanced Data Engineering: Big Data & ETL Pipelines</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined" style="font-size: 14px;">person</span> Dr. Elena Rodriguez</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.8</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                </div>
+                <span class="rating-count">(876)</span>
             </div>
+            <div class="price-row"><span class="price-main">$19.99</span> <span class="price-strike">$149.99</span></div>
+        </div>
+    </div>
 
-            <!-- Infinite Scroll Loading -->
-            <div id="infinite-scroll-loading" class="infinite-scroll-loading hidden">
-                <div class="loading-spinner-small"></div>
-                <p>Loading more courses...</p>
+    <div class="card-base">
+        <div class="card-img-container">
+            <img alt="Cybersecurity" class="card-img" src="images/lab-techniques.jpg" />
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">SecOps & Penetration Testing for Enterprise Researchers</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined" style="font-size: 14px;">school</span> Technical Univ. of Berlin</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.6</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
+                </div>
+                <span class="rating-count">(5,532)</span>
+            </div>
+            <div class="price-row"><span class="price-main">$34.99</span> <span class="price-strike">$54.99</span></div>
+        </div>
+    </div>
+</div>
+            
+        <!-- Programming Courses: Row 1 -->
+<div class="grid-cols-basic" style="margin-top: 2rem;">
+    <div class="card-base group">
+        <div class="card-img-container">
+            <img alt="Fullstack JavaScript" class="card-img" src="images/programming1.jpg" />
+            <div class="badge-tag bg-tag-primary">Bestseller</div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Fullstack JavaScript: From Zero to Hero</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined">person</span> Alex Turner</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.9</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                </div>
+                <span class="rating-count">(14,230)</span>
+            </div>
+            <div class="price-row"><span class="price-main">$99.99</span> <span class="price-strike">$149.99</span></div>
+        </div>
+    </div>
+
+    <div class="card-base group">
+        <div class="card-img-container">
+            <img alt="Python Data Science" class="card-img" src="images/programming2.jpg" />
+            <div class="badge-tag bg-tag-new">New</div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Python for Data Science and AI</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined">person</span> Maria Santos</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.8</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
+                </div>
+                <span class="rating-count">(10,842)</span>
+            </div>
+            <div class="price-row"><span class="price-main">$79.99</span> <span class="price-strike">$129.99</span></div>
+        </div>
+    </div>
+
+    <div class="card-base group">
+        <div class="card-img-container">
+            <img alt="React Advanced" class="card-img" src="images/programming3.jpg" />
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Advanced React & Redux: Build Real Projects</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined">person</span> James Lee</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.7</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
+                </div>
+                <span class="rating-count">(8,540)</span>
             </div>
             <div class="price-row"><span class="price-main">$89.99</span> <span class="price-strike">$139.99</span></div>
         </div>
     </div>
 
-        <!-- Trusted By -->
-        <section style="margin-bottom: 2.5rem; padding: 3rem 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
-            <h2 class="text-center" style="font-size: 0.625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: var(--text-muted); margin-bottom: 3rem;">
-                Trusted by Leading Tech Companies
-            </h2>
-            <div class="trusted-grid">
-                <div class="brand-item">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">laptop_mac</span> MICROSOFT
+    <div class="card-base group">
+        <div class="card-img-container">
+            <img alt="Java Backend" class="card-img" src="images/programming4.jpg" />
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Java Backend Development with Spring Boot</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined">person</span> Clara Martins</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.6</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
                 </div>
-                <div class="brand-item">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">cloud</span> AWS
+                <span class="rating-count">(6,732)</span>
+            </div>
+            <div class="price-row"><span class="price-main">$69.99</span> <span class="price-strike">$119.99</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- Programming Courses: Row 2 -->
+<div class="grid-cols-basic" style="margin-top: 2rem;">
+    <div class="card-base group">
+        <div class="card-img-container">
+            <img alt="C++ Algorithms" class="card-img" src="images/programming5.jpg" />
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">C++ Algorithms & Data Structures</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined">person</span> Victor Almeida</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.8</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
                 </div>
-                <div class="brand-item">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">terminal</span> GITHUB
+                <span class="rating-count">(9,210)</span>
+            </div>
+            <div class="price-row"><span class="price-main">$79.99</span> <span class="price-strike">$129.99</span></div>
+        </div>
+    </div>
+
+    <div class="card-base group">
+        <div class="card-img-container">
+            <img alt="DevOps" class="card-img" src="images/programming6.jpg" />
+            <div class="badge-tag bg-tag-primary">Popular</div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">DevOps & Cloud Deployment with Docker & AWS</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined">person</span> Helena Costa</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.7</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
                 </div>
-                <div class="brand-item">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">psychology</span> OPENAI
+                <span class="rating-count">(7,410)</span>
+            </div>
+            <div class="price-row"><span class="price-main">$89.99</span> <span class="price-strike">$139.99</span></div>
+        </div>
+    </div>
+
+    <div class="card-base group">
+        <div class="card-img-container">
+            <img alt="React Native" class="card-img" src="images/programming7.jpg" />
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Mobile Apps with React Native</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined">person</span> Bruno Lima</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.6</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
+                </div>
+                <span class="rating-count">(6,320)</span>
+            </div>
+            <div class="price-row"><span class="price-main">$69.99</span> <span class="price-strike">$109.99</span></div>
+        </div>
+    </div>
+
+    <div class="card-base group">
+        <div class="card-img-container">
+            <img alt="Cybersecurity" class="card-img" src="images/programming8.jpg" />
+            <div class="badge-tag bg-tag-secondary">Top Rated</div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Cybersecurity Fundamentals for Developers</h3>
+            <div class="card-instructor"><span class="material-symbols-outlined">person</span> Rafael Souza</div>
+            <div class="rating-row">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.875rem;">4.8</span>
+                <div class="star-set">
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px; fill: currentColor;">star</span>
+                    <span class="material-symbols-outlined" style="font-size: 14px;">star_half</span>
                 </div>
                 <span class="rating-count">(5,210)</span>
             </div>
@@ -352,13 +566,11 @@
             <div class="col-span-2-lg">
                 <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
                     <div class="logo-icon" style="width: 2.25rem; height: 2.25rem;">
-                        <span class="material-symbols-outlined" style="font-size: 1.25rem;">code</span>
+                        <span class="material-symbols-outlined" style="font-size: 1.25rem;">science</span>
                     </div>
-                    <span style="font-size: 1.25rem; font-weight: 700; color: white;">Lykos.eng</span>
+                    <span style="font-size: 1.25rem; font-weight: 700; color: white;">ChemAcademy</span>
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 2rem; max-width: 300px;">
-                    The premier platform for programming education, software development training, and tech career advancement.
-                </p>
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 2rem; max-width: 300px;">The world's premier digital infrastructure for chemical education, molecular research, and laboratory training.</p>
                 <div class="flex table" style="gap: 1.25rem;">
                     <a href="#" class="btn-icon"><span class="material-symbols-outlined">public</span></a>
                     <a href="#" class="btn-icon"><span class="material-symbols-outlined">mail</span></a>
@@ -369,45 +581,45 @@
             <div>
                 <h4 class="footer-heading">Programs</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Career Paths</a></li>
-                    <li><a href="#">Certifications</a></li>
-                    <li><a href="#">Enterprise Training</a></li>
-                    <li><a href="#">University Partnerships</a></li>
+                    <li><a href="#">Degree Tracks</a></li>
+                    <li><a href="#">Lab Certifications</a></li>
+                    <li><a href="#">Enterprise Research</a></li>
+                    <li><a href="#">Academic Partnerships</a></li>
                 </ul>
             </div>
 
             <div>
                 <h4 class="footer-heading">Resources</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Code Sandbox</a></li>
-                    <li><a href="#">Documentation</a></li>
-                    <li><a href="#">Tech Blog</a></li>
-                    <li><a href="#">API Reference</a></li>
+                    <li><a href="#">Simulation Tools</a></li>
+                    <li><a href="#">Safety Protocols</a></li>
+                    <li><a href="#">Journal Access</a></li>
+                    <li><a href="#">API Documentation</a></li>
                 </ul>
             </div>
 
             <div>
-                <h4 class="footer-heading">Community</h4>
+                <h4 class="footer-heading">Global</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Developer Forum</a></li>
-                    <li><a href="#">Tech Blog</a></li>
-                    <li><a href="#">Partners</a></li>
+                    <li><a href="#">Student Forum</a></li>
+                    <li><a href="#">Research Blog</a></li>
+                    <li><a href="#">Affiliates</a></li>
                     <li><a href="#">Scholarships</a></li>
                 </ul>
             </div>
 
             <div class="col-span-2-lg">
                 <h4 class="footer-heading">Newsletter</h4>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.5rem;">Stay updated on the latest programming trends, frameworks, and tech innovations.</p>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.5rem;">Stay updated on breakthroughs in synthetic and computational chemistry.</p>
                 <div class="flex-col" style="gap: 0.5rem;">
-                    <input class="newsletter-input" placeholder="developer@company.com" type="email" />
+                    <input class="newsletter-input" placeholder="researcher@lab.edu" type="email" />
                     <button class="btn-sub">Subscribe</button>
                 </div>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <p>© 2024 Lykos.eng Education Platform. Code Your Future.</p>
+            <p>© 2024 ChemAcademy Education Inc. Molecularly Precise Education.</p>
             <div class="flex" style="gap: 2.5rem;">
                 <a href="#" style="color: inherit; text-decoration: none;">Terms</a>
                 <a href="#" style="color: inherit; text-decoration: none;">Privacy</a>
@@ -416,10 +628,9 @@
         </div>
     </footer>
 
-    <!-- Dark/Light Mode Toggle -->
-    <button class="btn-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-        <span class="material-symbols-outlined dark-icon" style="font-weight: 700;">dark_mode</span>
-        <span class="material-symbols-outlined light-icon" style="font-weight: 700;">light_mode</span>
+    <!-- Dark Mode Toggle -->
+    <button class="btn-theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
+        <span class="material-symbols-outlined" style="font-weight: 700;">dark_mode</span>
     </button>
 
     <script type="module" src="js/main.js"></script>

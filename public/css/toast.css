@@ -2,81 +2,64 @@
 .toast-container {
     position: fixed;
     top: 5rem;
-    right: 1rem;
-    z-index: 100;
+    right: 1.5rem;
+    z-index: 9999;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
     pointer-events: none;
 }
 
 .toast {
+    pointer-events: auto;
+    background-color: var(--card-dark);
+    color: var(--text-primary);
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-med);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 1rem 1.5rem;
-    background-color: rgba(10, 10, 10, 0.98);
-    border: 1px solid var(--border-med);
-    border-radius: 0.75rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(12px);
     min-width: 300px;
-    max-width: 400px;
-    pointer-events: auto;
-    animation: slideIn 0.3s ease-out;
+    opacity: 0;
+    transform: translateX(100%);
+    animation: toast-in 0.5s forwards;
+    backdrop-filter: blur(12px);
 }
 
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-.toast-icon {
-    flex-shrink: 0;
-    font-size: 1.5rem !important;
+.toast.toast-out {
+    animation: toast-out 0.5s forwards;
 }
 
 .toast-success {
-    border-left: 4px solid #10b981;
-}
-
-.toast-success .toast-icon {
-    color: #10b981;
+    border-left: 4px solid var(--primary);
 }
 
 .toast-error {
     border-left: 4px solid #ef4444;
-}
-
-.toast-error .toast-icon {
-    color: #ef4444;
+    /* Red-500 */
 }
 
 .toast-info {
-    border-left: 4px solid var(--primary);
+    border-left: 4px solid var(--secondary);
 }
 
-.toast-info .toast-icon {
-    color: var(--primary);
+@keyframes toast-in {
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-.toast span:last-child {
-    color: var(--text-primary);
-    font-size: 0.875rem;
-    line-height: 1.5;
+@keyframes toast-out {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
 }
