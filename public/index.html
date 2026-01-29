@@ -298,12 +298,73 @@
               <span class="material-symbols-outlined">add_circle</span> Create
               Course
             </button>
+            <button id="btn-manage-categories" class="btn-dashboard hidden">
+              <span class="material-symbols-outlined">category</span> Manage
+              Categories
+            </button>
             <button id="btn-view-profile" class="btn-dashboard">
               <span class="material-symbols-outlined">person</span> View Profile
             </button>
             <button id="btn-logout" class="btn-dashboard outline">
               <span class="material-symbols-outlined">logout</span> Logout
             </button>
+          </div>
+        </div>
+
+        <!-- Categories Management View (Instructors Only) -->
+        <div id="auth-categories-view" class="auth-face hidden">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 1.5rem;
+            "
+          >
+            <h3 class="auth-title" style="margin: 0">Manage Categories</h3>
+            <button id="btn-back-from-categories" class="btn-icon">
+              <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+          </div>
+
+          <form id="category-create-form" style="margin-bottom: 1.5rem">
+            <div style="margin-bottom: 1rem">
+              <label class="auth-label">New Category Name</label>
+              <div style="display: flex; gap: 0.5rem">
+                <input
+                  id="new-category-name"
+                  type="text"
+                  class="auth-input"
+                  placeholder="e.g., Web Development"
+                  required
+                  style="flex: 1"
+                />
+                <button
+                  type="submit"
+                  class="btn-auth-submit"
+                  style="width: auto; padding: 0 1.5rem"
+                >
+                  <span
+                    class="material-symbols-outlined"
+                    style="font-size: 1.25rem"
+                    >add</span
+                  >
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div>
+            <label
+              class="auth-label"
+              style="margin-bottom: 0.75rem; display: block"
+              >Existing Categories</label
+            >
+            <div id="categories-list" class="categories-container">
+              <p style="color: var(--text-muted); text-align: center">
+                Loading...
+              </p>
+            </div>
           </div>
         </div>
 

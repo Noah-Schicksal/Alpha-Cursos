@@ -151,11 +151,12 @@ export const Auth = {
 
     const cardInner = document.getElementById('auth-card');
     const loginFace = cardInner?.querySelector(
-      '.auth-face:not(.auth-face-back):not(#auth-logged-in):not(#auth-profile-view):not(#auth-profile-edit)',
+      '.auth-face:not(.auth-face-back):not(#auth-logged-in):not(#auth-profile-view):not(#auth-profile-edit):not(#auth-categories-view)',
     ) as HTMLElement;
     const loggedInFace = document.getElementById('auth-logged-in');
     const profileViewFace = document.getElementById('auth-profile-view');
     const profileEditFace = document.getElementById('auth-profile-edit');
+    const categoriesViewFace = document.getElementById('auth-categories-view');
     const registerFace = cardInner?.querySelector(
       '.auth-face-back',
     ) as HTMLElement;
@@ -168,6 +169,7 @@ export const Auth = {
       loggedInFace.classList.remove('hidden');
       if (profileViewFace) profileViewFace.classList.add('hidden');
       if (profileEditFace) profileEditFace.classList.add('hidden');
+      if (categoriesViewFace) categoriesViewFace.classList.add('hidden');
 
       cardInner?.classList.remove('flipped');
 
@@ -189,13 +191,18 @@ export const Auth = {
 
       const btnInstructor = document.getElementById('btn-instructor-dash');
       const btnCreateCourse = document.getElementById('btn-create-course');
+      const btnManageCategories = document.getElementById(
+        'btn-manage-categories',
+      );
 
       if (userRole === 'instructor') {
         if (btnInstructor) btnInstructor.classList.remove('hidden');
         if (btnCreateCourse) btnCreateCourse.classList.remove('hidden');
+        if (btnManageCategories) btnManageCategories.classList.remove('hidden');
       } else {
         if (btnInstructor) btnInstructor.classList.add('hidden');
         if (btnCreateCourse) btnCreateCourse.classList.add('hidden');
+        if (btnManageCategories) btnManageCategories.classList.add('hidden');
       }
 
       if (userAvatarBtn) userAvatarBtn.style.borderColor = 'var(--primary)';
@@ -205,6 +212,7 @@ export const Auth = {
       loggedInFace.classList.add('hidden');
       if (profileViewFace) profileViewFace.classList.add('hidden');
       if (profileEditFace) profileEditFace.classList.add('hidden');
+      if (categoriesViewFace) categoriesViewFace.classList.add('hidden');
       if (registerFace) registerFace.classList.remove('hidden');
 
       if (userAvatarBtn)

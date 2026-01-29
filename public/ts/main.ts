@@ -3,10 +3,12 @@
  */
 import { AppUI } from './utils/ui.js';
 import { Auth } from './modules/auth.js';
+import { Categories } from './modules/categories.js';
 
-// Expose UI to window for debugging or legacy scripts if needed
+// Expose to window for debugging or legacy scripts if needed
 (window as any).ui = AppUI;
 (window as any).auth = Auth;
+(window as any).categories = Categories;
 
 document.addEventListener('DOMContentLoaded', () => {
   // Check Auth Status immediately
@@ -213,6 +215,70 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       await Auth.deleteUserAccount();
     });
+  }
+
+  // Handle Manage Categories
+  const btnManageCategories = document.getElementById('btn-manage-categories');
+  if (btnManageCategories) {
+    btnManageCategories.addEventListener('click', (e) => {
+      e.preventDefault();
+      showCategoriesView();
+    });
+  }
+
+  // Handle Back from Categories
+  const btnBackFromCategories = document.getElementById(
+    'btn-back-from-categories',
+  );
+  if (btnBackFromCategories) {
+    btnBackFromCategories.addEventListener('click', (e) => {
+      e.preventDefault();
+      Auth.updateAuthUI();
+    });
+  }
+
+  // Handle Category Create Form
+  const categoryCreateForm = document.getElementById('category-create-form');
+  if (categoryCreateForm) {
+    categoryCreateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById(
+        'new-category-name',
+      ) as HTMLInputElement;
+      if (!nameInput.value.trim()) {
+        AppUI.showMessage(
+          'Por favor, digite um nome para a categoria.',
+          'error',
+        );
+        return;
+      }
+
+      try {
+        await Categories.create(nameInput.value.trim());
+        nameInput.value = '';
+        Categories.renderCategoriesList('categories-list');
+      } catch (error) {
+        console.error('Error creating category:', error);
+      }
+    });
+  }
+
+  // Function to show categories view
+  function showCategoriesView() {
+    const loggedInFace = document.getElementById('auth-logged-in');
+    const profileViewFace = document.getElementById('auth-profile-view');
+    const profileEditFace = document.getElementById('auth-profile-edit');
+    const categoriesViewFace = document.getElementById('auth-categories-view');
+
+    if (loggedInFace) loggedInFace.classList.add('hidden');
+    if (profileViewFace) profileViewFace.classList.add('hidden');
+    if (profileEditFace) profileEditFace.classList.add('hidden');
+    if (categoriesViewFace) {
+      categoriesViewFace.classList.remove('hidden');
+      // Load categories when view is shown
+      Categories.renderCategoriesList('categories-list');
+    }
   }
 
   // Handle Register
