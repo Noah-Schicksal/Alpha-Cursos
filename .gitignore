@@ -28,3 +28,4 @@ dist/
 storage/
 package-lock.json
 
+.agent

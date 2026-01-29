@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>ChemAcademy | Master the Science of Matter</title>
+  <title>Instructor Dashboard | ChemAcademy</title>
 
   <!-- Fonts -->
   <link
@@ -14,19 +14,27 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
     rel="stylesheet" />
 
-  <!-- Local Styles (No Frameworks) -->
+  <!-- Local Styles -->
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/instructor.css" />
 </head>
 
 <body class="molecular-bg">
   <!-- Navbar -->
   <nav class="navbar">
-    <div class="container-xl nav-inner">
-      <div class="logo-container">
-        <div class="logo-icon">
-          <span class="material-symbols-outlined">science</span>
+    <div class="nav-inner" style="padding: 0 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="/" class="btn-secondary"
+          style="padding: 0.5rem 1rem; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+          <span class="material-symbols-outlined" style="font-size: 1.2rem;">arrow_back</span>
+          Voltar
+        </a>
+        <div class="logo-container">
+          <div class="logo-icon">
+            <span class="material-symbols-outlined">science</span>
+          </div>
+          <span class="logo-text hidden lg:block">ChemAcademy</span>
         </div>
-        <span class="logo-text hidden lg:block">ChemAcademy</span>
       </div>
 
       <button class="btn-nav hidden md:flex">
@@ -44,6 +52,7 @@
 
       <!-- Right Actions -->
       <div class="nav-right-actions">
+
         <div class="nav-links-xl">
           <a href="#">Solutions</a>
           <a href="#">Teach</a>
@@ -195,7 +204,10 @@
             <span class="material-symbols-outlined">dashboard</span>
             Instructor Dashboard
           </button>
-
+          <button id="btn-create-course" class="btn-dashboard hidden">
+            <span class="material-symbols-outlined">add_circle</span> Create
+            Course
+          </button>
           <button id="btn-manage-categories" class="btn-dashboard hidden">
             <span class="material-symbols-outlined">category</span> Manage
             Categories
@@ -224,25 +236,17 @@
         </div>
 
         <form id="category-create-form" style="margin-bottom: 1.5rem">
-          <div style="margin-bottom: 1rem">
+          <div style="margin-bottom: 0.75rem">
             <label class="auth-label">New Category Name</label>
-            <div style="display: flex; gap: 0.5rem">
-              <input id="new-category-name" type="text" class="auth-input" placeholder="e.g., Web Development" required
-                style="flex: 1" />
-              <button type="submit" class="btn-auth-submit" style="width: auto; padding: 0 1.5rem">
-                <span class="material-symbols-outlined" style="font-size: 1.25rem">add</span>
-              </button>
-            </div>
+            <input id="category-name-input" type="text" class="auth-input" placeholder="e.g., Quantum Chemistry" />
           </div>
+          <button type="submit" class="btn-auth-submit">Add Category</button>
         </form>
 
-        <div>
-          <label class="auth-label" style="margin-bottom: 0.75rem; display: block">Existing Categories</label>
-          <div id="categories-list" class="categories-container">
-            <p style="color: var(--text-muted); text-align: center">
-              Loading...
-            </p>
-          </div>
+        <div id="categories-list-container">
+          <p style="color: var(--text-muted); font-size: 0.875rem">
+            Loading categories...
+          </p>
         </div>
       </div>
 
@@ -254,7 +258,7 @@
               justify-content: space-between;
               margin-bottom: 1.5rem;
             ">
-          <h3 class="auth-title" style="margin: 0">My Profile</h3>
+          <h3 class="auth-title" style="margin: 0">Profile</h3>
           <button id="btn-back-from-profile" class="btn-icon">
             <span class="material-symbols-outlined">arrow_back</span>
           </button>
@@ -264,33 +268,28 @@
           <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--primary)">account_circle</span>
         </div>
 
-        <div style="text-align: left; width: 100%; margin-bottom: 1.5rem">
-          <div style="margin-bottom: 1rem">
-            <label class="auth-label">Name</label>
-            <p id="profile-view-name" style="color: var(--text-primary); font-weight: 500">
-              User Name
-            </p>
-          </div>
-          <div style="margin-bottom: 1rem">
-            <label class="auth-label">Email</label>
-            <p id="profile-view-email" style="color: var(--text-primary); font-weight: 500">
-              user@example.com
-            </p>
-          </div>
-          <div style="margin-bottom: 1rem">
-            <label class="auth-label">Role</label>
-            <p id="profile-view-role" style="color: var(--text-primary); font-weight: 500">
-              Student
-            </p>
-          </div>
+        <div style="margin-bottom: 1.5rem">
+          <label class="auth-label">Name</label>
+          <p id="profile-name-display" style="color: var(--text-primary); margin-bottom: 0.75rem">
+            User Name
+          </p>
+
+          <label class="auth-label">Email</label>
+          <p id="profile-email-display" style="color: var(--text-primary); margin-bottom: 0.75rem">
+            user@example.com
+          </p>
+
+          <label class="auth-label">Role</label>
+          <p id="profile-role-display" style="color: var(--text-primary)">
+            Student
+          </p>
         </div>
 
-        <div class="flex-col" style="width: 100%; gap: 0.75rem">
-          <button id="btn-edit-profile" class="btn-auth-submit">
-            <span class="material-symbols-outlined" style="font-size: 1.25rem">edit</span>
-            Edit Profile
+        <div class="flex-col gap-2" style="width: 100%">
+          <button id="btn-edit-profile" class="btn-dashboard">
+            <span class="material-symbols-outlined">edit</span> Edit Profile
           </button>
-          <button id="btn-delete-account" class="btn-dashboard outline" style="color: #ef4444; border-color: #ef4444">
+          <button id="btn-delete-account" class="btn-dashboard outline danger">
             <span class="material-symbols-outlined">delete</span> Delete
             Account
           </button>
@@ -312,18 +311,18 @@
         </div>
 
         <form id="profile-edit-form">
-          <div style="margin-bottom: 1rem">
+          <div style="margin-bottom: 0.75rem">
             <label class="auth-label">Name</label>
             <input id="edit-name" type="text" class="auth-input" placeholder="Your name" />
           </div>
-          <div style="margin-bottom: 1rem">
+          <div style="margin-bottom: 0.75rem">
             <label class="auth-label">Email</label>
-            <input id="edit-email" type="email" class="auth-input" placeholder="your@email.com" />
+            <input id="edit-email" type="email" class="auth-input" placeholder="your.email@example.com" />
           </div>
-          <div style="margin-bottom: 1rem">
-            <label class="auth-label">New Password (optional)</label>
+          <div style="margin-bottom: 0.75rem">
+            <label class="auth-label">New Password (leave blank to keep current)</label>
             <div class="password-input-wrapper">
-              <input id="edit-password" type="password" class="auth-input" placeholder="Leave empty to keep current" />
+              <input id="edit-password" type="password" class="auth-input" placeholder="••••••••" />
               <button type="button" class="btn-toggle-password" data-target="edit-password">
                 <span class="material-symbols-outlined">visibility</span>
               </button>
@@ -335,219 +334,153 @@
     </div>
   </div>
 
-  <main class="main-content">
-    <!-- Hero -->
-    <header class="hero-section">
-      <div class="container-xl">
-        <div class="hero-glow"></div>
-        <h1 class="hero-title">
-          Explore Nossos <span class="text-gradient">Cursos</span>
-        </h1>
-        <p class="hero-desc">
-          Expanda seus conhecimentos com cursos ministrados por especialistas em diversas áreas.
-          Tecnologia, Ciências, Negócios e muito mais para impulsionar sua carreira.
-        </p>
+  <!-- Main Container -->
+  <main class="dashboard-wrapper">
+    <!-- Left Sidebar: Course List -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">Meus Cursos</h2>
+        <button id="btn-create-new-course" class="btn-primary full-width">
+          <span class="material-symbols-outlined">add_circle</span> Criar Novo Curso
+        </button>
       </div>
-    </header>
 
-    <!-- Listing Section -->
-    <section id="courses-section" style="margin-bottom: 5rem">
-      <div class="container-xl">
-        <div class="flex justify-between items-center" style="margin-bottom: 2rem">
-          <div>
-            <h2 class="section-title">
-              <span class="material-symbols-outlined" style="color: var(--primary)">school</span>
-              Comece Sua Jornada
-            </h2>
-            <p style="font-size: 0.875rem; color: var(--text-muted)">
-              Currículo personalizado baseado nos seus interesses de aprendizado.
-            </p>
-          </div>
-        </div>
-
-
-
-        <!-- Filters Container -->
-        <div style="
-            display: flex; 
-            justify-content: center; 
-            max-width: 800px; 
-            margin: 0 auto 2rem auto; 
-            gap: 1rem;
-            flex-wrap: wrap;
-            padding: 0 1rem;
-        ">
-          <!-- Search Filter -->
-          <div style="flex: 2; min-width: 280px; position: relative;">
-            <span class="material-symbols-outlined" style="
-              position: absolute; 
-              left: 1rem; 
-              top: 50%; 
-              transform: translateY(-50%); 
-              color: #8b949e; 
-            ">search</span>
-            <input type="text" id="course-search" placeholder="Buscar cursos..." style="
-                width: 100%;
-                padding: 0.75rem 1rem 0.75rem 3rem;
-                background-color: #0d1117;
-                border: 1px solid #30363d;
-                border-radius: 2rem;
-                color: white;
-                font-size: 1rem;
-                outline: none;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-              ">
-          </div>
-
-          <!-- Category Filter -->
-          <div style="flex: 1; min-width: 200px;">
-            <select id="category-filter" style="
-                width: 100%;
-                padding: 0.75rem 1rem;
-                background-color: #0d1117;
-                border: 1px solid #30363d;
-                border-radius: 2rem;
-                color: white;
-                font-size: 1rem;
-                outline: none;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                cursor: pointer;
-                appearance: none;
-                background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-                background-repeat: no-repeat;
-                background-position: right 1rem center;
-                background-size: 0.65em auto;
-            ">
-              <option value="" style="background-color: #0d1117; color: white;">Todas Categorias</option>
-              <option disabled style="background-color: #0d1117; color: white;">Carregando...</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Pagination Top -->
-        <div id="pagination-top" style="
-              display: flex; 
-              justify-content: center; 
-              align-items: center; 
-              gap: 1rem; 
-              margin-bottom: 2rem;
-            ">
-        </div>
-
-        <div id="courses-grid" class="grid-cols-basic">
-          <!-- Courses will be loaded here dynamically -->
-          <p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2rem;">
-            Carregando cursos...
-          </p>
-        </div>
-
-        <!-- Pagination Bottom -->
-        <div id="pagination-bottom" style="
-              display: flex; 
-              justify-content: center; 
-              align-items: center; 
-              gap: 1rem; 
-              margin-top: 3rem;
-            ">
+      <div id="courses-sidebar-list" class="sidebar-list">
+        <!-- List items will be injected here -->
+        <div class="sidebar-loading">
+          <span class="material-symbols-outlined spin">sync</span> Carregando...
         </div>
       </div>
-    </section>
+    </aside>
 
-
-
-    <!-- Trusted By -->
-    <section style="
-          margin-bottom: 2.5rem;
-          padding: 3rem 0;
-          border-top: 1px solid var(--border-light);
-          border-bottom: 1px solid var(--border-light);
-        ">
-      <div class="container-xl">
-        <h2 class="text-center" style="
-              font-size: 0.625rem;
-              font-weight: 900;
-              text-transform: uppercase;
-              letter-spacing: 0.4em;
-              color: var(--text-muted);
-              margin-bottom: 3rem;
-            ">
-          Reconhecido por Grandes Instituições
-        </h2>
-        <div class="trusted-grid">
-          <div class="brand-item">
-            <span class="material-symbols-outlined" style="font-size: 2rem">biotech</span>
-            OXFORD LABS
-          </div>
-          <div class="brand-item">
-            <span class="material-symbols-outlined" style="font-size: 2rem">genetics</span>
-            GENE-TECH
-          </div>
-          <div class="brand-item">
-            <span class="material-symbols-outlined" style="font-size: 2rem">grid_view</span>
-            NANO-SCIENCE
-          </div>
-          <div class="brand-item">
-            <span class="material-symbols-outlined" style="font-size: 2rem">hub</span>
-            MOLECULAR.AI
-          </div>
-        </div>
+    <!-- Right Content: Detail/Form View -->
+    <section id="dashboard-content" class="dashboard-main-view">
+      <div class="empty-state-view">
+        <span class="material-symbols-outlined" style="font-size: 4rem; color: var(--text-muted);">arrow_back</span>
+        <h3>Selecione um curso</h3>
+        <p>Escolha um curso na lista lateral para ver detalhes ou editar.</p>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-grid">
-      <!-- Brand Col -->
-      <div class="col-span-2-lg" style="grid-column: span 5; text-align: center;">
-        <div style="
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 0.75rem;
-              margin-bottom: 2rem;
-            ">
-          <div class="logo-icon" style="width: 2.25rem; height: 2.25rem">
-            <span class="material-symbols-outlined" style="font-size: 1.25rem">science</span>
+  <!-- Templates (Hidden) -->
+  <template id="template-course-form">
+    <div class="content-header">
+      <h2 id="form-view-title" class="page-title">Novo Curso</h2>
+    </div>
+    <form id="course-inline-form" class="form-panel">
+      <input type="hidden" id="course-id" />
+
+      <div class="form-group">
+        <label class="form-label">Título do Curso *</label>
+        <input id="course-title" type="text" class="form-input" placeholder="ex: Química Orgânica Avançada" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Descrição *</label>
+        <textarea id="course-description" class="form-input" rows="5" placeholder="Descreva seu curso..."
+          required></textarea>
+      </div>
+
+      <div class="form-row three-col">
+        <div class="form-group">
+          <label class="form-label">Preço (R$) *</label>
+          <input id="course-price" type="text" class="form-input" placeholder="0,00" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categoria *</label>
+          <select id="course-category" class="form-input" required>
+            <option value="">Carregando...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Máx. Alunos</label>
+          <input id="course-max-students" type="number" min="1" class="form-input" placeholder="Ilimitado" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Imagem de Capa</label>
+        <div class="file-upload-wrapper">
+          <input id="course-cover" type="file" accept="image/*" class="form-input" />
+          <div id="cover-preview-container"></div>
+        </div>
+      </div>
+
+      <div class="form-actions-bar">
+        <button type="button" id="btn-cancel-form" class="btn-secondary">Cancelar</button>
+        <button type="submit" class="btn-primary">Salvar Curso</button>
+      </div>
+    </form>
+  </template>
+
+  <!-- Custom Confirm Modal -->
+  <div id="delete-confirm-modal" class="custom-modal-overlay">
+    <div class="custom-modal-box">
+      <h3 class="modal-title">Confirmar Exclusão</h3>
+      <p id="modal-msg" class="modal-message">Tem certeza que deseja excluir? Esta ação não pode ser desfeita.</p>
+      <div class="modal-actions">
+        <button id="btn-modal-cancel" class="btn-secondary">Cancelar</button>
+        <button id="btn-modal-confirm" class="btn-danger-fill">Sim, Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <template id="template-course-detail">
+    <div class="detail-header">
+      <div class="detail-title-wrapper">
+        <h1 id="detail-title" class="detail-title">Course Title</h1>
+        <div class="detail-badges">
+          <span id="detail-category" class="badge-tag">Category</span>
+        </div>
+      </div>
+      <div class="detail-actions">
+        <button id="btn-edit-current" class="btn-secondary">
+          <span class="material-symbols-outlined">edit</span> Editar
+        </button>
+        <button id="btn-delete-current" class="btn-danger-outline">
+          <span class="material-symbols-outlined">delete</span> Excluir
+        </button>
+      </div>
+    </div>
+
+    <!-- Rest of template remains same -->
+    <div class="detail-cover-banner" id="detail-cover">
+      <!-- Cover image goes here -->
+    </div>
+
+    <div class="detail-body">
+      <div class="detail-section" id="course-description-section">
+        <h3>Sobre o Curso</h3>
+        <p id="detail-description">Course description...</p>
+      </div>
+
+      <div class="detail-section" id="course-content-section">
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--dash-border); padding-bottom: 0.5rem;">
+          <h3 style="margin: 0; border: none;">Conteúdo do Curso</h3>
+          <button id="btn-toggle-content" class="btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+            <span class="material-symbols-outlined" style="font-size: 1rem;">edit_note</span>
+            Editar Conteúdo
+          </button>
+        </div>
+
+        <div id="course-content-area" class="hidden">
+          <!-- Tree Content Will Be Injected Here -->
+          <div class="sidebar-loading">
+            <span class="material-symbols-outlined spin">sync</span> Carregando...
           </div>
-          <span style="font-size: 1.25rem; font-weight: 700; color: white">ChemAcademy</span>
         </div>
-        <p style="
-              color: var(--text-muted);
-              font-size: 0.875rem;
-              margin-bottom: 2rem;
-              max-width: 500px;
-              margin-left: auto;
-              margin-right: auto;
-            ">
-          The world's premier digital infrastructure for chemical education,
-          molecular research, and laboratory training.
-        </p>
-        <div class="flex table" style="gap: 1.25rem; margin: 0 auto; justify-content: center;">
-          <a href="#" class="btn-icon"><span class="material-symbols-outlined">public</span></a>
-          <a href="#" class="btn-icon"><span class="material-symbols-outlined">mail</span></a>
-          <a href="#" class="btn-icon"><span class="material-symbols-outlined">forum</span></a>
+
+        <!-- Summary View (when collapsed) -->
+        <div id="course-content-summary">
+          <p class="text-muted">Clique em "Editar Conteúdo" para gerenciar módulos e aulas.</p>
         </div>
       </div>
-
     </div>
+  </template>
 
-    <div class="footer-bottom">
-      <p>© 2024 ChemAcademy Education Inc. Molecularly Precise Education.</p>
-      <div class="flex" style="gap: 2.5rem">
-        <a href="#" style="color: inherit; text-decoration: none">Terms</a>
-        <a href="#" style="color: inherit; text-decoration: none">Privacy</a>
-        <a href="#" style="color: inherit; text-decoration: none">Security</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Dark Mode Toggle -->
-  <button class="btn-theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
-    <span class="material-symbols-outlined" style="font-weight: 700">dark_mode</span>
-  </button>
-
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/instructor.js"></script>
 </body>
 
 </html>

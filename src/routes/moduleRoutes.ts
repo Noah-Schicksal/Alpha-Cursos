@@ -8,17 +8,6 @@ const moduleRoutes = Router();
 const moduleController = new ModuleController();
 const classController = new ClassController();
 
-// Rotas de módulos de cursos (sub-recurso de courses)
-moduleRoutes.get('/courses/:id/modules', (req, res) =>
-  moduleController.listByCourse(req, res),
-);
-moduleRoutes.post(
-  '/courses/:id/modules',
-  authMiddleware,
-  roleMiddleware(['INSTRUCTOR']),
-  (req, res) => moduleController.create(req, res),
-);
-
 // Operações diretas em módulos
 moduleRoutes.get('/:id', (req, res) => moduleController.show(req, res));
 moduleRoutes.put(
