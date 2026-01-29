@@ -337,56 +337,119 @@
 
   <main class="main-content">
     <!-- Hero -->
-    <header class="hero-header">
-      <div class="hero-glow"></div>
-      <h1 class="hero-title">
-        Chemistry Mastery <span class="text-gradient">Courses</span>
-      </h1>
-      <p class="hero-desc">
-        Unravel the molecular world with expert-led courses. From orbital
-        mechanics to complex organic synthesis, master the science of matter.
-      </p>
+    <header class="hero-section">
+      <div class="container-xl">
+        <div class="hero-glow"></div>
+        <h1 class="hero-title">
+          Explore Nossos <span class="text-gradient">Cursos</span>
+        </h1>
+        <p class="hero-desc">
+          Expanda seus conhecimentos com cursos ministrados por especialistas em diversas áreas.
+          Tecnologia, Ciências, Negócios e muito mais para impulsionar sua carreira.
+        </p>
+      </div>
     </header>
 
     <!-- Listing Section -->
-    <section style="margin-bottom: 5rem">
-      <div class="flex justify-between items-center" style="margin-bottom: 2rem">
-        <div>
-          <h2 class="section-title">
-            <span class="material-symbols-outlined" style="color: var(--primary)">biotech</span>
-            Start Your Lab Journey
-          </h2>
-          <p style="font-size: 0.875rem; color: var(--text-muted)">
-            Personalized curriculum based on your research interests.
-          </p>
+    <section id="courses-section" style="margin-bottom: 5rem">
+      <div class="container-xl">
+        <div class="flex justify-between items-center" style="margin-bottom: 2rem">
+          <div>
+            <h2 class="section-title">
+              <span class="material-symbols-outlined" style="color: var(--primary)">school</span>
+              Comece Sua Jornada
+            </h2>
+            <p style="font-size: 0.875rem; color: var(--text-muted)">
+              Currículo personalizado baseado nos seus interesses de aprendizado.
+            </p>
+          </div>
         </div>
-        <!-- Nav Arrows -->
-        <div class="flex gap-2">
-          <button class="btn-icon" style="border: 1px solid var(--border-med); border-radius: 0.5rem">
-            <span class="material-symbols-outlined">chevron_left</span>
-          </button>
-          <button class="btn-icon" style="border: 1px solid var(--border-med); border-radius: 0.5rem">
-            <span class="material-symbols-outlined">chevron_right</span>
-          </button>
-        </div>
-      </div>
 
-      <div id="courses-grid" class="grid-cols-basic">
-        <!-- Courses will be loaded here dynamically -->
-        <p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2rem;">
-          Loading courses...
-        </p>
-      </div>
 
-      <!-- Pagination Controls -->
-      <div id="pagination-controls" style="
+
+        <!-- Filters Container -->
+        <div style="
             display: flex; 
             justify-content: center; 
-            align-items: center; 
-            gap: 1rem; 
-            margin-top: 3rem;
-          ">
-        <!-- Dynamically populated -->
+            max-width: 800px; 
+            margin: 0 auto 2rem auto; 
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        ">
+          <!-- Search Filter -->
+          <div style="flex: 2; min-width: 280px; position: relative;">
+            <span class="material-symbols-outlined" style="
+              position: absolute; 
+              left: 1rem; 
+              top: 50%; 
+              transform: translateY(-50%); 
+              color: #8b949e; 
+            ">search</span>
+            <input type="text" id="course-search" placeholder="Buscar cursos..." style="
+                width: 100%;
+                padding: 0.75rem 1rem 0.75rem 3rem;
+                background-color: #0d1117;
+                border: 1px solid #30363d;
+                border-radius: 2rem;
+                color: white;
+                font-size: 1rem;
+                outline: none;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+              ">
+          </div>
+
+          <!-- Category Filter -->
+          <div style="flex: 1; min-width: 200px;">
+            <select id="category-filter" style="
+                width: 100%;
+                padding: 0.75rem 1rem;
+                background-color: #0d1117;
+                border: 1px solid #30363d;
+                border-radius: 2rem;
+                color: white;
+                font-size: 1rem;
+                outline: none;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+                appearance: none;
+                background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+                background-repeat: no-repeat;
+                background-position: right 1rem center;
+                background-size: 0.65em auto;
+            ">
+              <option value="" style="background-color: #0d1117; color: white;">Todas Categorias</option>
+              <option disabled style="background-color: #0d1117; color: white;">Carregando...</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Pagination Top -->
+        <div id="pagination-top" style="
+              display: flex; 
+              justify-content: center; 
+              align-items: center; 
+              gap: 1rem; 
+              margin-bottom: 2rem;
+            ">
+        </div>
+
+        <div id="courses-grid" class="grid-cols-basic">
+          <!-- Courses will be loaded here dynamically -->
+          <p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2rem;">
+            Carregando cursos...
+          </p>
+        </div>
+
+        <!-- Pagination Bottom -->
+        <div id="pagination-bottom" style="
+              display: flex; 
+              justify-content: center; 
+              align-items: center; 
+              gap: 1rem; 
+              margin-top: 3rem;
+            ">
+        </div>
       </div>
     </section>
 
@@ -399,32 +462,34 @@
           border-top: 1px solid var(--border-light);
           border-bottom: 1px solid var(--border-light);
         ">
-      <h2 class="text-center" style="
-            font-size: 0.625rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.4em;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-          ">
-        Trusted by Global Research Institutions
-      </h2>
-      <div class="trusted-grid">
-        <div class="brand-item">
-          <span class="material-symbols-outlined" style="font-size: 2rem">biotech</span>
-          OXFORD LABS
-        </div>
-        <div class="brand-item">
-          <span class="material-symbols-outlined" style="font-size: 2rem">genetics</span>
-          GENE-TECH
-        </div>
-        <div class="brand-item">
-          <span class="material-symbols-outlined" style="font-size: 2rem">grid_view</span>
-          NANO-SCIENCE
-        </div>
-        <div class="brand-item">
-          <span class="material-symbols-outlined" style="font-size: 2rem">hub</span>
-          MOLECULAR.AI
+      <div class="container-xl">
+        <h2 class="text-center" style="
+              font-size: 0.625rem;
+              font-weight: 900;
+              text-transform: uppercase;
+              letter-spacing: 0.4em;
+              color: var(--text-muted);
+              margin-bottom: 3rem;
+            ">
+          Reconhecido por Grandes Instituições
+        </h2>
+        <div class="trusted-grid">
+          <div class="brand-item">
+            <span class="material-symbols-outlined" style="font-size: 2rem">biotech</span>
+            OXFORD LABS
+          </div>
+          <div class="brand-item">
+            <span class="material-symbols-outlined" style="font-size: 2rem">genetics</span>
+            GENE-TECH
+          </div>
+          <div class="brand-item">
+            <span class="material-symbols-outlined" style="font-size: 2rem">grid_view</span>
+            NANO-SCIENCE
+          </div>
+          <div class="brand-item">
+            <span class="material-symbols-outlined" style="font-size: 2rem">hub</span>
+            MOLECULAR.AI
+          </div>
         </div>
       </div>
     </section>
