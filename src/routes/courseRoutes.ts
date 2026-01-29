@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { CourseController } from '../controllers/courseController';
+import { ModuleController } from '../controllers/moduleController';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { roleMiddleware } from '../middlewares/roleMiddleware';
 
@@ -11,6 +12,7 @@ const upload = multer({ dest: 'storage/temp/' });
 
 const courseRoutes = Router();
 const courseController = new CourseController();
+const moduleController = new ModuleController();
 
 // rotas públicas
 courseRoutes.get('/', (req, res) => courseController.index(req, res));
@@ -26,6 +28,17 @@ courseRoutes.get(
 courseRoutes.get('/:id', (req, res) => courseController.show(req, res));
 courseRoutes.get('/:id/cover', (req, res) =>
   courseController.getCover(req, res),
+);
+
+// Rotas de módulos do curso (sub-recurso)
+courseRoutes.get('/:id/modules', (req, res) =>
+  moduleController.listByCourse(req, res),
+);
+courseRoutes.post(
+  '/:id/modules',
+  authMiddleware,
+  roleMiddleware(['INSTRUCTOR']),
+  (req, res) => moduleController.create(req, res),
 );
 
 // rotas privadas (apenas instrutores)
