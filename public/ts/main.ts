@@ -226,6 +226,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Handle Instructor Dashboard
+  const btnInstructorDash = document.getElementById('btn-instructor-dash');
+  if (btnInstructorDash) {
+    btnInstructorDash.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'instructor.html';
+    });
+  }
+
   // Handle Back from Categories
   const btnBackFromCategories = document.getElementById(
     'btn-back-from-categories',

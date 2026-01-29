@@ -72,6 +72,8 @@ export const Auth = {
         Auth.updateAuthUI();
         return userData;
       }
+
+      return null;
     } catch (error: any) {
       AppUI.showMessage(error.message || 'Erro ao buscar perfil', 'error');
       throw error;
