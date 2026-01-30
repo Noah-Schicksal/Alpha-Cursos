@@ -17,7 +17,7 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --primary-glow: rgba(0, 245, 212, 0.1);
+    --primary-glow: rgba(94, 23, 235, 0.1);
 }
 
 .cart-modal-container.show {

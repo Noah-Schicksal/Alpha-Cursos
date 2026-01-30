@@ -1,18 +1,19 @@
 /* Dashboard Theme Variables */
 :root {
-    --dash-bg: #0d1117;
-    /* Dark background like GitHub Dimmed */
-    --dash-sidebar: #161b22;
+    --dash-bg: #000000;
+    /* Pure Black */
+    --dash-sidebar: #0a0a0a;
     /* Slightly lighter sidebar */
-    --dash-border: #30363d;
+    --dash-border: rgba(94, 23, 235, 0.2);
     /* Subtle border */
-    --dash-primary: #00e5ff;
-    /* Cyan/Teal accent */
-    --dash-primary-hover: #00b8ce;
-    --dash-text-main: #c9d1d9;
-    --dash-text-muted: #8b949e;
-    --dash-card: #161b22;
-    --dash-card-hover: #1f2428;
+    --dash-primary: #5e17eb;
+    /* Vibrant Purple */
+    --dash-primary-hover: #004953;
+    /* Deep Teal */
+    --dash-text-main: #f1f5f9;
+    --dash-text-muted: #64748b;
+    --dash-card: #0a0a0a;
+    --dash-card-hover: rgba(94, 23, 235, 0.1);
 }
 
 /* Dashboard Split Layout */
@@ -246,7 +247,7 @@ h5 {
 .form-input {
     width: 100%;
     padding: 0.75rem;
-    background-color: #0d1117;
+    background-color: var(--dash-bg);
     /* Input darkest bg */
     border: 1px solid var(--dash-border);
     border-radius: 0.375rem;
@@ -258,7 +259,7 @@ h5 {
 .form-input:focus {
     outline: none;
     border-color: var(--dash-primary);
-    box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.1);
+    box-shadow: 0 0 0 2px rgba(94, 23, 235, 0.1);
 }
 
 .form-actions-bar {
@@ -336,9 +337,9 @@ h5 {
     font-size: 0.75rem;
     padding: 2px 8px;
     border-radius: 12px;
-    background-color: rgba(0, 229, 255, 0.1);
+    background-color: rgba(94, 23, 235, 0.1);
     color: var(--dash-primary);
-    border: 1px solid rgba(0, 229, 255, 0.2);
+    border: 1px solid rgba(94, 23, 235, 0.2);
     font-weight: 600;
     white-space: nowrap;
     /* Prevent breaking inside badge */
@@ -507,8 +508,8 @@ h5 {
 }
 
 .btn-secondary:hover {
-    background-color: #30363d;
-    border-color: var(--dash-text-muted);
+    background-color: rgba(94, 23, 235, 0.1);
+    border-color: var(--dash-primary);
 }
 
 .btn-danger-outline {
@@ -601,7 +602,7 @@ h5 {
 
 /* Tree Content Editor Styles */
 .tree-module-node {
-    background-color: #161b22;
+    background-color: var(--dash-sidebar);
     border: 1px solid var(--dash-border);
     border-radius: 0.5rem;
     margin-bottom: 1rem;
@@ -634,7 +635,7 @@ h5 {
 }
 
 .tree-class-item {
-    background-color: #0d1117;
+    background-color: var(--dash-bg);
     border: 1px solid var(--dash-border);
     border-radius: 0.375rem;
     margin-bottom: 0.5rem;
@@ -675,7 +676,7 @@ h5 {
 }
 
 .tree-input {
-    background-color: #161b22;
+    background-color: var(--dash-sidebar);
     border: 1px solid var(--dash-border);
     color: white;
     padding: 0.25rem 0.5rem;

@@ -4,11 +4,11 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Painel do Instrutor | ChemAcademy</title>
+  <title>Painel do Instrutor | Lykos</title>
 
   <!-- Fonts -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Fira+Code:wght@400&amp;display=swap"
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -31,9 +31,9 @@
         </a>
         <div class="logo-container">
           <div class="logo-icon">
-            <span class="material-symbols-outlined">science</span>
+            <span class="material-symbols-outlined">school</span>
           </div>
-          <span class="logo-text hidden lg:block">ChemAcademy</span>
+          <span class="logo-text hidden lg:block">Lykos</span>
         </div>
       </div>
 
@@ -47,7 +47,7 @@
         <div class="search-icon-wrapper">
           <span class="material-symbols-outlined" style="font-size: 1.25rem">search</span>
         </div>
-        <input class="search-input" placeholder="Buscar mecanismos, termodinâmica..." type="text" />
+        <input class="search-input" placeholder="Buscar cursos, tópicos..." type="text" />
       </div>
 
       <!-- Right Actions -->
@@ -131,7 +131,7 @@
           </div>
           <div style="margin-bottom: 0.5rem">
             <label class="auth-label">Email</label>
-            <input type="email" id="register-email" class="auth-input" placeholder="marie@science.org" required />
+            <input type="email" id="register-email" class="auth-input" placeholder="usuario@exemplo.com" required />
           </div>
           <div class="grid grid-2" style="gap: 0.5rem; margin-bottom: 0.5rem">
             <div>
@@ -234,7 +234,7 @@
         <form id="category-create-form" style="margin-bottom: 1.5rem">
           <div style="margin-bottom: 0.75rem">
             <label class="auth-label">Nome da Nova Categoria</label>
-            <input id="category-name-input" type="text" class="auth-input" placeholder="ex: Química Quântica" />
+            <input id="category-name-input" type="text" class="auth-input" placeholder="ex: Programação" />
           </div>
           <button type="submit" class="btn-auth-submit">Adicionar Categoria</button>
         </form>
@@ -369,7 +369,7 @@
 
       <div class="form-group">
         <label class="form-label">Título do Curso *</label>
-        <input id="course-title" type="text" class="form-input" placeholder="ex: Química Orgânica Avançada" required />
+        <input id="course-title" type="text" class="form-input" placeholder="ex: Desenvolvimento Web Avançado" required />
       </div>
 
       <div class="form-group">
@@ -428,7 +428,7 @@
       <h3 class="modal-title">Nova Categoria</h3>
       <div class="form-group" style="margin-top: 1rem;">
         <label class="form-label">Nome da Categoria</label>
-        <input id="modal-category-name" type="text" class="form-input" placeholder="Ex: Química Orgânica" />
+        <input id="modal-category-name" type="text" class="form-input" placeholder="Ex: Desenvolvimento Web" />
       </div>
       <div class="modal-actions">
         <button id="btn-cat-modal-cancel" class="btn-secondary">Cancelar</button>
