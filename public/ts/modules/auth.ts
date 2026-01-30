@@ -8,24 +8,29 @@ export const Auth = {
     window.addEventListener('session-expired', () => {
       console.log('[Auth] Session expired event received');
       // Clear data but don't call backend logout (token is already invalid)
+      const hadValidSession =
+        localStorage.getItem('auth_token') || localStorage.getItem('auth_user');
+
       localStorage.removeItem('auth_token');
       localStorage.removeItem('auth_user');
 
       Auth.updateAuthUI();
 
-      // Ensure auth card is shown effectively asking for login
-      const authContainer = document.getElementById('auth-card-container');
-      if (authContainer) {
-        authContainer.classList.add('show');
-        // Reset to login face if needed
-        const cardInner = document.getElementById('auth-card');
-        if (cardInner) {
-          cardInner.classList.remove('flipped');
-          const loginFace = document.getElementById('auth-login'); // Assuming ID or class logic in updateAuthUI handles this
+      // Only show message and auth card if user had a valid session
+      if (hadValidSession) {
+        // Ensure auth card is shown effectively asking for login
+        const authContainer = document.getElementById('auth-card-container');
+        if (authContainer) {
+          authContainer.classList.add('show');
+          // Reset to login face if needed
+          const cardInner = document.getElementById('auth-card');
+          if (cardInner) {
+            cardInner.classList.remove('flipped');
+          }
         }
-      }
 
-      AppUI.showMessage('Sua sessão expirou. Faça login novamente.', 'info');
+        AppUI.showMessage('Sua sessão expirou. Faça login novamente.', 'info');
+      }
     });
   },
 
@@ -235,8 +240,7 @@ export const Auth = {
       if (categoriesViewFace) categoriesViewFace.classList.add('hidden');
       if (registerFace) registerFace.classList.remove('hidden');
 
-      if (userAvatarBtn)
-        userAvatarBtn.style.borderColor = 'rgba(0, 245, 212, 0.5)';
+      if (userAvatarBtn) userAvatarBtn.style.borderColor = 'var(--primary)';
     }
   },
 
@@ -261,8 +265,7 @@ export const Auth = {
       if (nameEl) nameEl.textContent = user.name;
       if (emailEl) emailEl.textContent = user.email;
       if (roleEl)
-        roleEl.textContent =
-          user.role === 'INSTRUCTOR' ? 'Instrutor' : 'Aluno';
+        roleEl.textContent = user.role === 'INSTRUCTOR' ? 'Instrutor' : 'Aluno';
     }
   },
 

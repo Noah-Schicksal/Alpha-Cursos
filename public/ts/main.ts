@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Auth.updateAuthUI();
   Home.init();
 
-  console.log('ChemAcademy App Initialized');
+  console.log('Lykos App Initialized');
 
   // 1. Initialize Cart
   Cart.updateBadge();
@@ -57,7 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
       // Check if logged in before showing cart
       if (!localStorage.getItem('auth_user')) {
-        AppUI.showMessage('Por favor, faça login para ver seu carrinho.', 'info');
+        AppUI.showMessage(
+          'Por favor, faça login para ver seu carrinho.',
+          'info',
+        );
         const authContainer = document.getElementById('auth-card-container');
         if (authContainer) authContainer.classList.add('show');
         return;
@@ -90,7 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const checkoutBtn = document.getElementById('btn-cart-checkout');
   if (checkoutBtn) {
     checkoutBtn.addEventListener('click', async () => {
-      const confirm = await AppUI.promptModal('Finalizar Compra', 'Deseja confirmar a compra dos itens no carrinho?');
+      const confirm = await AppUI.promptModal(
+        'Finalizar Compra',
+        'Deseja confirmar a compra dos itens no carrinho?',
+      );
       if (confirm) {
         const success = await Cart.checkout();
         if (success) {
@@ -106,28 +112,36 @@ document.addEventListener('DOMContentLoaded', () => {
   async function renderCartItems() {
     const listContainer = document.getElementById('cart-items-list');
     const totalPriceEl = document.getElementById('cart-total-price');
-    const checkoutBtn = document.getElementById('btn-cart-checkout') as HTMLButtonElement;
+    const checkoutBtn = document.getElementById(
+      'btn-cart-checkout',
+    ) as HTMLButtonElement;
 
     if (!listContainer || !totalPriceEl) return;
 
-    listContainer.innerHTML = '<div class="cart-empty-msg">Carregando itens...</div>';
+    listContainer.innerHTML =
+      '<div class="cart-empty-msg">Carregando itens...</div>';
 
     try {
       const items = await Cart.getCart();
 
       if (items.length === 0) {
-        listContainer.innerHTML = '<div class="cart-empty-msg">Seu carrinho está vazio.</div>';
+        listContainer.innerHTML =
+          '<div class="cart-empty-msg">Seu carrinho está vazio.</div>';
         totalPriceEl.textContent = 'R$ 0,00';
         if (checkoutBtn) checkoutBtn.disabled = true;
         return;
       }
 
       let total = 0;
-      listContainer.innerHTML = items.map(item => {
-        total += item.price;
-        const price = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.price);
+      listContainer.innerHTML = items
+        .map((item) => {
+          total += item.price;
+          const price = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(item.price);
 
-        return `
+          return `
           <div class="cart-item">
             <img src="${item.coverImageUrl || 'https://placehold.co/100x60'}" class="cart-item-img" alt="${item.title}">
             <div class="cart-item-info">
@@ -139,14 +153,18 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>
           </div>
         `;
-      }).join('');
+        })
+        .join('');
 
-      totalPriceEl.textContent = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total);
+      totalPriceEl.textContent = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(total);
       if (checkoutBtn) checkoutBtn.disabled = false;
 
       // Add remove listeners
       const removeBtns = listContainer.querySelectorAll('.btn-remove-cart');
-      removeBtns.forEach(btn => {
+      removeBtns.forEach((btn) => {
         btn.addEventListener('click', async (e) => {
           const courseId = (btn as HTMLElement).dataset.id!;
           const success = await Cart.remove(courseId);
@@ -155,9 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       });
-
     } catch (error) {
-      listContainer.innerHTML = '<div class="cart-empty-msg" style="color: #ef4444">Erro ao carregar carrinho.</div>';
+      listContainer.innerHTML =
+        '<div class="cart-empty-msg" style="color: #ef4444">Erro ao carregar carrinho.</div>';
     }
   }
 
