@@ -53,8 +53,37 @@ const Player = {
             return;
         }
         Player.setupAuthUI(JSON.parse(user));
+        Player.setupSidebarToggle(); // Setup toggle logic
 
         await Player.loadCourseData();
+    },
+
+    setupSidebarToggle: () => {
+        const layout = document.querySelector('.player-layout');
+        const btnCollapse = document.getElementById('btn-collapse-sidebar');
+        const btnRestore = document.getElementById('btn-toggle-sidebar-restore');
+
+        if (!layout || !btnCollapse || !btnRestore) return;
+
+        const toggleSidebar = (collapse: boolean) => {
+            if (collapse) {
+                layout.classList.add('sidebar-collapsed');
+                btnRestore.classList.remove('hidden');
+                // Persist preference
+                localStorage.setItem('player_sidebar_collapsed', 'true');
+            } else {
+                layout.classList.remove('sidebar-collapsed');
+                btnRestore.classList.add('hidden');
+                localStorage.setItem('player_sidebar_collapsed', 'false');
+            }
+        };
+
+        btnCollapse.addEventListener('click', () => toggleSidebar(true));
+        btnRestore.addEventListener('click', () => toggleSidebar(false));
+
+        // Restore state
+        const savedState = localStorage.getItem('player_sidebar_collapsed') === 'true';
+        if (savedState) toggleSidebar(true);
     },
 
     setupAuthUI: (user: any) => {
@@ -238,41 +267,8 @@ const Player = {
         const videoPlaceholder = document.getElementById('video-placeholder');
 
         if (cls.videoUrl) {
-            let embedUrl = cls.videoUrl;
-            let isNative = false;
-
-            // YouTube Fix using origin and robust ID extraction
-            if (cls.videoUrl.includes('youtube.com') || cls.videoUrl.includes('youtu.be')) {
-                let videoId = '';
-
-                // Regex to capture video ID from various YouTube formats
-                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-                const match = cls.videoUrl.match(regExp);
-
-                if (match && match[2].length === 11) {
-                    videoId = match[2];
-                }
-
-                if (videoId) {
-                    // Add origin to preventing blocking in some cases
-                    embedUrl = `https://www.youtube.com/embed/${videoId}?origin=${encodeURIComponent(window.location.origin)}`;
-                } else {
-                    // Fallback mechanism
-                    if (cls.videoUrl.includes('watch?v=')) {
-                        embedUrl = cls.videoUrl.replace('watch?v=', 'embed/');
-                    }
-                }
-            }
-            // Vimeo Fix
-            else if (cls.videoUrl.includes('vimeo.com')) {
-                const parts = cls.videoUrl.split('/');
-                const vimeoId = parts[parts.length - 1];
-                embedUrl = `https://player.vimeo.com/video/${vimeoId}`;
-            }
-            // Assume Native (MP4/WebM)
-            else {
-                isNative = true;
-            }
+            const embedUrl = Player.getVideoEmbedUrl(cls.videoUrl);
+            const isNative = !embedUrl.includes('youtube.com') && !embedUrl.includes('vimeo.com') && !embedUrl.includes('youtu.be');
 
             if (isNative) {
                 // Show HTML5 Player
@@ -335,31 +331,62 @@ const Player = {
         }
 
         // Download/Materials
-        const matSection = document.getElementById('materials-section');
-        const matList = document.getElementById('materials-list');
-
-        // Logic: Fetch materials for this class
-        // For now, we simulate check or call endpoint
-        Player.checkMaterials(cls.id);
+        // Logic: Render materials only if they exist
+        Player.checkMaterials(cls);
     },
 
-    checkMaterials: async (classId: string) => {
+    getVideoEmbedUrl: (url: string): string => {
+        if (!url) return '';
+
+        // YouTube Logic
+        if (url.includes('youtube.com') || url.includes('youtu.be')) {
+            let videoId = '';
+            // Regex to capture video ID from various YouTube formats
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+
+            if (match && match[2].length === 11) {
+                videoId = match[2];
+                // Return clean embed URL
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+        }
+
+        // Vimeo Logic
+        if (url.includes('vimeo.com')) {
+            // Extract ID from end of URL
+            const regExp = /vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
+            const match = url.match(regExp);
+            if (match && match[1]) {
+                return `https://player.vimeo.com/video/${match[1]}`;
+            }
+        }
+
+        // Return original if no specific handler matched
+        return url;
+    },
+
+    checkMaterials: async (cls: ClassItem) => {
         try {
             const matSection = document.getElementById('materials-section');
             const matList = document.getElementById('materials-list');
 
-            if (matSection) matSection.classList.add('hidden'); // Hide by default
+            if (!matSection || !matList) return;
 
-            // In a real scenario, we should check if material exists via API first or rely on class data.
-            // But here we will show the button and handle the download errors.
+            // Default hidden
+            matSection.classList.add('hidden');
+            matList.innerHTML = '';
 
-            if (matList && matSection) {
-                matList.innerHTML = ''; // Clear previous
+            // Only proceed if there is a materialUrl
+            if (!cls.materialUrl) return;
 
-                const item = document.createElement('div');
-                item.className = 'material-item';
-                item.style.cursor = 'pointer';
-                item.innerHTML = `
+            const materialUrl = cls.materialUrl; // Capture for closure safety
+
+            // Render Item
+            const item = document.createElement('div');
+            item.className = 'material-item';
+            item.style.cursor = 'pointer';
+            item.innerHTML = `
                 <span class="material-symbols-outlined material-icon">download</span>
                 <div class="material-info">
                     <span class="material-name">Baixar Material de Apoio</span>
@@ -367,52 +394,60 @@ const Player = {
                 </div>
              `;
 
-                item.addEventListener('click', async () => {
-                    try {
-                        AppUI.showMessage('Iniciando download...', 'info');
-
-                        const token = localStorage.getItem('auth_token');
-                        const headers: Record<string, string> = {};
-                        if (token) headers['Authorization'] = `Bearer ${token}`;
-
-                        const response = await fetch(`/classes/${classId}/material`, {
-                            method: 'GET',
-                            headers
-                        });
-
-                        if (response.ok) {
-                            const blob = await response.blob();
-                            const downloadUrl = window.URL.createObjectURL(blob);
-                            const a = document.createElement('a');
-                            a.href = downloadUrl;
-
-                            // Try to get filename from header
-                            const disposition = response.headers.get('content-disposition');
-                            let filename = `material_${classId}.pdf`; // fallback
-                            if (disposition && disposition.includes('filename=')) {
-                                const match = disposition.match(/filename="?([^"]+)"?/);
-                                if (match && match[1]) filename = match[1];
-                            }
-
-                            a.download = filename;
-                            document.body.appendChild(a);
-                            a.click();
-                            window.URL.revokeObjectURL(downloadUrl);
-                            a.remove();
-                            AppUI.showMessage('Download concluído', 'success');
-                        } else {
-                            const errData = await response.json().catch(() => ({}));
-                            AppUI.showMessage(errData.message || 'Erro ao baixar material', 'error');
-                        }
-                    } catch (error) {
-                        console.error(error);
-                        AppUI.showMessage('Erro de conexão ao baixar', 'error');
+            item.addEventListener('click', async () => {
+                try {
+                    // If it is a direct link (http), just open it
+                    if (materialUrl.startsWith('http')) {
+                        window.open(materialUrl, '_blank');
+                        return;
                     }
-                });
 
-                matList.appendChild(item);
-                matSection.classList.remove('hidden');
-            }
+                    // Otherwise try API download
+                    AppUI.showMessage('Iniciando download...', 'info');
+
+                    const token = localStorage.getItem('auth_token');
+                    const headers: Record<string, string> = {};
+                    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+                    const response = await fetch(materialUrl.startsWith('/') ? materialUrl : `/classes/${cls.id}/material`, {
+                        method: 'GET',
+                        headers
+                    });
+
+                    if (response.ok) {
+                        const blob = await response.blob();
+                        const downloadUrl = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = downloadUrl;
+
+                        // Try to get filename from header
+                        const disposition = response.headers.get('content-disposition');
+                        let filename = `material_${cls.id}.pdf`; // fallback
+                        if (disposition && disposition.includes('filename=')) {
+                            const match = disposition.match(/filename="?([^"]+)"?/);
+                            if (match && match[1]) filename = match[1];
+                        }
+
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(downloadUrl);
+                        a.remove();
+                        AppUI.showMessage('Download concluído', 'success');
+                    } else {
+                        // Fallback: maybe it's a static file path we can just navigate to?
+                        // For now just error
+                        const errData = await response.json().catch(() => ({}));
+                        AppUI.showMessage(errData.message || 'Erro ao baixar material', 'error');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    AppUI.showMessage('Erro de conexão ao baixar', 'error');
+                }
+            });
+
+            matList.appendChild(item);
+            matSection.classList.remove('hidden');
 
         } catch (e) {
             console.error('Error checking materials:', e);

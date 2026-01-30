@@ -8,6 +8,12 @@
     overflow: hidden;
     margin-top: 0;
     padding-top: 0;
+    transition: grid-template-columns 0.3s ease;
+    /* Animate transition */
+}
+
+.player-layout.sidebar-collapsed {
+    grid-template-columns: 1fr 0px;
 }
 
 @media (max-width: 1024px) {
@@ -15,6 +21,11 @@
         grid-template-columns: 1fr;
         height: auto;
         overflow-y: auto;
+    }
+
+    .player-layout.sidebar-collapsed {
+        grid-template-columns: 1fr;
+        /* No effect on mobile usually, or hide sidebar section */
     }
 }
 
@@ -234,6 +245,26 @@
     font-weight: 600;
     margin-bottom: 1rem;
     color: var(--text-primary);
+}
+
+.btn-sidebar-action {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-sidebar-action:hover {
+    background-color: var(--bg-dark);
+    color: var(--primary);
 }
 
 .modules-accordion {
