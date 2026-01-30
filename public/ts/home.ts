@@ -70,12 +70,46 @@ export const Home = {
     if (modalCartBtn) {
       modalCartBtn.addEventListener('click', () => {
         const courseId = modalCartBtn.getAttribute('data-course-id');
+        console.log(`[Home] Modal cart button clicked for course ${courseId}`);
         if (courseId) {
+          if (Home.cartItems.includes(courseId)) {
+            console.log(`[Home] Course ${courseId} is already in cart. Opening sidebar...`);
+            const cartToggle = document.getElementById('cart-toggle-btn');
+            if (cartToggle) {
+              Home.closeCourseModal();
+              setTimeout(() => {
+                console.log('[Home] Triggering cart toggle click');
+                cartToggle.click();
+              }, 100);
+            } else {
+              console.error('[Home] cart-toggle-btn not found');
+            }
+            return;
+          }
           Home.addToCart(courseId);
-          // Optional: close modal or change button state
-          // Home.closeCourseModal();
         }
       });
+    }
+
+    Home.syncCart();
+  },
+
+  /**
+   * Sincroniza os itens do carrinho com o servidor
+   */
+  syncCart: async () => {
+    try {
+      const items = await Cart.getCart();
+      Home.cartItems = items.map(item => item.courseId);
+
+      // Update badge
+      const badge = document.getElementById('cart-count-badge');
+      if (badge) {
+        badge.textContent = Home.cartItems.length.toString();
+        badge.style.display = Home.cartItems.length > 0 ? 'flex' : 'none';
+      }
+    } catch (error) {
+      console.error('Error syncing cart:', error);
     }
   },
 
@@ -317,7 +351,22 @@ export const Home = {
       return;
     }
 
-    await Cart.add(courseId);
+    const success = await Cart.add(courseId);
+    if (success) {
+      // Update local state
+      if (!Home.cartItems.includes(courseId)) {
+        Home.cartItems.push(courseId);
+      }
+
+      // Update modal button if open
+      const modalCartBtn = document.getElementById('modal-add-cart-btn');
+      if (modalCartBtn && modalCartBtn.getAttribute('data-course-id') === courseId) {
+        modalCartBtn.innerHTML = `
+          <span class="material-symbols-outlined">shopping_cart_checkout</span>
+          Ir para Carrinho
+        `;
+      }
+    }
   },
 
   /**
