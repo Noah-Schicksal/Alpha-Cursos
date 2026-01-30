@@ -44,7 +44,9 @@
 
 /* Smooth transition for theme switching */
 body {
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* RESET & BASE */
@@ -347,7 +349,6 @@ p {
 }
 
 @media (min-width: 1280px) {
-
   /* xl */
   .nav-links-xl {
     display: flex;
@@ -1028,7 +1029,7 @@ p {
   position: relative;
   width: 100%;
   display: grid;
-  grid-template-areas: "card";
+  grid-template-areas: 'card';
   transition: transform 0.7s;
   transform-style: preserve-3d;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
@@ -1362,7 +1363,7 @@ p {
 
 /* Logo na navbar */
 :root.light .logo-text {
-  color: #004953;  /* Azul petróleo */
+  color: #004953; /* Azul petróleo */
 }
 
 /* Todos os headings */
@@ -1370,17 +1371,17 @@ p {
 :root.light h2,
 :root.light h3,
 :root.light h4 {
-  color: #0d1b2a;  /* Azul escuro quase preto */
+  color: #0d1b2a; /* Azul escuro quase preto */
 }
 
 /* Preços dos cursos */
 :root.light .price-main {
-  color: #0d1b2a;  /* Azul escuro */
+  color: #0d1b2a; /* Azul escuro */
 }
 
 /* Apoiadores/Marcas */
 :root.light .brand-item {
-  color: #004953;  /* Azul petróleo */
+  color: #004953; /* Azul petróleo */
 }
 
 /* Footer adjustments */
