@@ -31,6 +31,7 @@ const Player = {
     courseId: '',
     currentClassId: '',
     courseData: null as CourseFull | null,
+    openModules: new Set<string>(),
 
     init: async () => {
         // Get courseId from URL
@@ -149,6 +150,11 @@ const Player = {
                 Player.loadClass(firstClass);
             }
 
+            // Check Certificate Availability
+            if (course.progress === 100) {
+                Player.showCertificateButton();
+            }
+
         } catch (error) {
             AppUI.showMessage('Erro ao carregar dados do curso', 'error');
             console.error(error);
@@ -159,11 +165,17 @@ const Player = {
         const list = document.getElementById('modules-list');
         if (!list || !Player.courseData) return;
 
+        if (!list || !Player.courseData) return;
+
         list.innerHTML = '';
 
         Player.courseData.modules.forEach((mod, index) => {
             const moduleEl = document.createElement('div');
-            moduleEl.className = `module-item ${index === 0 ? 'open' : ''}`; // Open first by default
+            // Check persistence state or default to first
+            const isOpen = Player.openModules.has(mod.id) || (Player.openModules.size === 0 && index === 0);
+            if (isOpen) Player.openModules.add(mod.id); // Ensure initial is tracked
+
+            moduleEl.className = `module-item ${isOpen ? 'open' : ''}`;
 
             const header = document.createElement('div');
             header.className = 'module-header';
@@ -175,7 +187,12 @@ const Player = {
         <span class="material-symbols-outlined layer-icon">expand_more</span>
       `;
             header.addEventListener('click', () => {
-                moduleEl.classList.toggle('open');
+                const isNowOpen = moduleEl.classList.toggle('open');
+                if (isNowOpen) {
+                    Player.openModules.add(mod.id);
+                } else {
+                    Player.openModules.delete(mod.id);
+                }
             });
 
             const classesContainer = document.createElement('div');
@@ -425,6 +442,11 @@ const Player = {
                     progressFill.style.width = `${prog}%`;
                     progressText.textContent = `${prog}%`;
                 }
+
+                // Check Certificate Availability
+                if (Player.courseData.progress === 100) {
+                    Player.showCertificateButton();
+                }
             }
 
             // Refresh View
@@ -435,6 +457,39 @@ const Player = {
 
         } catch (error) {
             AppUI.showMessage('Erro ao atualizar progresso', 'error');
+        }
+    },
+
+    showCertificateButton: () => {
+        const actionsContainer = document.querySelector('.class-actions');
+        if (!actionsContainer) return;
+
+        // Check if button already exists
+        if (document.getElementById('btn-generate-certificate')) return;
+
+        const btnCert = document.createElement('button');
+        btnCert.id = 'btn-generate-certificate';
+        btnCert.className = 'btn-action completed'; // Use green style
+        btnCert.innerHTML = '<span class="material-symbols-outlined">workspace_premium</span> <span class="btn-text">Gerar Certificado</span>';
+        // Remove direct margin as we use flex gap
+
+        btnCert.addEventListener('click', async () => {
+            try {
+                const res = await AppUI.apiFetch(`/courses/${Player.courseId}/certificate`, { method: 'POST' });
+                if (res.data && res.data.hash) {
+                    window.location.href = `certificate.html?hash=${res.data.hash}`;
+                }
+            } catch (e) {
+                AppUI.showMessage('Erro ao gerar certificado.', 'error');
+            }
+        });
+
+        actionsContainer.appendChild(btnCert);
+    },
+
+    checkCertificateStatus: async () => {
+        if (Player.courseData && Player.courseData.progress === 100) {
+            Player.showCertificateButton();
         }
     }
 };

@@ -20,6 +20,7 @@
 <body class="molecular-bg">
 
     <!-- Navbar (Simplified) -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="container-xl nav-inner">
             <a href="index.html" class="logo-container" style="text-decoration: none;">
@@ -28,6 +29,16 @@
                 </div>
                 <span class="logo-text hidden lg:block">ChemAcademy</span>
             </a>
+
+            <!-- Search (Optional for Player, keeping consistent with Home) -->
+            <div class="search-bar-container hidden md:block" style="margin-left: 2rem; margin-right: 2rem;">
+                <div class="search-icon-wrapper">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem">search</span>
+                </div>
+                <!-- Search input disabled in player context or redirects to home search -->
+                <input class="search-input" placeholder="Search courses..." type="text"
+                    onkeydown="if(event.key === 'Enter') window.location.href='index.html?search='+this.value" />
+            </div>
 
             <div class="nav-right-actions">
                 <a href="index.html" class="btn-dashboard outline">
@@ -122,10 +133,12 @@
                 <!-- Header with Title and Action -->
                 <div class="class-header">
                     <h1 id="class-title" class="class-title">Título da Aula</h1>
-                    <button id="btn-mark-completed" class="btn-action">
-                        <span class="material-symbols-outlined">check_circle</span>
-                        <span class="btn-text">Marcar como Concluída</span>
-                    </button>
+                    <div class="class-actions">
+                        <button id="btn-mark-completed" class="btn-action">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span class="btn-text">Marcar como Concluída</span>
+                        </button>
+                    </div>
                 </div>
 
                 <p id="class-description" class="class-description">
