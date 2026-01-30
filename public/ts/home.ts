@@ -5,6 +5,7 @@ import { AppUI } from './utils/ui.js';
 import { Courses, Course } from './modules/courses.js';
 import { Categories } from './modules/categories.js';
 import { Modules } from './modules/modules.js';
+import { Cart } from './modules/cart.js';
 
 export const Home = {
   allCourses: [] as Course[], // Store all courses locally
@@ -305,33 +306,18 @@ export const Home = {
   },
 
   /**
-   * Adiciona ao carrinho (Simulado por enquanto)
+   * Adiciona ao carrinho
    */
-  addToCart: (courseId: string) => {
-    // TODO: Integrate with real Cart module
-    console.log(`Adding course ${courseId} to cart`);
-    AppUI.showMessage('Curso adicionado ao carrinho!', 'success');
-
-    // Track it
-    if (!Home.cartItems.includes(courseId)) {
-      Home.cartItems.push(courseId);
+  addToCart: async (courseId: string) => {
+    // Check if logged in
+    if (!localStorage.getItem('auth_user')) {
+      AppUI.showMessage('Por favor, faça login para adicionar cursos ao carrinho.', 'info');
+      const authContainer = document.getElementById('auth-card-container');
+      if (authContainer) authContainer.classList.add('show');
+      return;
     }
 
-    // Update badge (simulated)
-    const badge = document.getElementById('cart-count-badge');
-    if (badge) {
-      badge.textContent = Home.cartItems.length.toString();
-      badge.style.display = 'flex';
-    }
-
-    // Update modal button if open
-    const modalCartBtn = document.getElementById('modal-add-cart-btn');
-    if (modalCartBtn && modalCartBtn.getAttribute('data-course-id') === courseId) {
-      modalCartBtn.innerHTML = `
-        <span class="material-symbols-outlined">shopping_cart_checkout</span>
-        Ir para Carrinho
-      `;
-    }
+    await Cart.add(courseId);
   },
 
   /**
@@ -505,6 +491,3 @@ export const Home = {
     }
   }
 };
-
-// Remove global exposure as we use event delegation
-// (window as any).HomeModule = Home;
