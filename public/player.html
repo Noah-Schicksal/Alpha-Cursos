@@ -113,12 +113,15 @@
                 </div>
                 <iframe id="video-frame" class="video-frame" src="" allowfullscreen
                     allow="autoplay; encrypted-media"></iframe>
+                <video id="html5-player" class="video-frame hidden" controls controlsList="nodownload">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
             </div>
 
             <div class="class-info-section">
-                <div class="flex justify-between items-start" style="margin-bottom: 1rem; gap: 1rem;">
+                <!-- Header with Title and Action -->
+                <div class="class-header">
                     <h1 id="class-title" class="class-title">Título da Aula</h1>
-
                     <button id="btn-mark-completed" class="btn-action">
                         <span class="material-symbols-outlined">check_circle</span>
                         <span class="btn-text">Marcar como Concluída</span>

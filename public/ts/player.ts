@@ -217,34 +217,85 @@ const Player = {
 
         // Update Video
         const videoFrame = document.getElementById('video-frame') as HTMLIFrameElement;
+        const html5Player = document.getElementById('html5-player') as HTMLVideoElement;
         const videoPlaceholder = document.getElementById('video-placeholder');
 
         if (cls.videoUrl) {
             let embedUrl = cls.videoUrl;
+            let isNative = false;
 
-            // YouTube Fix using origin
-            if (cls.videoUrl.includes('youtube.com/watch?v=')) {
-                embedUrl = cls.videoUrl.replace('watch?v=', 'embed/');
-                embedUrl += `?origin=${window.location.origin}`;
-            } else if (cls.videoUrl.includes('youtu.be/')) {
-                embedUrl = cls.videoUrl.replace('youtu.be/', 'youtube.com/embed/');
-                embedUrl += `?origin=${window.location.origin}`;
+            // YouTube Fix using origin and robust ID extraction
+            if (cls.videoUrl.includes('youtube.com') || cls.videoUrl.includes('youtu.be')) {
+                let videoId = '';
+
+                // Regex to capture video ID from various YouTube formats
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                const match = cls.videoUrl.match(regExp);
+
+                if (match && match[2].length === 11) {
+                    videoId = match[2];
+                }
+
+                if (videoId) {
+                    // Add origin to preventing blocking in some cases
+                    embedUrl = `https://www.youtube.com/embed/${videoId}?origin=${encodeURIComponent(window.location.origin)}`;
+                } else {
+                    // Fallback mechanism
+                    if (cls.videoUrl.includes('watch?v=')) {
+                        embedUrl = cls.videoUrl.replace('watch?v=', 'embed/');
+                    }
+                }
             }
-
-            // Vimeo Fix (Basic)
+            // Vimeo Fix
             else if (cls.videoUrl.includes('vimeo.com')) {
-                // Assuming URL is like https://vimeo.com/123456
                 const parts = cls.videoUrl.split('/');
                 const vimeoId = parts[parts.length - 1];
                 embedUrl = `https://player.vimeo.com/video/${vimeoId}`;
             }
+            // Assume Native (MP4/WebM)
+            else {
+                isNative = true;
+            }
 
-            videoFrame.src = embedUrl;
-            videoFrame.classList.add('active');
+            if (isNative) {
+                // Show HTML5 Player
+                if (html5Player) {
+                    html5Player.src = cls.videoUrl;
+                    html5Player.classList.remove('hidden');
+                    html5Player.classList.add('active');
+                    // html5Player.play().catch(e => console.log('Auto-play blocked')); // Optional
+                }
+                if (videoFrame) {
+                    videoFrame.src = "";
+                    videoFrame.classList.add('hidden');
+                    videoFrame.classList.remove('active');
+                }
+            } else {
+                // Show Iframe
+                if (videoFrame) {
+                    videoFrame.src = embedUrl;
+                    videoFrame.classList.remove('hidden');
+                    videoFrame.classList.add('active');
+                }
+                if (html5Player) {
+                    html5Player.pause();
+                    html5Player.src = "";
+                    html5Player.classList.add('hidden');
+                }
+            }
+
             if (videoPlaceholder) videoPlaceholder.classList.add('hidden');
         } else {
-            videoFrame.src = "";
-            videoFrame.classList.remove('active');
+            // No Video
+            if (videoFrame) {
+                videoFrame.src = "";
+                videoFrame.classList.remove('active');
+                videoFrame.classList.add('hidden');
+            }
+            if (html5Player) {
+                html5Player.src = "";
+                html5Player.classList.add('hidden');
+            }
             if (videoPlaceholder) videoPlaceholder.classList.remove('hidden');
         }
 
