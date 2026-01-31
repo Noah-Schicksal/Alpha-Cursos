@@ -29,8 +29,8 @@
             <span class="material-symbols-outlined">code</span>
           </div>
           <div class="brand-info">
-            <h1 class="brand-title">Student Area</h1>
-            <p class="brand-subtitle">Tech Scholar</p>
+            <h1 class="brand-title">Área do Aluno</h1>
+            <p class="brand-subtitle">Lykos.eng</p>
           </div>
           <button id="btn-toggle-sidebar" class="sidebar-toggle-btn">
             <span class="material-symbols-outlined">menu</span>
@@ -41,30 +41,18 @@
         <nav class="nav-menu">
           <a href="#" class="nav-item active">
             <span class="material-symbols-outlined">school</span>
-            <span class="nav-text">My Courses</span>
-          </a>
-          <a href="#" class="nav-item">
-            <span class="material-symbols-outlined">analytics</span>
-            <span class="nav-text">Progress</span>
+            <span class="nav-text">Meus Cursos</span>
           </a>
           <a href="#" class="nav-item">
             <span class="material-symbols-outlined">verified</span>
-            <span class="nav-text">Certificates</span>
-          </a>
-          <a href="#" class="nav-item">
-            <span class="material-symbols-outlined">groups</span>
-            <span class="nav-text">Community</span>
-          </a>
-          <a href="#" class="nav-item">
-            <span class="material-symbols-outlined">help_center</span>
-            <span class="nav-text">Support</span>
+            <span class="nav-text">Certificados</span>
           </a>
         </nav>
       </div>
 
       <!-- Sidebar Footer -->
       <div class="sidebar-footer">
-        <div class="storage-info">
+        <div class="storage-info" style="display: none;">
           <p class="storage-label">Storage</p>
           <div class="storage-bar">
             <div class="storage-fill"></div>
@@ -72,8 +60,8 @@
           <p class="storage-text">6.5 GB of 10 GB used</p>
         </div>
         <div class="sidebar-user">
-          <div class="user-info-mini">
-            <div class="user-avatar-mini">
+          <div id="collapsed-profile-info" class="user-info-mini">
+            <div id="sidebar-avatar-container" class="user-avatar-mini clickable">
               <img id="sidebar-user-avatar" src="https://lh3.googleusercontent.com/a/default-user" alt="User avatar">
             </div>
             <div class="user-details-mini">
@@ -81,9 +69,20 @@
               <p id="sidebar-user-role" class="user-role-mini">Estudante</p>
             </div>
           </div>
-          <button id="btn-logout-sidebar" class="btn-logout-mini" title="Sair da Conta">
-            <span class="material-symbols-outlined">logout</span>
-          </button>
+          <!-- Mini Profile Popup for Collapsed Sidebar -->
+          <div id="sidebar-profile-popup" class="collapsed-profile-popup">
+            <div class="popup-user-info">
+              <p id="popup-user-name" class="popup-user-name">Aluno</p>
+              <p id="popup-user-role" class="popup-user-role">Estudante</p>
+            </div>
+            <a href="index.html" class="btn-popup-home">
+              <span class="material-symbols-outlined" style="font-size: 1.25rem">home</span>
+              <span>Voltar ao Início</span>
+            </a>
+          </div>
+          <a href="index.html" id="btn-home-sidebar" class="btn-logout-mini" title="Voltar para o Início">
+            <span class="material-symbols-outlined">home</span>
+          </a>
         </div>
       </div>
     </aside>
@@ -100,12 +99,6 @@
           </nav>
         </div>
         <div class="header-actions">
-          <button class="header-btn">
-            <span class="material-symbols-outlined">notifications</span>
-          </button>
-          <button class="header-btn">
-            <span class="material-symbols-outlined">settings</span>
-          </button>
           <div class="user-avatar-header">
             <div id="header-user-info" class="text-right hidden sm:block mr-3">
               <p id="header-user-name" class="text-sm font-bold leading-none text-white">Aluno</p>
@@ -138,15 +131,15 @@
             <span class="badge-ongoing">Ongoing</span>
           </div>
           <div class="featured-content">
-            <p class="featured-label">CONTINUE LEARNING</p>
+            <p class="featured-label">CONTINUE ESTUDANDO</p>
             <h2 id="featured-title" class="featured-title">Carregando curso em destaque...</h2>
             <div class="featured-info">
               <div class="info-item">
-                <p class="info-label">Current Module</p>
+                <p class="info-label">Módulo Atual</p>
                 <p id="featured-module-name" class="info-value">Carregando módulo...</p>
               </div>
               <div class="info-item">
-                <p class="info-label">Next Challenge</p>
+                <p class="info-label">Próximo Desafio</p>
                 <p class="info-value">
                   <span class="material-symbols-outlined">quiz</span>
                   API Integration Quiz
@@ -156,7 +149,7 @@
             <div class="progress-section">
               <div class="progress-wrapper">
                 <div class="progress-header">
-                  <span class="progress-label">Overall Course Completion</span>
+                  <span class="progress-label">Progresso Geral do Curso</span>
                   <span id="featured-progress-text" class="progress-percent">0%</span>
                 </div>
                 <div class="progress-bar">
@@ -175,10 +168,9 @@
       <div class="courses-achievements">
         <div class="my-courses">
           <div class="section-header">
-            <h2 class="section-title">My Courses</h2>
+            <h2 class="section-title">Meus Cursos</h2>
             <div class="section-actions">
-              <button id="create-course-toggle" class="btn-create-course">Create Course</button>
-              <button class="btn-view-all">View All</button>
+              <button class="btn-view-all">Ver Todos</button>
             </div>
           </div>
 
@@ -197,12 +189,6 @@
             </div>
           </div>
 
-          <!-- Create Course Form -->
-          <form id="create-course-form" class="create-course-form">
-            <input id="course-title" placeholder="Course Title" class="form-input-inline" type="text">
-            <input id="course-desc" placeholder="Short Description" class="form-input-inline" type="text">
-            <button type="submit" class="btn-submit-inline">Create</button>
-          </form>
 
           <!-- Courses Grid -->
           <div id="courses-grid" class="courses-grid">
@@ -252,7 +238,7 @@
 
         <!-- Achievements Sidebar -->
         <div class="achievements">
-          <h2 class="section-title">Tech Achievements</h2>
+          <h2 class="section-title">Conquistas Tech</h2>
           <div class="achievements-card">
             <div class="achievement-item">
               <div class="achievement-icon primary">
@@ -284,14 +270,14 @@
               </div>
             </div>
 
-            <button class="btn-view-badges">View All Badges</button>
+            <button class="btn-view-badges">Ver Todas as Medalhas</button>
           </div>
         </div>
       </div>
 
       <!-- Community Feed -->
       <section class="community-feed">
-        <h2 class="section-title-small">Recent Community Activity</h2>
+        <h2 class="section-title-small">Atividade Recente na Comunidade</h2>
         <div class="activity-grid">
           <div class="activity-item">
             <img class="activity-avatar" alt="User avatar for Maria"
@@ -322,9 +308,8 @@
   </div>
 
   <!-- Dark/Light Mode Toggle -->
-  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-    <span class="material-symbols-outlined dark-icon">dark_mode</span>
-    <span class="material-symbols-outlined light-icon">light_mode</span>
+  <button class="btn-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+    <span class="material-symbols-outlined">light_mode</span>
   </button>
 
   <!-- Auth Card Container -->
@@ -389,7 +374,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/theme-toggle.js"></script>
   <script type="module" src="js/studentDashboard.js"></script>
 </body>
 

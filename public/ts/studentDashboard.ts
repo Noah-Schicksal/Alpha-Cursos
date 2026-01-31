@@ -5,11 +5,14 @@
 import { AppUI } from './utils/ui.js';
 import { Auth } from './modules/auth.js';
 import { Categories } from './modules/categories.js';
+import { Theme } from './utils/theme.js';
 
 let allCourses: any[] = [];
 let currentView: 'courses' | 'certificates' = 'courses';
 
 document.addEventListener('DOMContentLoaded', async () => {
+    Theme.init();
+    Auth.init();
     // Check if user is logged in
     const userStr = localStorage.getItem('auth_user');
     const user = userStr ? JSON.parse(userStr) : null;
@@ -38,8 +41,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Setup Category Filter
     setupCategoryFilter();
 
-    // Setup Create Course Toggle
-    setupCreateCourse();
 });
 
 /**
@@ -53,6 +54,9 @@ function updateUserInfo(user: any) {
     const coursesStatus = document.getElementById('courses-status');
     const sidebarUserName = document.getElementById('sidebar-user-name');
     const sidebarUserRole = document.getElementById('sidebar-user-role');
+
+    const popupName = document.getElementById('popup-user-name');
+    const popupRole = document.getElementById('popup-user-role');
 
     if (headerName) {
         headerName.textContent = user.name || 'Aluno';
@@ -69,6 +73,12 @@ function updateUserInfo(user: any) {
     if (sidebarUserRole) {
         const userRole = (user.role || 'STUDENT').toLowerCase();
         sidebarUserRole.textContent = userRole === 'instructor' ? 'Instrutor' : 'Estudante';
+    }
+
+    if (popupName) popupName.textContent = user.name || 'Aluno';
+    if (popupRole) {
+        const userRole = (user.role || 'STUDENT').toLowerCase();
+        popupRole.textContent = userRole === 'instructor' ? 'Instrutor' : 'Estudante';
     }
 
     if (roleText) {
@@ -99,9 +109,15 @@ async function loadStudentCourses() {
         }
 
         if (allCourses.length > 0) {
-            renderFeaturedCourse(allCourses[0]);
+            // Find course with most progress but not 100%, or the first one
+            const ongoing = allCourses
+                .filter(c => (c.progress || 0) > 0 && (c.progress || 0) < 100)
+                .sort((a, b) => (b.progress || 0) - (a.progress || 0))[0];
+
+            renderFeaturedCourse(ongoing || allCourses[0]);
         } else {
-            document.getElementById('featured-course-container')?.classList.add('hidden');
+            const featuredContainer = document.getElementById('featured-course-container');
+            if (featuredContainer) featuredContainer.style.display = 'none';
         }
 
         if (currentView === 'courses') {
@@ -143,19 +159,27 @@ function renderCourses(courses: any[]) {
 
     grid.innerHTML = courses.map((course: any) => {
         const progress = course.progress || 0;
+        let imageUrl = course.coverImageUrl;
+        if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('/') && !imageUrl.startsWith('data:')) {
+            imageUrl = '/' + imageUrl;
+        }
+        if (!imageUrl) {
+            imageUrl = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800';
+        }
+
         return `
-            <div class="bg-surface-dark border border-white/5 rounded-xl overflow-hidden group hover:border-primary/40 transition-all flex flex-col">
+            <div class="bg-surface-dark border border-white-5 rounded-xl overflow-hidden group hover-border-primary transition-all flex flex-col">
                 <div class="relative h-48 overflow-hidden">
-                    <div class="absolute inset-0 bg-center bg-cover transform group-hover:scale-105 transition-transform duration-700"
-                        style="background-image: url('${course.coverImageUrl || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800'}')">
+                    <div class="absolute inset-0 bg-center bg-cover transform group-hover-scale-105 transition-transform duration-700"
+                        style="background-image: url('${imageUrl}')">
                     </div>
-                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 bg-black-20 group-hover-opacity-0 transition-colors duration-500"></div>
                     <div class="absolute top-4 left-4">
-                        <span class="px-3 py-1 bg-black/80 backdrop-blur-md text-primary text-xs font-bold rounded-full border border-primary/30">CURSO</span>
+                        <span class="px-3 py-1 bg-black-80 backdrop-blur-md text-primary text-xs font-bold rounded-full border border-primary-30">CURSO</span>
                     </div>
                 </div>
                 <div class="p-6 flex-1 flex flex-col">
-                    <h3 class="text-xl font-bold mb-1 text-white group-hover:text-primary transition-colors">
+                    <h3 class="text-xl font-bold mb-1 text-white group-hover-text-primary transition-colors">
                         ${course.title}</h3>
                     <p class="text-sm text-slate-500 mb-6 line-clamp-2">${course.description || 'Inicie seus estudos neste treinamento completo.'}</p>
                     <div class="mt-auto">
@@ -163,10 +187,10 @@ function renderCourses(courses: any[]) {
                             <span class="text-xs font-bold text-slate-500">PROGRESSO</span>
                             <span class="text-sm font-bold text-primary">${progress}%</span>
                         </div>
-                        <div class="w-full h-1.5 bg-white/5 rounded-full mb-6 overflow-hidden">
+                        <div class="w-full h-1-5 bg-white-5 rounded-full mb-6 overflow-hidden">
                             <div class="h-full bg-primary shadow-primary-md transition-all duration-1000" style="width: ${progress}%"></div>
                         </div>
-                        <a href="player.html?courseId=${course.id}" class="w-full bg-white/5 text-primary py-3 rounded-lg text-sm font-bold flex items-center justify-center gap-2 group-hover:bg-primary group-hover:text-black transition-all" style="text-decoration: none;">
+                        <a href="player.html?courseId=${course.id}" class="w-full bg-white-5 text-primary py-3 rounded-lg text-sm font-bold flex items-center justify-center gap-2 group-hover-bg-primary transition-all" style="text-decoration: none;">
                             <span>${progress === 100 ? 'Revisar Conteúdo' : 'Continuar Estudo'}</span>
                             <span class="material-symbols-outlined text-sm">${progress === 100 ? 'verified' : 'play_circle'}</span>
                         </a>
@@ -181,16 +205,16 @@ function renderCourses(courses: any[]) {
  * Renders the featured course (Continue Learning)
  */
 function renderFeaturedCourse(course: any) {
-    const container = document.getElementById('featured-course-container');
     const title = document.getElementById('featured-title');
     const cover = document.getElementById('featured-course-image') as HTMLImageElement;
     const progressText = document.getElementById('featured-progress-text');
     const progressBar = document.getElementById('featured-progress-bar');
     const link = document.getElementById('featured-link') as HTMLAnchorElement;
+    const featuredContainer = document.getElementById('featured-course-container');
 
-    if (!container || !course) return;
+    if (!course || !featuredContainer) return;
 
-    container.classList.remove('hidden');
+    featuredContainer.style.display = 'flex';
 
     if (title) title.textContent = course.title;
     if (cover) cover.src = course.coverImageUrl || 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800&q=80';
@@ -198,11 +222,13 @@ function renderFeaturedCourse(course: any) {
     const progress = course.progress || 0;
     if (progressText) progressText.textContent = `${progress}%`;
     if (progressBar) progressBar.style.width = `${progress}%`;
+
     if (link) {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = `player.html?courseId=${course.id}`;
-        });
+        link.href = `player.html?courseId=${course.id}`;
+        link.onclick = (e) => {
+            // e.preventDefault();
+            // window.location.href = link.href;
+        };
     }
 }
 
@@ -232,30 +258,26 @@ function renderCertificates(courses: any[]) {
     }
 
     grid.innerHTML = certificates.map((course: any) => {
+        const date = new Date().toLocaleDateString('pt-BR');
         return `
-            <div class="bg-surface-dark border border-white/5 rounded-xl overflow-hidden group hover:border-primary/40 transition-all flex flex-col">
-                <div class="relative h-48 overflow-hidden">
-                    <div class="absolute inset-0 bg-center bg-cover transform group-hover:scale-105 transition-transform duration-700"
-                        style="background-image: url('${course.coverImageUrl || 'https://images.unsplash.com/photo-1523240715632-d040850239f6?auto=format&fit=crop&q=80&w=800'}')">
-                    </div>
-                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-6xl text-primary opacity-50">workspace_premium</span>
-                    </div>
-                    <div class="absolute top-4 left-4">
-                        <span class="px-3 py-1 bg-black/80 backdrop-blur-md text-primary text-xs font-bold rounded-full border border-primary/30">CONCLUÍDO</span>
+            <div class="certificate-card-premium group">
+                <div class="cert-badge-premium">Conquista</div>
+                <div class="cert-icon-wrapper">
+                    <span class="material-symbols-outlined">workspace_premium</span>
+                </div>
+                <div>
+                    <h3 class="cert-title-premium">${course.title}</h3>
+                    <div class="cert-meta-premium">
+                        <span class="material-symbols-outlined" style="font-size: 1rem">calendar_today</span>
+                        <span>Concluído em ${date}</span>
                     </div>
                 </div>
-                <div class="p-6 flex-1 flex flex-col">
-                    <h3 class="text-xl font-bold mb-1 text-white group-hover:text-primary transition-colors">
-                        ${course.title}</h3>
-                    <p class="text-sm text-slate-500 mb-6">Certificado de conclusão disponível para download.</p>
-                    <div class="mt-auto">
-                        <a href="${course.certificateHash ? `certificate.html?hash=${course.certificateHash}` : `player.html?courseId=${course.id}`}" 
-                           class="w-full bg-primary text-black py-3 rounded-lg text-sm font-bold flex items-center justify-center gap-2 glow-hover transition-all" style="text-decoration: none;">
-                            <span>${course.certificateHash ? 'Ver Certificado' : 'Gerar Certificado'}</span>
-                            <span class="material-symbols-outlined text-sm">workspace_premium</span>
-                        </a>
-                    </div>
+                <div class="mt-auto pt-2">
+                    <a href="${course.certificateHash ? `certificate.html?hash=${course.certificateHash}` : `player.html?courseId=${course.id}`}" 
+                       class="btn-download-cert" style="text-decoration: none;">
+                        <span class="material-symbols-outlined">download</span>
+                        <span>${course.certificateHash ? 'Baixar Certificado' : 'Gerar Agora'}</span>
+                    </a>
                 </div>
             </div>
         `;
@@ -366,24 +388,33 @@ function setupNavigation() {
         }
     });
 
-    // Logout logic for sidebar
-    const btnLogoutSidebar = document.getElementById('btn-logout-sidebar');
-    if (btnLogoutSidebar) {
-        btnLogoutSidebar.addEventListener('click', async (e) => {
-            e.stopPropagation();
-            const confirmed = await AppUI.promptModal('Sair da Conta', 'Tem certeza que deseja sair agora?');
-            if (confirmed) {
-                await Auth.logout();
-                window.location.href = 'index.html';
+
+    const sidebarProfileCard = document.getElementById('sidebar-profile-card');
+    const sidebarAvatarContainer = document.getElementById('sidebar-avatar-container');
+    const sidebarPopup = document.getElementById('sidebar-profile-popup');
+
+    if (sidebarAvatarContainer && sidebarPopup) {
+        sidebarAvatarContainer.addEventListener('click', (e) => {
+            if (sidebar?.classList.contains('collapsed')) {
+                e.preventDefault();
+                e.stopPropagation();
+                sidebarPopup.classList.toggle('show');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (sidebarPopup.classList.contains('show') && !sidebarPopup.contains(e.target as Node) && !sidebarAvatarContainer.contains(e.target as Node)) {
+                sidebarPopup.classList.remove('show');
             }
         });
     }
 
-    const sidebarProfileCard = document.getElementById('sidebar-profile-card');
     if (sidebarProfileCard) {
         sidebarProfileCard.addEventListener('click', () => {
-            authContainer?.classList.add('show');
-            Auth.showProfileView();
+            if (!sidebar?.classList.contains('collapsed')) {
+                authContainer?.classList.add('show');
+                Auth.showProfileView();
+            }
         });
     }
 
@@ -429,21 +460,26 @@ function setupNavigation() {
             });
         }
     });
+
+    // Set initial active link
+    const initialLink = document.querySelector('nav a') as HTMLAnchorElement;
+    if (initialLink) updateActiveLink(initialLink);
+
+    // Initial Active state handling for sidebar sections
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        if (item.classList.contains('active')) {
+            // already correct
+        }
+    });
 }
 
-/**
- * Updates active class on sidebar links
- */
 function updateActiveLink(activeLink: HTMLAnchorElement) {
-    document.querySelectorAll('nav a').forEach(link => {
-        link.classList.remove('sidebar-item-active', 'border-l-2', 'border-primary', 'text-primary');
-        link.classList.add('nav-link-default');
-        link.querySelector('.material-symbols-outlined')?.classList.remove('fill-1');
+    document.querySelectorAll('.nav-item').forEach(link => {
+        link.classList.remove('active');
     });
 
-    activeLink.classList.add('sidebar-item-active', 'border-l-2', 'border-primary', 'text-primary');
-    activeLink.classList.remove('nav-link-default');
-    activeLink.querySelector('.material-symbols-outlined')?.classList.add('fill-1');
+    activeLink.classList.add('active');
 }
 
 /**
@@ -472,48 +508,3 @@ async function setupCategoryFilter() {
     }
 }
 
-/**
- * Sets up create course form toggle and logic
- */
-function setupCreateCourse() {
-    const btnToggle = document.getElementById('create-course-toggle');
-    const form = document.getElementById('create-course-form');
-
-    if (btnToggle && form) {
-        btnToggle.addEventListener('click', () => {
-            form.classList.toggle('show');
-            btnToggle.textContent = form.classList.contains('show') ? 'Cancelar' : 'Create Course';
-        });
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const titleInput = document.getElementById('course-title') as HTMLInputElement;
-            const descInput = document.getElementById('course-desc') as HTMLInputElement;
-
-            if (!titleInput.value.trim()) {
-                AppUI.showMessage('Por favor, informe o título do curso.', 'error');
-                return;
-            }
-
-            try {
-                await AppUI.apiFetch('/courses', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        title: titleInput.value.trim(),
-                        description: descInput.value.trim(),
-                        categoryId: '', // Default or first category
-                        price: 0
-                    })
-                });
-                AppUI.showMessage('Curso criado com sucesso!', 'success');
-                titleInput.value = '';
-                descInput.value = '';
-                form.classList.remove('show');
-                btnToggle.textContent = 'Create Course';
-                await loadStudentCourses(); // Refresh
-            } catch (error) {
-                console.error('Error creating course:', error);
-            }
-        });
-    }
-}

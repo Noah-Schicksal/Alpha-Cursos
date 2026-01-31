@@ -202,12 +202,12 @@ export const Home = {
 
       // Handle Image URL
       let imageUrl = course.coverImageUrl;
-      if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
+      if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('/') && !imageUrl.startsWith('data:')) {
         imageUrl = '/' + imageUrl;
       }
-      // If no image provided, fallback
+      // If no image provided, fallback to a reliable Unsplash placeholder
       if (!imageUrl) {
-        imageUrl = 'https://placehold.co/600x400/1e293b/cbd5e1?text=Curso';
+        imageUrl = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800';
       }
 
       // Format price
@@ -292,7 +292,7 @@ export const Home = {
             alt="${course.title}"
             class="card-img"
             src="${imageUrl}"
-            onerror="this.onerror=null;this.src='https://placehold.co/600x400/1e293b/cbd5e1?text=Erro+Imagem';"
+            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800';"
           />
           <div class="badge-tag bg-tag-primary">${categoryName}</div>
           ${isEnrolled ? '<div style="position: absolute; top: 10px; right: 10px; background: #10b981; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold;">MATRICULADO</div>' : ''}

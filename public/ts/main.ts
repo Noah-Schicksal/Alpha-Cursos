@@ -6,6 +6,7 @@ import { Auth } from './modules/auth.js';
 import { Home } from './home.js';
 import { Categories } from './modules/categories.js';
 import { Cart } from './modules/cart.js';
+import { Theme } from './utils/theme.js';
 
 // Expose to window for debugging or legacy scripts if needed
 (window as any).ui = AppUI;
@@ -14,6 +15,7 @@ import { Cart } from './modules/cart.js';
 (window as any).cart = Cart;
 
 document.addEventListener('DOMContentLoaded', () => {
+  Theme.init();
   Auth.init();
   // Check Auth Status immediately
   Auth.updateAuthUI();
