@@ -62,9 +62,11 @@ export const Auth = {
         Auth.updateAuthUI();
         AppUI.showMessage('Login realizado com sucesso!', 'success');
 
-        // Mantém o card aberto para ver a transição para o estado logado
-        // const authContainer = document.getElementById('auth-card-container');
-        // if (authContainer) authContainer.classList.remove('show');
+        // Close auth card after successful login
+        setTimeout(() => {
+          const authContainer = document.getElementById('auth-card-container');
+          if (authContainer) authContainer.classList.remove('show');
+        }, 800);
       } else {
         throw new Error('Resposta de login inválida');
       }
